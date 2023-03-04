@@ -14,4 +14,4 @@ Image-to-Image Translation in PyTorch. Cycle-consistency GAN models for multi-co
 **Master's Thesis. Master's in Data Science at Universitat Oberta de Catalunya.**
 
 #### Author
-* **Agustin Rovira** - [arovirarovi@uoc.edu](mailto:arovirarovi@uoc.edu)
+* **Agustin Rovira** - [agustinroviraquezada@gmail.com](mailto:agustinroviraquezada@gmail.com)
