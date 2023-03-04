@@ -1,9 +1,5 @@
-# MRI_T1_T2_CycleGAN
-
-
 Image-to-Image Translation in PyTorch. Cycle-consistency GAN models for multi-contrast MRI synthesis
 =
-
 
 
 [![made-with-python](https://img.shields.io/badge/Coded%20with-Python-21496b.svg?style=for-the-badge&logo=Python)](https://www.python.org/)
