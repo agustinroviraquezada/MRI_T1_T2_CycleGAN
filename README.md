@@ -4,8 +4,8 @@ Image-to-Image Translation in PyTorch. Cycle-consistency GAN models for multi-co
 
 [![made-with-python](https://img.shields.io/badge/Coded%20with-Python-21496b.svg?style=for-the-badge&logo=Python)](https://www.python.org/)
 [![made-with-latex](https://img.shields.io/badge/Documented%20with-LaTeX-4c9843.svg?style=for-the-badge&logo=Latex)](https://www.latex-project.org/)
-![Github code size](https://img.shields.io/github.com/atinrov/MRI_T1_T2_CycleGAN?style=for-the-badge&logo=Github)
-![GitHub license](https://img.shields.io/github.com/atinrov/MRI_T1_T2_CycleGAN/blob/main/LICENSE?style=for-the-badge&logo=Github)
+![Github code size](https://img.shields.io/github/languages/code-size/atinrov/MRI_T1_T2_CycleGAN?style=for-the-badge&logo=Github)
+![GitHub license](https://img.shields.io/github/license/atinrov/MRI_T1_T2_CycleGAN?style=for-the-badge&logo=Github)
 ![Github Follow](https://img.shields.io/github/followers/atinrov?style=social&label=Follow)
 
 
