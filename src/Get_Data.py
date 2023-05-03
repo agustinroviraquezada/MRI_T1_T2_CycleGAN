@@ -3,15 +3,9 @@ import os
 import re
 import gzip
 import shutil
-import nibabel as nib
-import numpy as np
-from scipy.ndimage import zoom
-import torch
-from torchvision.transforms.functional import normalize
-
 
 class Import_nii():
-    def __init__(self, dataset_id, version, save_path, bound, group, save_path_tensor):
+    def __init__(self, dataset_id, version, save_path):
         """
           @Description
             The Import_nii class provides a way to download NIfTI files from the OpenNeuro dataset.
@@ -33,9 +27,7 @@ class Import_nii():
         self.version = version
         self.save_path = save_path
         self.api_url = 'https://openneuro.org/crn/graphql'
-        self.bound = bound
-        self.group = group
-        self.save_path_tensor = save_path_tensor
+
 
         # Define the GraphQL query to get the dataset snapshot files
         query = f'''
@@ -57,12 +49,12 @@ class Import_nii():
         response = requests.post(self.api_url, json={'query': query})
         response_data = response.json()
 
-        # Get for each subjct the URL of the directory "anat"
+        # Get for each subject the URL of the directory "anat"
         subjects = {i['filename']: i['id'] for i in response_data['data']['snapshot']['files'] if
                     "sub" in i['filename']}
         Sub_anat = {k: self.RecQuery(v) for k, v in subjects.items()}
 
-        # Save the files  in a dicttionary such as  'sub-001_T2w.nii': URL
+        # Save the files  in a dictionary such as  'sub-001_T2w.nii': URL
         toDownload = {}
         for k, v in Sub_anat.items():
             toDownload.update(self.GetURL(v))
@@ -201,103 +193,3 @@ class Import_nii():
         # Remove the .gz file
         os.remove(local_file_path)
         print(f'Removed {local_file_path}')
-
-        print(f'Slicing {filename}...')
-        # Before apply this line you must ensure that T1 and T2 is created
-        if "T1" in filename:
-            path_pt = self.save_path_tensor[0]
-        else:
-            path_pt = self.save_path_tensor[1]
-
-        # Save the slice in onther folder
-        TransformImage(local_file_path_nii, self.bound, self.group, path_pt)
-
-        # Remove the .nii file
-        os.remove(local_file_path_nii)
-        print(f'Removed {local_file_path_nii} finish slicing{filename} ')
-
-
-class TransformImage():
-    def __init__(self, file_path, bound, group, save_path):
-        """
-          Initialize the TransformImage class to preprocess and save the NIfTI image slices as PyTorch tensors.
-
-          @Description
-              The TransformImage class processes a NIfTI image by extracting slices, resizing, converting them
-              to PyTorch tensors, and normalizing the intensity values. The preprocessed image slices are then
-              saved as .pt files in the specified path.
-
-          @Inputs
-              - file_path (str): The file path of the NIfTI image.
-              - bound (tuple): The start and end indices for slicing the NIfTI image.
-              - group (str): The group label to be added to the saved file name, e.g., 'D3'.
-              - save_path (str): The path to save the preprocessed image slices as .pt files.
-        """
-
-        self.group = group
-        self.save_path = save_path
-        self.process_nii(file_path, bound)
-
-    def process_nii(self, file_path, bound):
-        """
-        @Description
-          Preprocess the NIfTI image by extracting, resizing, and normalizing its slices.
-
-        @Inputs
-          - file_path (str): The file path of the NIfTI image.
-          - bound (tuple): The start and end indices for slicing the NIfTI image.
-
-        @output
-          - Processes the NIfTI image and calls ApplyOperations() to further preprocess and save each slice.
-        """
-
-        # Load the NIfTI file
-        nii_object = nib.load(file_path)
-
-        # Get info about the file
-        subject_match = re.search(r'sub-(\d+)', file_path)
-        modality_match = re.search(r'_(\w+)\.', file_path)
-        if subject_match and modality_match:
-            self.subject_number = int(subject_match.group(1))
-            self.modality = modality_match.group(1)
-
-        # Get the 3D data array from the NIfTI object
-        data = nii_object.get_fdata()
-
-        # Aply resize, tensor convertion and normalization between [-1,1]
-        if self.group == "D3":
-            for i in range(bound[0], bound[1]):
-                self.ApplyOperations(data[:, :, i], i)
-
-        else:
-            for i in range(bound[0], bound[1]):
-                self.ApplyOperations(data[:, i, :], i)
-
-    def ApplyOperations(self, img, seq):
-        """
-        @Description
-          Apply resizing, tensor conversion, and normalization to the input image, and save it as a .pt file.
-
-        @Inputs
-          - img (numpy.ndarray): The 2D image slice to be preprocessed.
-          - seq (int): The index of the image slice.
-
-        @output
-          - Preprocesses the input image and saves it as a .pt file in the specified path.
-        """
-
-        # Resize the image to 256x256
-        img_resized = zoom(img, (256 / img.shape[0], 256 / img.shape[1]))
-
-        # Normalize the data array between 0 and 1
-        img_resized_01 = (img_resized - np.min(img_resized)) / (np.max(img_resized) - np.min(img_resized))
-
-        # Convert the image to a PyTorch tensor
-        img_tensor = torch.tensor(np.expand_dims(img_resized_01, axis=0), dtype=torch.float32)
-
-        # Apply normalization with mean=0.5 and std=0.5
-        img_normalized = normalize(img_tensor, (0.5,), (0.5,))
-
-        # Save tensor
-        torch.save(img_normalized,
-                   os.path.join(self.save_path, f'{self.group}_{self.subject_number:03d}_{seq:03d}_{self.modality}.pt'))
