@@ -35,3 +35,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 
 MRI T1-T2 CycleGAN is a deep learning model that performs image conversion between T1-weighted (T1) and T2-weighted (T2) MRI images. Learn to convert MRI images from one modality to another modality without using training data pairs. This model uses a consistent cycle loss to bring the transformed image closer to the original input when returning to the source domain. 
 
+## Installation
+
+Due resource limitation this model was created in google colab. Therefore, the installation and use has been designed to fits with google colab and google drive. If you want to recreate the training please be aware that some modifications have to be done before use it. 
+
+1. Clone the repository:
