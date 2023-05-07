@@ -4,7 +4,8 @@ import re
 import gzip
 import shutil
 
-class Import_nii():
+
+class Import_nii:
     def __init__(self, dataset_id, version, save_path):
         """
           @Description
@@ -30,7 +31,7 @@ class Import_nii():
 
 
         # Define the GraphQL query to get the dataset snapshot files
-        query = f'''
+        self.query = f'''
     {{
       snapshot(datasetId: "{self.dataset_id}", tag: "{self.version}") {{
         id
@@ -46,11 +47,11 @@ class Import_nii():
     '''
 
         # Get the URL info from the query
-        response = requests.post(self.api_url, json={'query': query})
-        response_data = response.json()
+        response = requests.post(self.api_url, json={'query': self.query})
+        self.response_data = response.json()
 
         # Get for each subject the URL of the directory "anat"
-        subjects = {i['filename']: i['id'] for i in response_data['data']['snapshot']['files'] if
+        subjects = {i['filename']: i['id'] for i in self.response_data['data']['snapshot']['files'] if
                     "sub" in i['filename']}
         Sub_anat = {k: self.RecQuery(v) for k, v in subjects.items()}
 
@@ -139,7 +140,7 @@ class Import_nii():
 
         query = f'''
       {{
-        snapshot(datasetId: "{dataset_id}", tag: "{self.version}") {{
+        snapshot(datasetId: "{self.dataset_id}", tag: "{self.version}") {{
           files(tree: "{ant_id}") {{
             id
             filename
