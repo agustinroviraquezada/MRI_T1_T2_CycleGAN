@@ -7,10 +7,8 @@ opencv_python_headless>=4.7.0.72
 pandas>=1.5.3
 Requests>=2.30.0
 scikit_learn>=1.2.2
-SimpleITK>=2.2.1
 torch>=2.0.0+cu118
 torchmetrics>=0.11.4
 torchvision>=0.15.1+cu118
--e git+https://github.com/MIC-DKFZ/HD-BET.git#egg=HD_BET
--e git+https://github.com/MIC-DKFZ/batchgenerators#egg=batchgenerators
-
+HD_BET @ git+https://github.com/MIC-DKFZ/HD-BET.git
+batchgenerators @ git+https://github.com/MIC-DKFZ/batchgenerators.git
