@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='my-package',
+    name='cycle',
     version='0.1',
     packages=find_packages(),
     install_requires=[
@@ -17,7 +17,9 @@ setup(
         'torch>=2.0.0+cu118',
         'torchmetrics>=0.11.4',
         'torchvision>=0.15.1+cu118',
-        'HD_BET @ git+https://github.com/MIC-DKFZ/HD-BET.git',
-        'batchgenerators @ git+https://github.com/MIC-DKFZ/batchgenerators.git'
-    ]
+    ],
+    dependency_links=[
+        'git+https://github.com/MIC-DKFZ/HD-BET.git#egg=HD_BET',
+        'git+https://github.com/MIC-DKFZ/batchgenerators.git#egg=batchgenerators',
+    ],
 )
