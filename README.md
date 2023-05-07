@@ -2,6 +2,7 @@
 This repository contains an implementation of CycleGAN for MRI T1-T2 image translation in PyTorch.
 // =
 
+***********
 
 [![made-with-python](https://img.shields.io/badge/Coded%20with-Python-21496b.svg?style=for-the-badge&logo=Python)](https://www.python.org/)
 [![made-with-latex](https://img.shields.io/badge/Documented%20with-LaTeX-4c9843.svg?style=for-the-badge&logo=Latex)](https://www.latex-project.org/)
@@ -18,7 +19,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 * **Agustin Rovira** - [agustinroviraquezada@gmail.com](mailto:agustinroviraquezada@gmail.com)
 
 
-
+***********
 
 ## Table of Contents
 
