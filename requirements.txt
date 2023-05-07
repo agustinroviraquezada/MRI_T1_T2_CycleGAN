@@ -10,4 +10,3 @@ scikit_learn>=1.2.2
 torch>=2.0.0+cu118
 torchmetrics>=0.11.4
 torchvision>=0.15.1+cu118
--e git+https://github.com/MIC-DKFZ/HD-BET.git#egg=HD_BET
