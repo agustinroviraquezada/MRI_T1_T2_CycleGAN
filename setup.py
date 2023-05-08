@@ -1,9 +1,15 @@
+import subprocess
 from setuptools import setup, find_packages
+
+# Install HD-BET package from GitHub
+subprocess.check_call(['pip', 'install', '--upgrade', '--no-deps', '--force-reinstall', '--no-cache-dir', 'git+https://github.com/MIC-DKFZ/HD-BET.git'])
 
 setup(
     name='cycle',
-    version='0.1',
-    packages=find_packages(),
+    version='1.0',
+    description='CyclegGAN Model',
+    url="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN",
+    author='Agustin Rovira',
     install_requires=[
         'lightning>=2.0.2',
         'nibabel>=3.0.2',
@@ -17,9 +23,7 @@ setup(
         'torch>=2.0.0+cu118',
         'torchmetrics>=0.11.4',
         'torchvision>=0.15.1+cu118',
+        'SimpleITK>=2.2.1'
     ],
-    dependency_links=[
-        'git+https://github.com/MIC-DKFZ/HD-BET.git#egg=HD_BET',
-        'git+https://github.com/MIC-DKFZ/batchgenerators.git#egg=batchgenerators',
-    ],
+   packages=find_packages(include=['cycle'])
 )
