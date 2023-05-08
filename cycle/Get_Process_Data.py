@@ -529,7 +529,7 @@ class  DownloadData:
           - dataPath (str, optional): Path to the data directory. If not provided, it uses the `save_path_nii` as the data directory.
   """
 
-  def __int__(self,save_path_nii,Datasets,target_img,dataPath=None):
+  def __init__(self,save_path_nii,Datasets,target_img,dataPath=None):
 
     self.save_path_nii=save_path_nii
     self.target_img=target_img
