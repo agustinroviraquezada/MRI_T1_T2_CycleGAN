@@ -555,6 +555,40 @@ class  DownloadData:
       shutil.rmtree(os.path.join(self.save_path_nii, f'{k}_files'))
 
  
+
+
+class Sanity_Check:
+  def __init__(self,paths):
+    self.paths=paths
+    
+    #Check T1 folder
+    T1 = [f for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
+    T2 = [f for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
+
+    print(f"check if T1 length:{len(T1)} and T2 length:{len(T2)} have correspondency")
+
+    T2_cor=[re.sub(r'(T1)(w?)', r'T2\2', f) for f in T1]
+    T1_cor=[re.sub(r'(T2)(w?)', r'T1\2', f) for f in T2]
+
+    files_only_in_list1 = set(T1) - set(T1_cor)
+    files_only_in_list2 = set(T2) - set(T2_cor)
+
+    if files_only_in_list1:
+      for file_id in files_only_in_list1:
+        file_path = os.path.join(paths["T1"], file_id)
+        if os.path.isfile(file_path):
+            print(f"Deleted {file_path}")
+            os.remove(file_path)
+
+    if files_only_in_list2:
+      for file_id in files_only_in_list2:
+        file_path = os.path.join(paths["T2"], file_id)
+        if os.path.isfile(file_path):
+            print(f"Deleted {file_path}")
+            os.remove(file_path)
+    
+    print("Check ok")
+
   def count_slices_per_subject(self):
     """
         Count the number of slices per subject.
@@ -565,7 +599,7 @@ class  DownloadData:
         @Output:
             - df (pd.DataFrame): DataFrame with the slice counts per subject.
     """
-    folder_path=self.save_path_tensor["T1"]
+    folder_path=self.paths["T1"]
     slice_counts = {}
     pattern =  r'ds\d+_\d+_(\d+)_T1w.pt'
     files=[f for f in os.listdir(folder_path) if f.endswith('.pt')]
@@ -581,7 +615,6 @@ class  DownloadData:
     df = pd.DataFrame.from_dict(slice_counts)
     return df
 
-
   def plot_pdf(self,percentage=0.4):
     """
         Plot the probability density function (PDF) of T1 and T2 data.
@@ -592,7 +625,7 @@ class  DownloadData:
         @Input:
             - percentage (float, optional): Percentage of files to sample. Default is 0.4.
     """
-    paths=self.save_path_tensor
+    paths=self.paths
     T1_files    = [os.path.join(paths["T1"],f) for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
     T2_files    = [os.path.join(paths["T2"],f) for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
     
@@ -628,7 +661,7 @@ class  DownloadData:
         @Description:
             Plots a sample of T1 and T2 data.
     """
-    paths=self.save_path_tensor
+    paths=self.paths
     T1_files    = [os.path.join(paths["T1"],f) for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
     T1_sample   = random.sample(T1_files, 1)
     T2_sample   = re.sub(r'(T1)(w?)', r'T2\2', T1_sample)
@@ -653,39 +686,6 @@ class  DownloadData:
     plt.show()
     print(f"It is shown {os.path.basename(T1_sample)} and {os.path.basename(T2_sample)}")
 
-
-  def Sanity_Check(self):
-    paths=self.save_path_tensor
-    T1=[f.replace("_T1w.pt", "") for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
-    T2=[f.replace("_T2w.pt", "") for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
-
-    set1 = set(T1)
-    set2 = set(T2)
-
-    # Files present in list1 but not in list2
-    files_only_in_list1 = set1 - set2
-    # Files present in list2 but not in list1
-    files_only_in_list2 = set2 - set1
-
-    print("Files only in T1:", files_only_in_list1)
-    print("Files only in T2:", files_only_in_list2)
-    print(f"T1 len {len(T1)} and T2 len {len(T2)} \n")
-
-    print("Then remove files are not in both lists")
-    # Remove files only in T1 from T1 list and delete them from the folder
-    for f_in in files_only_in_list1:
-        file_path = os.path.join(paths["T1"], f + "_T1w.pt")
-        os.remove(file_path)
-
-    # Remove files only in T2 from T2 list and delete them from the folder
-    for f in files_only_in_list2:
-        file_path = os.path.join(paths["T2"], f + "_T2w.pt")
-        os.remove(file_path)
-
-    T1_new=[f for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
-    T2_new=[f for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
-
-    print(f"T1 len {len(T1_new)} and T2 len {len(T2_new)}.")
 
 
 
