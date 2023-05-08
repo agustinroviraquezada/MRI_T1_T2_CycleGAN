@@ -663,7 +663,7 @@ class Sanity_Check:
     """
     paths=self.paths
     T1_files    = [os.path.join(paths["T1"],f) for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
-    T1_sample   = random.sample(T1_files, 1)
+    T1_sample   = random.sample(T1_files, 1)[0]
     T2_sample   = re.sub(r'(T1)(w?)', r'T2\2', T1_sample)
 
     # Move tensors to CPU and convert to NumPy arrays
