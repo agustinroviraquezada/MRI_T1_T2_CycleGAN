@@ -24,7 +24,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Prerequisites](#prerequisites)
 - [Installation](#Introduction)
 - [Usage](#usage)
-  - [Main.ipynb](#main)
+  - [Main](#Main-Scipt)
   - [Custom Script](#custom-script)
 - [File Structure](#file-structure)
 - [Data Storage](#data-storage)
@@ -40,19 +40,21 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 
 ## Introduction
 
-This repository contains an implementation of CycleGAN for performing image conversion between T1-weighted (T1) and T2-weighted (T2) MRI images. It learns how to convert MRI images from one modality to another modality without using training data pairs. This code is based on the [CycleGAN paper](https://arxiv.org/abs/1703.10593) by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros using PyTorch and PyTorch Lightning. 
+This repository contains an implementation of CycleGAN for performing image conversion between T1-weighted (T1) and T2-weighted (T2) MRI images. The model learned how to convert MRI images from one modality to another modality without using training data pairs. This code is based on the [CycleGAN paper](https://arxiv.org/abs/1703.10593) by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros using PyTorch and PyTorch Lightning.
 
 
 ## Usage
 Due resource limitation this model was created in google colab. Therefore, the installation and use has been designed to fits with google colab and google drive. You are provided with a Main.ipynb notebook in Google Colab or Jupyter Notebook, in case you want to reproduce the training of the model. If you want to recreate the training please be aware that some modifications have to be done before use it
 
-# main
-Open the Main.ipynb notebook in Google Colab or Jupyter Notebook.
-Update the project_pat variable with the path to the project folder.
-Run the notebook cells to download the datasets, train the model, and generate results.
+### Main-Scipt
+1.  Open the Main.ipynb notebook in Google Colab or Jupyter Notebook.
+2.  Update the project_pat variable with the path to the project folder.
+3.  Run the notebook cells to download the datasets, train the model, and generate results.
+
+Take into account that the dataset from OpenNeuro  can weigh up to 40GB 
 
 
-#custom-script
+### custom-script
 In case of create your own Main script, here I leave you hints about the usage of the package in colab. Mainly about how to clone and install the repo, and how to use the model.
 
 ```
