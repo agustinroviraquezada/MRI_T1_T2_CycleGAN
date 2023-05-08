@@ -14,6 +14,7 @@ import glob
 import cv2
 import torch
 from torchvision.transforms.functional import normalize
+import shutil
 
 
 ############################ Class 1 ############################
@@ -551,8 +552,9 @@ class  DownloadData:
 
       #Download data
       Process(dataset_id, version, self.save_path_nii, self.save_path_tensor,target_img=self.target_img)
-      os.remove(os.path.join(self.save_path_nii, f'{k}_files'))
-  
+      shutil.rmtree(os.path.join(self.save_path_nii, f'{k}_files'))
+
+ 
   def count_slices_per_subject(self):
     """
         Count the number of slices per subject.
@@ -652,7 +654,38 @@ class  DownloadData:
     print(f"It is shown {os.path.basename(T1_sample)} and {os.path.basename(T2_sample)}")
 
 
+  def Sanity_Check(self):
+    paths=self.save_path_tensor
+    T1=[f.replace("_T1w.pt", "") for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
+    T2=[f.replace("_T2w.pt", "") for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
 
+    set1 = set(T1)
+    set2 = set(T2)
+
+    # Files present in list1 but not in list2
+    files_only_in_list1 = set1 - set2
+    # Files present in list2 but not in list1
+    files_only_in_list2 = set2 - set1
+
+    print("Files only in T1:", files_only_in_list1)
+    print("Files only in T2:", files_only_in_list2)
+    print(f"T1 len {len(T1)} and T2 len {len(T2)} \n")
+
+    print("Then remove files are not in both lists")
+    # Remove files only in T1 from T1 list and delete them from the folder
+    for f_in in files_only_in_list1:
+        file_path = os.path.join(paths["T1"], f + "_T1w.pt")
+        os.remove(file_path)
+
+    # Remove files only in T2 from T2 list and delete them from the folder
+    for f in files_only_in_list2:
+        file_path = os.path.join(paths["T2"], f + "_T2w.pt")
+        os.remove(file_path)
+
+    T1_new=[f for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
+    T2_new=[f for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
+
+    print(f"T1 len {len(T1_new)} and T2 len {len(T2_new)}.")
 
 
 
