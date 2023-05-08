@@ -44,9 +44,7 @@ class HDBETProcessor:
     @Description: 
       Process the input NIfTI file using HDBET and save the result in the specified output folder.
     """
-    if not os.path.exists(self.output_folder):
-      os.makedirs(self.output_folder, exist_ok=True)
-
+    
     output_file = os.path.join(self.output_folder, os.path.basename(self.file_input))
     run_hd_bet(self.file_input, output_file)
 
@@ -428,7 +426,6 @@ class Process:
 
     # Create a directory for the downloaded files
     download_directory = os.path.join(self.save_path, f'{self.dataset_id}_files')
-    os.makedirs(download_directory, exist_ok=True)
 
     #Download .nii T1 and T2
     for k,v in subDic.items():
@@ -534,22 +531,27 @@ class  DownloadData:
     self.save_path_nii=save_path_nii
     self.target_img=target_img
 
-
+    #Define paths for T1 and T2
     if dataPath:
       self.save_path_tensor={"T1":os.path.join(dataPath,"T1") ,"T2":os.path.join(dataPath,"T2")}
     else:
       self.save_path_tensor={"T1":os.path.join(self.save_path_nii,"T1") ,"T2":os.path.join(self.save_path_nii,"T2")}
 
-    
+    #Create folders based on T1 and T2 paths
+    for _,v in self.save_path_tensor.items():
+      os.makedirs(v, exist_ok=True)
 
     for k,v in Datasets.items():
+      if not os.path.exists(os.path.join(self.save_path_nii, f'{k}_files')):
+        os.makedirs(os.path.join(self.save_path_nii, f'{k}_files'), exist_ok=True)
+      
       #Details of the dataset from OpenNeuro. id:ds002330
       dataset_id=k
       version=v
 
       #Download data
       Process(dataset_id, version, self.save_path_nii, self.save_path_tensor,target_img=self.target_img)
-      os.remove(os.path.join(self.save_path_nii,dataset_id))
+      os.remove(os.path.join(self.save_path_nii, f'{k}_files'))
   
   def count_slices_per_subject(self):
     """
