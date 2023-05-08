@@ -24,8 +24,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Prerequisites](#prerequisites)
 - [Installation](#Introduction)
 - [Usage](#usage)
-  - [Main-Script](#Main-Script)
-  - [Custom Script](#Custom Script)
+  - [Main-Script](###Main-Script)
+  - [Custom-Script](###Custom-Script)
 - [File Structure](#file-structure)
 - [Data Storage](#data-storage)
 - [Acknowledgements](#acknowledgements)
@@ -54,7 +54,7 @@ Due resource limitation this model was created in google colab. Therefore, the i
 Take into account that the dataset from OpenNeuro  can weigh up to 40GB 
 
 
-### Custom Script
+### Custom-Script
 In case of create your own Main script, here I leave you hints about the usage of the package in colab. Mainly about how to clone and install the repo, and how to use the model.
 
 ```
@@ -64,3 +64,5 @@ project_pat="/PATH_PARENT/FOLDER_TO_CONTAINS_THE_REPO"
 requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
+
+
