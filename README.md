@@ -26,7 +26,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
-- [File Structure](#file-structure)
+- [Package file Structure](#file-structure)
 - [Data Storage](#data-storage)
 - [Acknowledgements](#acknowledgements)
 
@@ -66,7 +66,7 @@ requirements= project_pat+"/requirements.txt"
 ```
 
 ## Package file Structure
-
+```
 .
 ├── cycle
 │   ├── CallBacks.py:
@@ -76,5 +76,5 @@ requirements= project_pat+"/requirements.txt"
 │   └── Nets.py:
 ├── Main.ipynb:
 └── README.md
-
+```
 
