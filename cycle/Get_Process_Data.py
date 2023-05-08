@@ -7,11 +7,13 @@ import shutil
 import nibabel as nib
 import numpy as np
 import SimpleITK as sitk
+import matplotlib.pyplot as plt
+import pandas as pd
+import random
 import glob
 import cv2
 import torch
 from torchvision.transforms.functional import normalize
-
 
 
 ############################ Class 1 ############################
@@ -512,6 +514,140 @@ class Process:
     print(f'applied HD-BET {filename}')
 
 
+
+class  DownloadData:
+  """
+      Initialize the DownloadData object. Downloads and processes data for analysis
+
+      @Description:
+          Initializes the DownloadData object with the provided parameters.
+
+      @Input:
+          - save_path_nii (str): Path to the directory to save NIfTI files.
+          - Datasets (dict): Dictionary of dataset IDs and versions.
+          - target_img (str): Target image type.
+          - dataPath (str, optional): Path to the data directory. If not provided, it uses the `save_path_nii` as the data directory.
+  """
+
+  def __int__(self,save_path_nii,Datasets,target_img,dataPath=None):
+
+    self.save_path_nii=save_path_nii
+    self.target_img=target_img
+
+
+    if dataPath:
+      self.save_path_tensor={"T1":os.path.join(dataPath,"T1") ,"T2":os.path.join(dataPath,"T2")}
+    else:
+      self.save_path_tensor={"T1":os.path.join(self.save_path_nii,"T1") ,"T2":os.path.join(self.save_path_nii,"T2")}
+
+    
+
+    for k,v in Datasets.items():
+      #Details of the dataset from OpenNeuro. id:ds002330
+      dataset_id=k
+      version=v
+
+      #Download data
+      Process(dataset_id, version, self.save_path_nii, self.save_path_tensor,target_img=self.target_img)
+      os.remove(os.path.join(self.save_path_nii,dataset_id))
+  
+  def count_slices_per_subject(self):
+    """
+        Count the number of slices per subject.
+
+        @Description:
+            Counts the number of slices per subject based on the file names.
+
+        @Output:
+            - df (pd.DataFrame): DataFrame with the slice counts per subject.
+    """
+    folder_path=self.save_path_tensor["T1"]
+    slice_counts = {}
+    pattern =  r'ds\d+_\d+_(\d+)_T1w.pt'
+    files=[f for f in os.listdir(folder_path) if f.endswith('.pt')]
+    for filename in files:
+        match = re.search(pattern, filename)
+        if match:
+            subject_group = match.group()
+            group_folder = subject_group.split('_')[0]
+            subject = subject_group.split('_')[1]
+            slice_counts.setdefault(group_folder, {}).setdefault(subject, 0)
+            slice_counts[group_folder][subject] += 1
+
+    df = pd.DataFrame.from_dict(slice_counts)
+    return df
+
+
+  def plot_pdf(self,percentage=0.4):
+    """
+        Plot the probability density function (PDF) of T1 and T2 data.
+
+        @Description:
+            Plots the PDF of randomly sampled T1 and T2 data.
+
+        @Input:
+            - percentage (float, optional): Percentage of files to sample. Default is 0.4.
+    """
+    paths=self.save_path_tensor
+    T1_files    = [os.path.join(paths["T1"],f) for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
+    T2_files    = [os.path.join(paths["T2"],f) for f in os.listdir(paths["T2"]) if f.endswith('.pt')]
+    
+    sample_size = int(len(T1_files)*percentage)
+    T1_sample   = random.sample(T1_files, sample_size)
+    T2_sample   = random.sample(T2_files, sample_size)
+    
+    num_bins = 100
+
+    fig, axs = plt.subplots(1, 2, figsize=(8, 8))
+    for T1,T2 in zip(T1_sample,T2_sample):
+
+      T1_array=torch.load(T1).numpy().flatten()
+      T2_array=torch.load(T2).numpy().flatten()
+
+      axs[0].hist(T1_array, num_bins, density=True, histtype='step', facecolor='g',alpha=0.05)
+      axs[1].hist(T2_array, num_bins, density=True, histtype='step', facecolor='g',alpha=0.05)
+
+    axs[0].set_xlim(-0.98, 1)
+    axs[1].set_xlim(-0.98, 1)
+
+    axs[0].set_title("T1 Probability Density Plot")
+    axs[1].set_title("T2 Probability Density Plot")
+
+    plt.tight_layout()
+    plt.show()
+    print(f"It has taken a sample of {sample_size} files from T1 and T2")
+  
+  def PlotSample(self):
+    """
+        Plot a sample of T1 and T2 data.
+
+        @Description:
+            Plots a sample of T1 and T2 data.
+    """
+    paths=self.save_path_tensor
+    T1_files    = [os.path.join(paths["T1"],f) for f in os.listdir(paths["T1"]) if f.endswith('.pt')]
+    T1_sample   = random.sample(T1_files, 1)
+    T2_sample   = re.sub(r'(T1)(w?)', r'T2\2', T1_sample)
+
+    # Move tensors to CPU and convert to NumPy arrays
+    T1_cpu = torch.load(T1_sample).numpy()
+    T2_cpu = torch.load(T2_sample).numpy()
+
+    # Plot the tensors
+    fig, axs = plt.subplots(1, 2, figsize=(12, 4))
+    
+    axs[0].imshow(T1_cpu, cmap='gray')
+    axs[0].set_title('T1 - Processed')
+    axs[0].axis('off')
+
+    axs[1].imshow(T2_cpu, cmap='gray')
+    axs[1].set_title('T2 - Processed')
+    axs[1].axis('off')
+
+
+    plt.tight_layout()
+    plt.show()
+    print(f"It is shown {os.path.basename(T1_sample)} and {os.path.basename(T2_sample)}")
 
 
 
