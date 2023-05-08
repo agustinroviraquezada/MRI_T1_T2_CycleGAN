@@ -27,6 +27,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
 - [Package file Structure](#file-structure)
+- [Data Processing](#Data Processing)
 - [Data Storage](#Data Storage)
 - [Acknowledgements](#Acknowledgements)
 
@@ -85,21 +86,11 @@ requirements= project_pat+"/requirements.txt"
 4. Get_Process_Data.py: This file contains functions to download and process the MRI dataset from OpenNeuro. It contains a DownloadData function that downloads the data set and a Process function that processes the NIfTI file into a PNG image.
 5. Nets.py: This file contains the generator and discriminator network implementation for PyTorch. It includes a Generator class for image-to-image conversion between T1-weighted and T2-weighted MRI scans, and a Discriminator class for determining whether an image is real or generated. A ResBlock class is also defined in this file for use with generator networks.
 
-## Data Storage
-```
-├── Desire_Folder
-│  ├── T1
-│  │   └── groupid_subject_slice._T1W.pt
-│  │   └── groupid_subject_slice._T1W.pt
-│  ├── T2
-│  │   └── groupid_subject_slice._T2W.pt
-│  │   └── groupid_subject_slice._T12W.pt
-```
 
 ## Data Processing
 In the `Get_Process_Data.py` file, there are two main classes: `DownloadData` and `Process`. Here, I will provide a description of each class and its methods.
 
-### `DownloadData` Class
+### `Class DownloadData`
 
 This class downloads MRI datasets from OpenNeuro and saves them as NIfTI files. It has the following methods:
 
@@ -136,6 +127,16 @@ This class processes the downloaded NIfTI files into PyTorch tensors. It has the
 
 By using the `DownloadData` and `Process` classes together, you can download MRI datasets from OpenNeuro, process the NIfTI files into PyTorch tensors, and save them in a structured format for training the CycleGAN model.
 
+## Data Storage
+```
+├── Desire_Folder
+│  ├── T1
+│  │   └── groupid_subject_slice._T1W.pt
+│  │   └── groupid_subject_slice._T1W.pt
+│  ├── T2
+│  │   └── groupid_subject_slice._T2W.pt
+│  │   └── groupid_subject_slice._T12W.pt
+```
 
 ## Acknowledgements
 This project is based on the CycleGAN paper by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. The MRI datasets are from OpenNeuro.
