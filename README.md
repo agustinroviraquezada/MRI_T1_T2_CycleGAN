@@ -24,8 +24,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Prerequisites](#prerequisites)
 - [Installation](#Introduction)
 - [Usage](#usage)
-  - [Main-Script](###Main-Script)
-  - [Custom-Script](###Custom-Script)
+  - [Main-Script](#Main-Script)
+  - [Custom-Script](#Custom-Script)
 - [File Structure](#file-structure)
 - [Data Storage](#data-storage)
 - [Acknowledgements](#acknowledgements)
@@ -64,5 +64,17 @@ project_pat="/PATH_PARENT/FOLDER_TO_CONTAINS_THE_REPO"
 requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
+
+## Package file Structure
+
+.
+├── cycle
+│   ├── CallBacks.py:
+│   ├── CycleGAN.py: 
+│   ├── DataMod.py:
+│   ├── Get_Process_Data.py:
+│   └── Nets.py:
+├── Main.ipynb:
+└── README.md
 
 
