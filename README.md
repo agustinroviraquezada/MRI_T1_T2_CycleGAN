@@ -28,7 +28,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
   - [Custom-Script](#Custom-Script)
 - [Package file Structure](#file-structure)
 - [Data Storage](#data-storage)
-- [Acknowledgements](#acknowledgements)
+- [Acknowledgements](#Acknowledgements)
 
 ## Prerequisites
 
@@ -78,3 +78,13 @@ requirements= project_pat+"/requirements.txt"
 └── README.md
 ```
 
+
+1. CallBacks.py: This file contains custom callback classes for PyTorch Lightning. This includes a CustomModelCheckpoint used to save the best model during training and a CreateGIF to generate his GIF of images generated during training for visualization.
+2. CycleGAN.py: This file contains the CycleGAN model implementation using PyTorch Lightning. It defines the overall structure of the model, including generators and discriminators, along with the loss function and training steps.
+3. DataMod.py: This file contains the CycleGANDataModule class implementation for loading and processing the MRI dataset. It handles data loading, preprocessing, and splitting into training and validation sets, making it easy to use with PyTorch Lightning.
+4. Get_Process_Data.py: This file contains functions to download and process the MRI dataset from OpenNeuro. It contains a DownloadData function that downloads the data set and a Process function that processes the NIfTI file into a PNG image.
+5. Nets.py: This file contains the generator and discriminator network implementation for PyTorch. It includes a Generator class for image-to-image conversion between T1-weighted and T2-weighted MRI scans, and a Discriminator class for determining whether an image is real or generated. A ResBlock class is also defined in this file for use with generator networks.
+
+
+#Acknowledgements
+This project is based on the CycleGAN paper by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. The MRI datasets are from OpenNeuro.
