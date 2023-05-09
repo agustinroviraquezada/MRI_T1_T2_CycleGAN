@@ -15,7 +15,7 @@ import re
 
 ##############################  Class 1 ############################## 
 class CustomDataset(Dataset):
-  def __init__(self, T1_files, T2_files):
+  def __init__(self, T1_files, T2_files,factor=1):
     """
     @Description: 
       A custom PyTorch Dataset class to  handle not paired T1 and T2 MRI image files.
@@ -25,9 +25,10 @@ class CustomDataset(Dataset):
     """
     self.T1_files = T1_files
     self.T2_files = T2_files
+    self.factor=factor
 
   def __len__(self):
-    return min(len(self.T1_files), len(self.T2_files))
+    return int(min(len(self.T1_files), len(self.T2_files))*self.factor)
 
   def __getitem__(self, idx):
     """
@@ -115,9 +116,9 @@ class CycleGANDataModule(pl.LightningDataModule):
       train_T1, val_T1, train_T2, val_T2 = train_test_split(train_T1,train_T2,test_size=(self.val_size / (1-self.test_size)), random_state=self.seed)
 
 
-      self.train_dataset = CustomDataset(train_T1, train_T2)
-      self.val_dataset = CustomDataset(val_T1, val_T2)
-      self.test_dataset = CustomDataset(test_T1, test_T2)
+      self.train_dataset = CustomDataset(train_T1, train_T2,self.factor)
+      self.val_dataset = CustomDataset(val_T1, val_T2,self.factor)
+      self.test_dataset = CustomDataset(test_T1, test_T2,self.factor)
 
     def train_dataloader(self):
       return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)
