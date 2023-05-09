@@ -267,7 +267,7 @@ class CycleGAN(pl.LightningModule):
     gen_loss, f_T1, f_T2,Iden_term,Cycle_term,Adv_term,C_T1,C_T2 = self.GenLoss(real_T1, real_T2)
 
     ############# Compute Training metrics #############
-    G_psnr_T2,G_ssim_T2,G_psnr_T1,G_ssim_T1,Vfid_T1,Vfid_T2=self.ComputeMetrics(f_T2, real_T2,f_T1, real_T1)
+    G_psnr_T2,G_ssim_T2,G_psnr_T1,G_ssim_T1=self.ComputeMetrics(f_T2, real_T2,f_T1, real_T1)
 
     ########### Loggers ###########
     self.log("Dval_loss_T1", T1Loss_Dics, prog_bar=True, on_epoch=True,on_step=False)
