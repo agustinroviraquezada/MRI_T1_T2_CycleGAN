@@ -671,7 +671,7 @@ class Sanity_Check:
     T2_cpu = torch.load(T2_sample).numpy()[0,:,:]
 
     # Plot the tensors
-    fig, axs = plt.subplots(1, 2, figsize=(12, 4))
+    fig, axs = plt.subplots(1, 2, figsize=(10, 3))
     
     axs[0].imshow(T1_cpu, cmap='gray')
     axs[0].set_title(f'T1({T1_cpu.shape[0]}x{T1_cpu.shape[1]}) - Processed')
