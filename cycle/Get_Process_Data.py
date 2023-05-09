@@ -667,8 +667,8 @@ class Sanity_Check:
     T2_sample   = re.sub(r'(T1)(w?)', r'T2\2', T1_sample)
 
     # Move tensors to CPU and convert to NumPy arrays
-    T1_cpu = torch.load(T1_sample).numpy()
-    T2_cpu = torch.load(T2_sample).numpy()
+    T1_cpu = torch.load(T1_sample).numpy()[0,:,:]
+    T2_cpu = torch.load(T2_sample).numpy()[0,:,:]
 
     # Plot the tensors
     fig, axs = plt.subplots(1, 2, figsize=(12, 4))
