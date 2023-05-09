@@ -42,20 +42,20 @@ class CustomDataset(Dataset):
 
     #Get Image Paths
     img_path_T1 = self.T1_files[idx]
-    img_path_T2 = self.T2_files[idx]
+    #img_path_T2 = self.T2_files[idx]
 
     #The images are not pairs! however, I want to find the pair to compare
     img_path_T1_T2Corrs = re.sub(r'(T1)(w?)', r'T2\2', img_path_T1)
-    img_path_T2_T1Corrs = re.sub(r'(T2)(w?)', r'T1\2', img_path_T2)
+    #img_path_T2_T1Corrs = re.sub(r'(T2)(w?)', r'T1\2', img_path_T2)
 
     #Load
     img_T1 = torch.load(img_path_T1)
-    img_T2 = torch.load(img_path_T2)
+    #img_T2 = torch.load(img_path_T2)
 
     img_T1_T2Corrs = torch.load(img_path_T1_T2Corrs)
-    img_T2_T1Corrs = torch.load(img_path_T2_T1Corrs)
+    #img_T2_T1Corrs = torch.load(img_path_T2_T1Corrs)
 
-    return img_T1, img_T1_T2Corrs, img_T2 ,img_T2_T1Corrs
+    return img_T1, img_T1_T2Corrs
 
 
 
