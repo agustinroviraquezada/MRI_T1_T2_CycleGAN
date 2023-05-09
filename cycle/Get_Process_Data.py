@@ -674,11 +674,11 @@ class Sanity_Check:
     fig, axs = plt.subplots(1, 2, figsize=(12, 4))
     
     axs[0].imshow(T1_cpu, cmap='gray')
-    axs[0].set_title('T1 - Processed')
+    axs[0].set_title(f'T1({T1_cpu.shape[0]}x{T1_cpu.shape[1]}) - Processed')
     axs[0].axis('off')
 
     axs[1].imshow(T2_cpu, cmap='gray')
-    axs[1].set_title('T2 - Processed')
+    axs[1].set_title(f'T2({T2_cpu.shape[0]}x{T2_cpu.shape[1]})- Processed')
     axs[1].axis('off')
 
 
