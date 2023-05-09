@@ -168,7 +168,7 @@ class CycleGAN(pl.LightningModule):
     f_T1 = self.G_T2_T1(real_T2)
     T1Loss_Dics = self.DiscLoss(real_T1,f_T1,disc="T1")
     
-    self.manual_backward(T1Loss_Dics,retain_graph=True)
+    self.manual_backward(T1Loss_Dics,retain_graph=False)
     Dopt_T1.step()
     Dopt_T1.zero_grad() # Zero out the gradient before backpropagation
     self.untoggle_optimizer(Dopt_T1)
@@ -179,7 +179,7 @@ class CycleGAN(pl.LightningModule):
     f_T2 = self.G_T1_T2(real_T1)
     T2Loss_Dics = self.DiscLoss(real_T2,f_T2,disc="T2")
     
-    self.manual_backward(T2Loss_Dics,retain_graph=True)
+    self.manual_backward(T2Loss_Dics,retain_graph=False)
     Dopt_T2.step()
     Dopt_T2.zero_grad() # Zero out the gradient before backpropagation
     self.untoggle_optimizer(Dopt_T2)
