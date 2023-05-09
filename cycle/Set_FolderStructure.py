@@ -9,6 +9,8 @@ class DirectoryCreator:
         T2_path = os.path.join(self.base_path, "T2")
         model_path = os.path.join(self.base_path, "Model")
         checkpoint_path = os.path.join(model_path, "CheckPoint")
+        checkOptimization_path = os.path.join(model_path, "CheckPoint_Opt")
+        gif_path = os.path.join(model_path, "GIF")
         best_path = os.path.join(model_path, "BestModel")
 
         # Create T1 directory
@@ -22,7 +24,13 @@ class DirectoryCreator:
 
         # Create CheckPoint directory
         os.makedirs(checkpoint_path, exist_ok=True)
+        
+        # Create CheckPoint optimization directory
+        os.makedirs(checkOptimization_path, exist_ok=True)
+        
+        # Create CheckPoint optimization directory
+        os.makedirs(gif_path, exist_ok=True)
 
         # Create Best directory
         os.makedirs(best_path, exist_ok=True)
-        return {"T1":T1_path,"T2":T2_path},model_path,checkpoint_path,best_path
+        return {"T1":T1_path,"T2":T2_path},model_path,checkpoint_path,best_path,checkOptimization_path,gif_path
