@@ -116,9 +116,9 @@ class CycleGANDataModule(pl.LightningDataModule):
       train_T1, val_T1, train_T2, val_T2 = train_test_split(train_T1,train_T2,test_size=(self.val_size / (1-self.test_size)), random_state=self.seed)
 
 
-      self.train_dataset = CustomDataset(train_T1, train_T2,self.factor)
-      self.val_dataset = CustomDataset(val_T1, val_T2,self.factor)
-      self.test_dataset = CustomDataset(test_T1, test_T2,self.factor)
+      self.train_dataset = CustomDataset(train_T1, train_T2,factor=self.factor)
+      self.val_dataset = CustomDataset(val_T1, val_T2,factor=self.factor)
+      self.test_dataset = CustomDataset(test_T1, test_T2,factor=self.factor)
 
     def train_dataloader(self):
       return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)
