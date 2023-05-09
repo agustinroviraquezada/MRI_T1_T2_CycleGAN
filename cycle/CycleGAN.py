@@ -155,7 +155,7 @@ class CycleGAN(pl.LightningModule):
 
     '''
     ############# Initialization #############
-    real_T1,real_T2,_,_ = batch
+    real_T1,real_T2 = batch
         
     Gopt=self.op[0]
     Dopt_T1=self.op[1]
@@ -252,7 +252,7 @@ class CycleGAN(pl.LightningModule):
 
 
     ############# Initialization #############
-    real_T1,real_T2,_,_ = batch
+    real_T1,real_T2 = batch
     
     ############# update discriminator #############
     #### Discriminator T1
