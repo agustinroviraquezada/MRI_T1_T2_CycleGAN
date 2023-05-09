@@ -155,7 +155,7 @@ class CycleGAN(pl.LightningModule):
 
     '''
     ############# Initialization #############
-    real_T1,real_T1,real_T2,_ = batch
+    real_T1,real_T2,_,_ = batch
         
     Gopt=self.op[0]
     Dopt_T1=self.op[1]
@@ -252,7 +252,7 @@ class CycleGAN(pl.LightningModule):
 
 
     ############# Initialization #############
-    real_T1,real_T1C,real_T2,real_T2C = batch
+    real_T1,real_T2,_,_ = batch
     
     ############# update discriminator #############
     #### Discriminator T1
@@ -298,7 +298,7 @@ class CycleGAN(pl.LightningModule):
 
 
     if batch_idx == self.log_every_n_iterations:
-      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T1C, f_T2, C_T2)
+      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
       self.logger.experiment.add_image("Training Image Grid", grid, global_step=self.trainer.current_epoch)
       #self.log_every_n_iterations=random.randint(1,len(self.trainer.val_dataloaders[0]))
 
@@ -526,6 +526,7 @@ class CycleGAN(pl.LightningModule):
     @Description: Computes evaluation metrics for the generated images.
 
     @Inputs:
+        real_T1 and real_T2 are not pairs.
         - f_T2 (Tensor): Generated images from domain T1 to T2.
         - real_T2 (Tensor): Real images from domain T2.
         - f_T1 (Tensor): Generated images from domain T2 to T1.
@@ -536,8 +537,6 @@ class CycleGAN(pl.LightningModule):
         - G_ssim_T2 (float): Structural Similarity Index Measure (SSIM) for generated T2 images.
         - G_psnr_T1 (float): PSNR for generated T1 images.
         - G_ssim_T1 (float): SSIM for generated T1 images.
-        - fid_T1 (float): Frechet Inception Distance (FID) score for generated T1 images (currently set to 0.0).
-        - fid_T2 (float): FID score for generated T2 images (currently set to 0.0).
     """
 
     ############# Metrics Generator #############
@@ -549,12 +548,7 @@ class CycleGAN(pl.LightningModule):
 
     G_psnr_T1 = psnr_metric(f_T1, real_T1)
     G_ssim_T1 = ssim_metric(f_T1, real_T1)
-
-    # Compute the FID score
-    fid_T1 = 0.0 #fid_score(real_T1, f_T1, model1, device=self.device)
-    fid_T2 = 0.0 #fid_score(real_T2, f_T2, model1, device=self.device)
-
-    return G_psnr_T2,G_ssim_T2,G_psnr_T1,G_ssim_T1,fid_T1,fid_T2
+    return G_psnr_T2,G_ssim_T2,G_psnr_T1,G_ssim_T1
 
   def CreateGrid(self,r_T1, f_T1, C_T1, r_T2, f_T2, C_T2):
     """
