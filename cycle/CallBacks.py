@@ -7,7 +7,7 @@ import torchvision
 ##############################  Class 1 ################################
 
 class CustomModelCheckpoint(pl.Callback):
-  def __init__(self, monitor, save_path,save_best,save_top_k=3, version,every_n_epochs=None):
+  def __init__(self, monitor, save_path,save_best,version,save_top_k=3,every_n_epochs=None):
     super().__init__()
     self.monitor = monitor
     self.save_path = save_path
