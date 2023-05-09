@@ -7,7 +7,7 @@ import torchvision
 ##############################  Class 1 ################################
 
 class CustomModelCheckpoint(pl.Callback):
-  def __init__(self, monitor, save_path,save_best,save_top_k=3, every_n_epochs=None):
+  def __init__(self, monitor, save_path,save_best,save_top_k=3, version,every_n_epochs=None):
     super().__init__()
     self.monitor = monitor
     self.save_path = save_path
@@ -16,6 +16,7 @@ class CustomModelCheckpoint(pl.Callback):
     self.best_k_models = {}
     self.save_best=save_best
     self.kth_best_value = None
+    self.version=version
     
 
 
@@ -23,7 +24,7 @@ class CustomModelCheckpoint(pl.Callback):
     current_value = trainer.logged_metrics.get(self.monitor)
 
     if len(self.best_k_models) < self.save_top_k or current_value > self.kth_best_value:
-      ckpt_path = os.path.join(self.save_best, f"best_model_{current_value:.3f}-{trainer.current_epoch:02d}.ckpt")
+      ckpt_path = os.path.join(self.save_best, f"best_model_version_{self.version}_{current_value:.3f}-{trainer.current_epoch:02d}.ckpt")
       trainer.save_checkpoint(ckpt_path)
 
       if len(self.best_k_models) == self.save_top_k:
@@ -37,7 +38,7 @@ class CustomModelCheckpoint(pl.Callback):
 
   def on_train_epoch_end(self, trainer, pl_module):
     if self.every_n_epochs is not None and trainer.current_epoch % self.every_n_epochs == 0:
-      ckpt_path = os.path.join(self.save_path, f"model_{trainer.current_epoch:02d}.ckpt")
+      ckpt_path = os.path.join(self.save_path, f"model__version_{self.version}_{trainer.current_epoch:02d}.ckpt")
       trainer.save_checkpoint(ckpt_path)
 
 
