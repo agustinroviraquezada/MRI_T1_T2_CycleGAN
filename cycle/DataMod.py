@@ -114,7 +114,10 @@ class CycleGANDataModule(pl.LightningDataModule):
       #Split to validation, training and test
       train_T1, test_T1, train_T2, test_T2 = train_test_split(T1_shuffled,T2_shuffled,test_size=self.test_size ,shuffle=True,random_state=self.seed)
       train_T1, val_T1, train_T2, val_T2 = train_test_split(train_T1,train_T2,test_size=(self.val_size / (1-self.test_size)), random_state=self.seed)
-
+      
+      self.trainSize=len(train_T1)
+      self.valSize=len(val_T2)
+      self.testSize=len(test_T2)
 
       self.train_dataset = CustomDataset(train_T1, train_T2,factor=self.factor)
       self.val_dataset = CustomDataset(val_T1, val_T2,factor=self.factor)
