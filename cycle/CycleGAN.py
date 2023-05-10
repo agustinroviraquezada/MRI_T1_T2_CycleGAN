@@ -300,12 +300,9 @@ class CycleGAN(pl.LightningModule):
     if batch_idx == self.log_every_n_iterations:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
       self.logger.experiment.add_image("Image GIFT", grid, global_step=self.trainer.current_epoch)
-      #self.log_every_n_iterations=random.randint(1,len(self.trainer.val_dataloaders[0]))
-    if batch_idx == 1:
+    else:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
-      self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)
-      self.log_every_n_iterations=random.randint(1,len(self.trainer.val_dataloaders[0]))
-    
+      self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)    
 
     return loss
   
