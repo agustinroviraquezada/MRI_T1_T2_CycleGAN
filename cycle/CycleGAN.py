@@ -310,6 +310,95 @@ class CycleGAN(pl.LightningModule):
       self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)    
 
     return loss
+    
+  def test_step(self, batch, batch_idx):
+    '''
+      @Description: 
+      Single test step of the CycleGAN model.
+
+      @Inputs:
+          - batch (Tuple): A tuple containing the input batch, which consists of real images from domains T1 and T2.
+          - batch_idx (int): The index of the current batch.
+
+      @Outputs:
+          - loss (Dict): A dictionary containing the computed losses and metrics during the test step, 
+            * Generator loss (Gval_loss)
+            * discriminator losses for T1 (Dval_loss_T1)
+            * discriminator losses for T2 (Dval_loss_T2)
+            * identity term (Val_identity)
+            * cycle term (Val_Cycle_term)
+            * adversarial term (Val_Adver_term)
+            * peak signal-to-noise ratio for T2 (Gval_psnr_T2)
+            * structural similarity index for T2 (Gval_ssim_T2)
+            * peak signal-to-noise ratio for T1 (Gval_psnr_T1)
+            * structural similarity index for T1 (Gval_ssim_T1)
+
+      @Note:
+      This method performs the following steps:
+      1. Initializes necessary variables.
+      2. Updates the discriminator networks (D_T1 and D_T2) separately for domains T1 and T2.
+      3. Updates the generator networks (G_T1_T2 and G_T2_T1).
+      4. Computes the losses and metrics.
+      5. Logs the losses and metrics.
+      6. Updates the image grid in the logger.
+      7. Returns the computed losses and metrics as a dictionary.
+    '''
+
+
+    ############# Initialization #############
+    real_T1,real_T2 = batch
+    
+    ############# update discriminator #############
+    #### Discriminator T1
+    f_T1 = self.G_T2_T1(real_T2)
+    T1Loss_Dics = self.DiscLoss(real_T1,f_T1,disc="T1")
+  
+    #### Discriminator T2
+    f_T2 = self.G_T1_T2(real_T1)
+    T2Loss_Dics = self.DiscLoss(real_T2,f_T2,disc="T2")
+
+    ############# update Generator #############
+    gen_loss, f_T1, f_T2,Iden_term,Cycle_term,Adv_term,C_T1,C_T2 = self.GenLoss(real_T1, real_T2)
+
+    ############# Compute Training metrics #############
+    G_psnr_T2,G_ssim_T2,G_psnr_T1,G_ssim_T1=self.ComputeMetrics(f_T2, real_T2,f_T1, real_T1)
+
+    ########### Loggers ###########
+    self.log("Dtst_loss_T1", T1Loss_Dics, prog_bar=True, on_epoch=True,on_step=False)
+    self.log("Dtst_loss_T2", T2Loss_Dics, prog_bar=True, on_epoch=True,on_step=False)
+    self.log("Gtst_loss", gen_loss, prog_bar=True, on_epoch=True,on_step=False)
+    self.log("Gtst_psnr_T2", G_psnr_T2, prog_bar=True,on_epoch=True,on_step=False)
+    self.log("Gtst_ssim_T2", G_ssim_T2, prog_bar=True,on_epoch=True,on_step=False)
+    self.log("Gtst_psnr_T1", G_psnr_T1, prog_bar=True,on_epoch=True,on_step=False)
+    self.log("Gtst_ssim_T1", G_ssim_T1, prog_bar=True,on_epoch=True,on_step=False)
+
+
+    self.logger.experiment.add_scalars("D_Losses", {"Dtst_loss_T1": T1Loss_Dics,"Dtst_loss_T2": T2Loss_Dics}, global_step=self.current_epoch)
+    self.logger.experiment.add_scalars("G_Losses", {"Gtst_loss": gen_loss}, global_step=self.current_epoch)
+
+
+    loss= {'Gtst_loss': gen_loss,
+            'Dtst_loss_T2': T2Loss_Dics,
+            'Dtst_loss_T1': T1Loss_Dics,
+            'tst_identity': Iden_term,
+            'tst_Cycle_term': Cycle_term,
+            "tst_Adver_term":Adv_term,
+            "Gtst_psnr_T2": G_psnr_T2,
+            "Gtst_ssim_T2": G_ssim_T2,
+            "Gtst_psnr_T1": G_psnr_T1,
+            "Gtst_ssim_T1": G_ssim_T1
+          }
+
+
+
+    if batch_idx == self.log_every_n_iterations:
+      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
+      self.logger.experiment.add_image("Image_GIFT_tst", grid, global_step=self.trainer.current_epoch)
+    else:
+      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
+      self.logger.experiment.add_image("Image_Transform_tst", grid, global_step=self.trainer.current_epoch)    
+
+    return loss
   
   def configure_optimizers(self,mode="linear"):
     '''
