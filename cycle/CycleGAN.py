@@ -39,6 +39,9 @@ class CycleGAN(pl.LightningModule):
         "batch_size" (int): The batch size used for training and inference.
         "target_shape" (tuple): The desired output shape of the generated images.
         "lbi" (float): The weight for the identity loss term.
+        "features" (int): Number of features for the first layer
+        "resnet_neck"(int): lenght of the restnet neck
+        "im_channel"(int): number of channels of the image
                 
         Example usage:
         params = 
@@ -52,7 +55,10 @@ class CycleGAN(pl.LightningModule):
             "lbc_T2": 10,
             "batch_size": 1,
             "target_shape": (256, 256),
-            "lbi": 5
+            "lbi": 5,
+            "features"=64,
+            "resnet_neck"=6,
+            "im_channel"=1
           }
         cyclegan = CycleGAN(input=3, params=params, features=64)
       - Networks (Dictionary): Generators and Discriminators.
@@ -61,8 +67,7 @@ class CycleGAN(pl.LightningModule):
       - A PyTorch LightningModule instance that can be used for training and inference.
   '''
   def __init__(self,
-               params,
-               Networks):
+               params):
     super(CycleGAN,self).__init__()
 
     ############# HyperParameters #############
@@ -80,12 +85,12 @@ class CycleGAN(pl.LightningModule):
     self.lbi=params["lbi"]
     self.log_every_n_iterations = 1
 
-    ############# Define components Gerators and discriminators #############
-    self.G_T1_T2=Networks["G_T1_T2"]
-    self.D_T1=Networks["D_T1"]
+    ############# Define components Gerators and discriminators #############   
+    self.G_T1_T2=Generator(params["im_channel"],out_f=params["features"],lvl_resnt=params["resnet_neck"])
+    self.D_T1=Discriminator(params["im_channel"],HCh=params["features"],n=3)
 
-    self.G_T2_T1=Networks["G_T2_T1"]
-    self.D_T2=Networks["D_T2"]
+    self.G_T2_T1=Generator(params["im_channel"],out_f=params["features"],lvl_resnt=params["resnet_neck"])
+    self.D_T2=Discriminator(params["im_channel"],HCh=params["features"],n=3)
 
     ############# Inicializar los pesos #############
     self.G_T1_T2=self.G_T1_T2.apply(self.weights_init)
