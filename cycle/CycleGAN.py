@@ -7,6 +7,7 @@ import torchvision
 from torch.optim.lr_scheduler import LambdaLR
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import random
+from cycle.Nets import Generator,Discriminator
 
 
 class CycleGAN(pl.LightningModule):
