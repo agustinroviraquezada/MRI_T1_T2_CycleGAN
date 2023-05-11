@@ -6,7 +6,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 [![made-with-latex](https://img.shields.io/badge/Documented%20with-LaTeX-4c9843.svg?style=for-the-badge&logo=Latex)](https://www.latex-project.org/)
 ![Github code size](https://img.shields.io/github/languages/code-size/agustinroviraquezada/MRI_T1_T2_CycleGAN?style=for-the-badge&logo=Github)
 ![GitHub license](https://img.shields.io/github/license/agustinroviraquezada/MRI_T1_T2_CycleGAN?style=for-the-badge&logo=Github)
-![Github Follow](https://img.shields.io/github/followers/agustinroviraquezada?style=social&label=Follow)
+[![Github Follow](https://img.shields.io/github/followers/agustinroviraquezada?style=social&label=Follow)(https://github.com/agustinroviraquezada)]
 
 
 ***********
