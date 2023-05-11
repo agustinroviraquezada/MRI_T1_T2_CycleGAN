@@ -61,8 +61,7 @@ class CycleGAN(pl.LightningModule):
             "resnet_neck"=6,
             "im_channel"=1
           }
-        cyclegan = CycleGAN(input=3, params=params, features=64)
-      - Networks (Dictionary): Generators and Discriminators.
+        cyclegan = CycleGAN(params)
 
   @Outputs:
       - A PyTorch LightningModule instance that can be used for training and inference.
