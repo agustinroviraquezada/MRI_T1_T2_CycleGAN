@@ -124,12 +124,12 @@ class CycleGANDataModule(pl.LightningDataModule):
       self.test_dataset = CustomDataset(test_T1, test_T2,factor=self.factor)
 
     def train_dataloader(self):
-      return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)
+      return DataLoader(self.train_dataset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True, pin_memory=True)
 
     def val_dataloader(self):
-      return DataLoader(self.val_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
+      return DataLoader(self.val_dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=True)
 
     def test_dataloader(self):
-      return DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers)
+      return DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=True)
 
   
