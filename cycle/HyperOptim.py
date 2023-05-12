@@ -85,6 +85,7 @@ class HyperParametrization():
         max_epochs=self.funcParam["epoch"],
         accelerator="gpu",
         callbacks=[PyTorchLightningPruningCallback(trial, monitor=self.funcParam["monitor"])],
+        enable_model_summary=False
     )
 
     trainer.logger.log_hyperparams(hyperp)
