@@ -96,7 +96,7 @@ class HyperParametrization():
     
     hyperparameters = {}
     for key, value in self.hyperparameters.items():
-        if key==key:
+        if key=="lr":
           hyperparameters[key]=trial.suggest_float(key, value[0], value[1], log=True)
         else:
           if isinstance(value, tuple):
