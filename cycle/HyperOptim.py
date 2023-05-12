@@ -46,10 +46,10 @@ class HyperParametrization():
     optuna.logging.set_verbosity(optuna.logging.INFO)
 
     # Now, when Optuna logs information, it will also be written to 'log.txt'
-    func = lambda trial: self.objective(trial, self.hyperparameters, self.funcParam)
+    #func = lambda trial: self.objective(trial, self.hyperparameters, self.funcParam)
     pruner = optuna.pruners.MedianPruner()
     study = optuna.create_study(direction="maximize", pruner=pruner)
-    study.optimize(func, n_trials=funcParam["n_trials"], timeout=9000)
+    study.optimize(self.objective, n_trials=funcParam["n_trials"], timeout=9000)
 
     # Print the model report to the log file
     with open(self.funcParam["logs"], 'a') as f:
@@ -63,27 +63,47 @@ class HyperParametrization():
 
 
 
-  def objective(self, trial: optuna.trial.Trial,hyperparameters:dict,funcParam:dict) -> float:
+  def objective(self, trial: optuna.trial.Trial) -> float:
     
+    #Define hyperParameters
+    hyperp=self.Gen_HyperPar(trial)
+
+
     # Create the CycleGAN model with the specified params and Networks
-    model = CycleGAN(hyperparameters)
+    model = CycleGAN(hyperp)
 
     # DataModule
-    datamodule = CycleGANDataModule(funcParam["paths"],
-                                    batch_size=funcParam["batch_size"],
-                                    num_workers=funcParam["num_workers"],
-                                    factor=funcParam["factor"])
+    datamodule = CycleGANDataModule(self.funcParam["paths"],
+                                    batch_size=self.funcParam["batch_size"],
+                                    num_workers=self.funcParam["num_workers"],
+                                    factor=self.funcParam["factor"])
 
     trainer = pl.Trainer(
         logger=True,
-        limit_train_batches=funcParam["limit_train_batches"],
-        limit_val_batches=funcParam["limit_val_batches"],
-        max_epochs=funcParam["epoch"],
+        limit_train_batches=self.funcParam["limit_train_batches"],
+        limit_val_batches=self.funcParam["limit_val_batches"],
+        max_epochs=self.funcParam["epoch"],
         accelerator="gpu",
-        callbacks=[PyTorchLightningPruningCallback(trial, monitor=funcParam["monitor"])],
+        callbacks=[PyTorchLightningPruningCallback(trial, monitor=self.funcParam["monitor"])],
     )
 
-    trainer.logger.log_hyperparams(hyperparameters)
+    trainer.logger.log_hyperparams(hyperp)
     trainer.fit(model, datamodule=datamodule)
 
-    return trainer.callback_metrics[funcParam["monitor"]].item()
+    return trainer.callback_metrics[self.funcParam["monitor"]].item()
+
+  def Gen_HyperPar(self,trial: optuna.trial.Trial)-> dict:
+    
+    hyperparameters = {}
+    for key, value in self.hyperparameters.items():
+        if key==key:
+          hyperparameters[key]=trial.suggest_float(key, value[0], value[1], log=True)
+        else:
+          if isinstance(value, tuple):
+              if all(isinstance(i, int) for i in value):
+                  hyperparameters[key] = trial.suggest_int(key, value[0], value[1])
+              elif all(isinstance(i, (float, int)) for i in value):
+                  hyperparameters[key] = trial.suggest_float(key, value[0], value[1])
+          else:
+              hyperparameters[key] = value
+    return hyperparameters
