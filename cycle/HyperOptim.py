@@ -61,7 +61,7 @@ class HyperParametrization():
           f.write("    {}: {}\n".format(key, value))
 
 
-
+    self.BestParameter=study.best_trial.params   
 
   def objective(self, trial: optuna.trial.Trial) -> float:
     
