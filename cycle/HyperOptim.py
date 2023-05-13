@@ -11,11 +11,30 @@ from cycle.DataMod import CycleGANDataModule
 
 
 class PyTorchLightningPruningCallback(PyTorchLightningPruningCallback, Callback):
+  """
+    @Description:
+      This class extends the functionality of PyTorchLightningPruningCallback and Callback classes. It is used for handling pruning in PyTorch Lightning trials.
+
+    @Input:
+      - trial (optuna.trial.Trial): Optuna trial object.
+      - monitor (str): Name of the metric to monitor for pruning.
+
+    @Output:
+      None
+  """
   def __init__(self, trial, monitor):
     super().__init__(trial, monitor)
 
 
 class HyperParametrization():
+  """
+  @Description:
+    The HyperParametrization class performs hyperparameter optimization using Optuna library. It searches for the best set of hyperparameters for a given function.
+
+  @Input:
+    - funcParam (dict): Dictionary containing the parameters for the objective function.
+    - hyperparameters (dict): Dictionary containing the hyperparameters to be optimized.
+  """
   def __init__(self,funcParam,hyperparameters):
     
     #Get parameters
@@ -64,6 +83,17 @@ class HyperParametrization():
     self.BestParameter=study.best_trial.params   
 
   def objective(self, trial: optuna.trial.Trial) -> float:
+    """
+    @Description:
+      This method defines the objective function that is used for hyperparameter optimization. It trains the CycleGAN model and returns the value of the metric being optimized.
+
+    @Input:
+      - trial (optuna.trial.Trial): Optuna trial object.
+
+    @Output:
+      - float: The value of the metric being optimized.
+    """
+
     
     #Define hyperParameters
     hyperp=self.Gen_HyperPar(trial)
@@ -94,6 +124,16 @@ class HyperParametrization():
     return trainer.callback_metrics[self.funcParam["monitor"]].item()
 
   def Gen_HyperPar(self,trial: optuna.trial.Trial)-> dict:
+    """
+    @Description:
+      This method generates the hyperparameters for a given trial.
+
+    @Input:
+      - trial (optuna.trial.Trial): Optuna trial object.
+
+    @Output:
+      - dict: Dictionary containing the generated hyperparameters.
+    """
     
     hyperparameters = {}
     for key, value in self.hyperparameters.items():
