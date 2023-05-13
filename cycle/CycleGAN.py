@@ -160,7 +160,7 @@ class CycleGAN(pl.LightningModule):
 
     '''
     ############# Initialization #############
-    real_T1,real_T2 = batch
+    real_T1,real_T2,T1_name,T2_name = batch
         
     Gopt=self.op[0]
     Dopt_T1=self.op[1]
@@ -257,7 +257,7 @@ class CycleGAN(pl.LightningModule):
 
 
     ############# Initialization #############
-    real_T1,real_T2 = batch
+    real_T1,real_T2,T1_name,T2_name = batch
     
     ############# update discriminator #############
     #### Discriminator T1
@@ -304,7 +304,7 @@ class CycleGAN(pl.LightningModule):
 
     if batch_idx == self.log_every_n_iterations:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
-      self.logger.experiment.add_image("Image GIFT", grid, global_step=self.trainer.current_epoch)
+      self.logger.experiment.add_image(T1_name, grid, global_step=self.trainer.current_epoch)
     else:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
       self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)    
@@ -346,7 +346,7 @@ class CycleGAN(pl.LightningModule):
 
 
     ############# Initialization #############
-    real_T1,real_T2 = batch
+    real_T1,real_T2,T1_name,T2_name = batch
     
     ############# update discriminator #############
     #### Discriminator T1
@@ -393,7 +393,7 @@ class CycleGAN(pl.LightningModule):
 
     if batch_idx == self.log_every_n_iterations:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
-      self.logger.experiment.add_image("Image_GIFT_tst", grid, global_step=self.trainer.current_epoch)
+      self.logger.experiment.add_image(T1_name+"_tst", grid, global_step=self.trainer.current_epoch)
     else:
       grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
       self.logger.experiment.add_image("Image_Transform_tst", grid, global_step=self.trainer.current_epoch)    
