@@ -74,7 +74,7 @@ class CustomModelCheckpoint(pl.Callback):
 ##############################  Class 2 ################################
 
 class CreateGIF(pl.Callback):
-   """
+  """
   @Description:
     This callback creates GIF images at the end of each validation epoch, showing the generated images and their reconstructions.
 
