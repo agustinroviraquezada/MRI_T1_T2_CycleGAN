@@ -223,7 +223,7 @@ class CustomDataset(Dataset):
       img_T1 = transform(imgT1)
       img_T2 = transform(imgT2)
 
-    return img_T1, img_T2,os.path.basename(img_path_T1)[0],os.path.basename(img_path_T2)[0]
+    return img_T1, img_T2,os.path.basename(img_path_T1),os.path.basename(img_path_T2)
 
 
 
