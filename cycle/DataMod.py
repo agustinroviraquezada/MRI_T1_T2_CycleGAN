@@ -11,6 +11,8 @@ from torch.utils.data import DataLoader,Dataset
 from sklearn.model_selection import train_test_split
 import random
 import re
+import torchvision.transforms.functional as F
+
 
 
 ##############################  Class 0 ############################## 
