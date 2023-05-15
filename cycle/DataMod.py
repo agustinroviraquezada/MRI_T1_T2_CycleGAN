@@ -76,16 +76,12 @@ class MRIImageAugmentation:
     """
     if self.rdm[0] < 0.5:
         img = self.random_gaussian_noise(img)
-        print("applied_noise")
     if self.rdm[1] < 0.5:
         img = self.random_rotation(img)
-        print("applied_rot")
     if self.rdm[2] < 0.5:
         img = self.random_crop(img)
-        print("applied_crop")
     if self.rdm[3] < self.horizontal_flip_prob:
         img = self.random_horizontal_flip(img)
-        print("applied_hori")
     return img
 
   def random_rotation(self, img):
