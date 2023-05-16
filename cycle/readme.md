@@ -9,8 +9,6 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 │   ├── CallBacks.py
 │   ├── CycleGAN.py
 │   ├── DataMod.py
-│   ├── Get_Data.py
-│   ├── Get_HDBET.py
 │   ├── Get_Process_Data.py
 │   ├── HyperOptim.py
 │   ├── Nets.py
