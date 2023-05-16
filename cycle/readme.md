@@ -5,7 +5,7 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 
 ## Project Structure
 
-´.
+```
 ├── cycle
 │   ├── CallBacks.py
 │   ├── CycleGAN.py
@@ -16,7 +16,7 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 │   ├── HyperOptim.py
 │   ├── Nets.py
 │   ├── SetSeed.py
-│   └── Set_FolderStructure.py´
+│   └── Set_FolderStructure.py```
 
 ## File Descriptions
 
