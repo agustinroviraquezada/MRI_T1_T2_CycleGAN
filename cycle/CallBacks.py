@@ -2,7 +2,7 @@ import os
 import os.path
 import lightning.pytorch as pl
 import torchvision
-
+import torch
 
 ##############################  Class 1 ################################
 
