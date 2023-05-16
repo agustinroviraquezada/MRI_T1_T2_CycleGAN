@@ -73,37 +73,26 @@ class CustomModelCheckpoint(pl.Callback):
 
 ##############################  Class 2 ################################
 
-class CreateGIF(pl.Callback):
+class CreateTensor(pl.Callback):
   """
   @Description:
-    This callback creates GIF images at the end of each validation epoch, showing the generated images and their reconstructions.
+  This callback saves an image as a PyTorch tensor at the end of the first step in each validation epoch.
 
   @Input:
-    - im_T1 (torch.Tensor): Input image from domain T1.
-    - im_T2 (torch.Tensor): Input image from domain T2.
-    - save_path (str): The path where the GIF images will be saved.
+  - save_path (str): The path where the tensor will be saved.
   """
-  def __init__(self, im_T1, im_T2, save_path):
+  def __init__(self, save_path):
     super().__init__()
     self.save_path = save_path
-    self.im_T1 = im_T1
-    self.im_T2 = im_T2
 
-  def on_validation_epoch_end(self, trainer, pl_module):
-    f_T1 = pl_module.G_T2_T1(self.im_T2)
-    f_T2 = pl_module.G_T1_T2(self.im_T1)
+  def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx):
+    if batch_idx == 0:
+      # Get the generated image from the validation step outputs
+      generated_image = outputs['images']
+      
+      # Save the tensor
+      epoch = trainer.current_epoch
 
-    C_T1 = pl_module.G_T2_T1(f_T2)
-    C_T2 = pl_module.G_T1_T2(f_T1)
-
-    epoch=trainer.current_epoch
-
-    path_f_T1 = os.path.join(self.save_path, f"f_T1_epoch{epoch:02d}.png")
-    path_f_T2 = os.path.join(self.save_path, f"f_T2_epoch{epoch:02d}.png")
-    path_C_T1 = os.path.join(self.save_path, f"C_T1_epoch{epoch:02d}.png")
-    path_C_T2 = os.path.join(self.save_path, f"C_T2_epoch{epoch:02d}.png")
-
-    torchvision.utils.save_image(f_T1, path_f_T1)
-    torchvision.utils.save_image(f_T2, path_f_T2)
-    torchvision.utils.save_image(C_T1, path_C_T1)
-    torchvision.utils.save_image(C_T2, path_C_T2)
+      for k,v in generated_image:
+        path_generated_image = os.path.join(self.save_path, f"{k}_epoch{epoch:02d}.pt")
+        torch.save(v, path_generated_image)
