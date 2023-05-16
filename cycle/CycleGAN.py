@@ -297,17 +297,18 @@ class CycleGAN(pl.LightningModule):
             "Gval_psnr_T2": G_psnr_T2,
             "Gval_ssim_T2": G_ssim_T2,
             "Gval_psnr_T1": G_psnr_T1,
-            "Gval_ssim_T1": G_ssim_T1
+            "Gval_ssim_T1": G_ssim_T1,
+            "images":{"real_T1":real_T1,"f_T1":f_T1,"C_T1":C_T1,"real_T2":real_T2,"f_T2":f_T2,"C_T2":C_T2}
           }
 
 
 
-    if batch_idx == self.log_every_n_iterations:
-      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
-      self.logger.experiment.add_image(T1_name[0], grid, global_step=self.trainer.current_epoch)
-    else:
-      grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
-      self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)    
+    #if batch_idx == self.log_every_n_iterations:
+      #grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
+      #self.logger.experiment.add_image(T1_name[0], grid, global_step=self.trainer.current_epoch)
+    #else:
+    grid=self.CreateGrid(real_T1, f_T1, C_T1, real_T2, f_T2, C_T2)
+    self.logger.experiment.add_image("Image Transform", grid, global_step=self.trainer.current_epoch)    
 
     return loss
     
