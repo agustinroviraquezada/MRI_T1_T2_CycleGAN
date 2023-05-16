@@ -93,6 +93,6 @@ class CreateTensor(pl.Callback):
       # Save the tensor
       epoch = trainer.current_epoch
 
-      for k,v in generated_image:
+      for k,v in generated_image.items():
         path_generated_image = os.path.join(self.save_path, f"{k}_epoch{epoch:02d}.pt")
         torch.save(v, path_generated_image)
