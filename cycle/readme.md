@@ -29,6 +29,11 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 
 
 - `cycle/CycleGAN.py`: 
+
+
+
+![UML Diagram from CycleGAN](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/CycleGAN.svg)
+
 - `cycle/Get_Process_Data.py`: creates a pipeline for processing brain MRI images for training the deep learning model. The process involves multiple steps.
 
   1. Download: Fetching data from a specified URL, unzipping the .gz files, and storing them locally in NIfTI format.
@@ -69,9 +74,11 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
       The objective method of HyperParametrization defines the objective function used for hyperparameter optimization. It trains a CycleGAN model using the hyperparameters generated for a given trial and returns the value of the metric being optimized.
 
       The Gen_HyperPar method generates the hyperparameters for a given trial. It suggests values for each hyperparameter based on the trial and the range of possible values specified for each hyperparameter.
-
 ![UML Diagram from Hyperparameter Optimization](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/HyperOptim.svg)
 
 
-- `cycle/SetSeed.py`: 
-- `cycle/Set_FolderStructure.py`: 
+- `cycle/Set_FolderStructure.py`:  it helps in organizing your project by creating a predefined folder structure. This script is particularly useful when you need to consistently create several directories for different purposes.
+
+    * DirectoryCreator class:  provides a method for creating multiple directories. It is designed to create directories for T1, T2, Model, CheckPoint, CheckPoint_Opt, GIF, and BestModel
+![UML Diagram from Set Folder Structure](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/Set_FolderStructure.svg)
+
