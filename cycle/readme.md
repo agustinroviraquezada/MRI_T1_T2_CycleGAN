@@ -60,7 +60,17 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
   * CycleGANDataModule: This class prepares and sets up the data for training, validation, and testing the CycleGAN model. It allows for customization of batch size, number of workers, train-test-validation split ratios, random seed, factor of data multiplication, proportion of augmented samples, and transformation parameters.
 ![UML Diagram from Data Module](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/DataMod.svg)
 
-- `cycle/HyperOptim.py`:  
+- `cycle/HyperOptim.py`: Python script that performs hyperparameter optimization using the Optuna library. This script is designed to work with PyTorch Lightning and specifically CycleGAN, which is an architecture used for image-to-image translation tasks.The script consists of two main classes: PyTorchLightningPruningCallback and HyperParametrization.
+
+   * PyTorchLightningPruningCallback: It extends the functionality of PyTorchLightningPruningCallback and Callback classes from the PyTorch Lightning library. It is used for handling pruning in PyTorch Lightning trials.
+
+    * HyperParametrization class performs hyperparameter optimization using the Optuna library. It searches for the best set of hyperparameters for a given function. It  creates a logging system using Python's built-in logging library. This logs information from both Python and Optuna during the optimization process.
+
+      The objective method of HyperParametrization defines the objective function used for hyperparameter optimization. It trains a CycleGAN model using the hyperparameters generated for a given trial and returns the value of the metric being optimized.
+
+      The Gen_HyperPar method generates the hyperparameters for a given trial. It suggests values for each hyperparameter based on the trial and the range of possible values specified for each hyperparameter.
+
+![UML Diagram from Hyperparameter Optimization](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/HyperOptim.svg)
 
 
 - `cycle/SetSeed.py`: 
