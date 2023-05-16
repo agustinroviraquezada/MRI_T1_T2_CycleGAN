@@ -54,8 +54,14 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 ![UML Diagram from Networks](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/Nets.svg)
 
 
-- `cycle/DataMod.py`
+- `cycle/DataMod.py`: This script contains three classes used for loading and transforming the dataset for the CycleGAN model. These classes are as follows:
+  * MRIImageAugmentation: This class applies random transformations to an image. The transformations include rotation, random crop, horizontal flip, and random Gaussian noise. It takes a dictionary of transformation parameters and an image sample to generate random noise.
+  * CustomDataset: This class represents a dataset that contains pairs of images (T1 and T2). It provides methods to retrieve the images, apply transformations, and access their paths. The dataset can be multiplied by a factor and can include a proportion of augmented samples.
+  * CycleGANDataModule: This class prepares and sets up the data for training, validation, and testing the CycleGAN model. It allows for customization of batch size, number of workers, train-test-validation split ratios, random seed, factor of data multiplication, proportion of augmented samples, and transformation parameters.
+![UML Diagram from Data Module](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/DataMod.svg)
+
 - `cycle/HyperOptim.py`:  
+
+
 - `cycle/SetSeed.py`: 
 - `cycle/Set_FolderStructure.py`: 
-- `Main.ipynb`: 
