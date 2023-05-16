@@ -91,6 +91,6 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 
 - `cycle/Set_FolderStructure.py`:  it helps in organizing your project by creating a predefined folder structure. This script is particularly useful when you need to consistently create several directories for different purposes.
 
-    * DirectoryCreator class:  provides a method for creating multiple directories. It is designed to create directories for T1, T2, Model, CheckPoint, CheckPoint_Opt, GIF, and BestModel
+    * DirectoryCreator class:  provides a method for creating multiple directories. It is designed to create directories for T1, T2, Model, CheckPoint, CheckPoint_Opt, GIF, and BestModel.
 ![UML Diagram from Set Folder Structure](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/Set_FolderStructure.svg)
 
