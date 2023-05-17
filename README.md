@@ -26,8 +26,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
-- [Data Processing](#Data_Processing)
-- [Data Storage](#Data_Storage)
+- [Data Processing](#Data-Processing)
+- [Data Storage](#Data-Storage)
 - [Acknowledgements](#Acknowledgements)
 
 ## Prerequisites
@@ -65,7 +65,7 @@ requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
 
-## Data Processing
+## Data-Processing
 This project contains several Python classes that are used to download, process, and transform medical imaging data (specifically NIfTI files). The classes interact with each other to form a processing pipeline that automates the extraction and transformation of the imaging data.
 
 ### Class Descriptions
