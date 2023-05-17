@@ -50,7 +50,48 @@ In the CycleGAN model, as an extension of the GANs, The generator function uses 
 
 The CycleGAN extends the GANS by adding one generator and discriminator more to the architecture to be able of achieve the cycle consistency.This concept implies that an image produced by the first generator can be utilized as input for the second generator, and the output from the second generator should align with the initial image, and in the opposite way.
 
+-----
 
+Apologies for the confusion. Here's how you can write the equations in Markdown:
+
+1. Adversarial Loss:
+    - For generator G: `L_G = E[log(D_Y(G(x)))]`
+    - For discriminator D_Y: `L_D_Y = E[log(D_Y(y))] + E[log(1 - D_Y(G(x)))]`
+    - Similar equations apply to F and D_X.
+
+2. Cycle Consistency Loss:
+    - `L_cycle = E[||F(G(x)) - x||1] + E[||G(F(y)) - y||1]`
+
+3. Identity Loss:
+    - `L_identity = E[||G(y) - y||1] + E[||F(x) - x||1]`
+
+Here's the same in HTML:
+
+```html
+<ol>
+  <li>Adversarial Loss:
+    <ul>
+      <li>For generator G: L<sub>G</sub> = E[log(D<sub>Y</sub>(G(x)))]</li>
+      <li>For discriminator D<sub>Y</sub>: L<sub>D<sub>Y</sub></sub> = E[log(D<sub>Y</sub>(y))] + E[log(1 - D<sub>Y</sub>(G(x)))]</li>
+      <li>Similar equations apply to F and D<sub>X</sub>.</li>
+    </ul>
+  </li>
+  <li>Cycle Consistency Loss:
+    <ul>
+      <li>L<sub>cycle</sub> = E[||F(G(x)) - x||<sub>1</sub>] + E[||G(F(y)) - y||<sub>1</sub>]</li>
+    </ul>
+  </li>
+  <li>Identity Loss:
+    <ul>
+      <li>L<sub>identity</sub> = E[||G(y) - y||<sub>1</sub>] + E[||F(x) - x||<sub>1</sub>]</li>
+    </ul>
+  </li>
+</ol>
+```
+
+In both cases, `E` denotes the expected value, `||...||1` denotes the L1 norm (absolute error), `G` and `F` are the generators, `D_Y` and `D_X` are the discriminators, `x` is a sample from domain X, and `y` is a sample from domain Y.
+
+-----
 The key components of CycleGAN include two generator networks G and F, and two discriminator networks D_Y and D_X:
 1. **Generator Networks (G and F):** These networks are responsible for the actual transformation of the images. G transforms images from domain X to domain Y (G: X -> Y) and F does the inverse, transforming images from domain Y to domain X (F: Y -> X).
 
