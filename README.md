@@ -153,6 +153,11 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
 ## Model-Training
 
+![T1 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
+
+![T2 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
+
+
 
 ## Acknowledgements
 This project is based on the CycleGAN paper by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. The MRI datasets are from OpenNeuro.
