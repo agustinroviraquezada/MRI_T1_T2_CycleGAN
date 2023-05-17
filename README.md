@@ -65,6 +65,33 @@ requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
 
+```
+.
+└── content
+    └── drive
+        └── MyDrive
+            ├── T1
+            |   ├── ds003717_055_149_T1w.pt
+            |   ├── ds003717_055_150_T1w.pt
+            |   ├── ds003717_054_151_T1w.pt
+            |   ├── ds003717_056_152_T1w.pt
+            ├── T2
+            |   ├── ds003717_053_183_T2w.pt
+            |   ├── ds003717_053_184_T2w.pt
+            |   ├── ds003717_054_129_T2w.pt
+            |   ├── ds003717_054_130_T2w.pt
+            └── Model
+                ├── BestModel
+                |   ├── best_model_version_0_0.669-235.ckpt
+                ├── CheckPoint
+                |   ├── model__version_0_25.ckpt
+                ├── GIF
+                └──   cycleGAN
+                     ├── version_0
+                        └── events.out.tfevents.1684251252.16c6ed093068.2517.0
+                  
+```
+
 ## Data-Processing
 This project contains several Python classes that are used to download, process, and transform medical imaging data (specifically NIfTI files). The classes interact with each other to form a processing pipeline that automates the extraction and transformation of the imaging data.
 
