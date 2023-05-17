@@ -102,7 +102,7 @@ This project contains several Python classes that are used to download, process,
 
   Finally, to ensure the integrity of the processed images, the Sanity_Check class is used. It checks if the number of images in the T1 and T2 folders are the same, and removes any extra images. It also provides a function to count the number of slices per subject.
 
-![Data processing pipeline](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.svg)
+![Data processing pipeline](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
 
 
 ## Acknowledgements
