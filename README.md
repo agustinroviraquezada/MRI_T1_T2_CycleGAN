@@ -108,32 +108,45 @@ This project contains several Python classes that are used to download, process,
 
 After pre-processing, the slice are sotores as .pt in their respective folders, as the structure shows. In addition the package implement a function to create the tree structure where the checkpoints, the bests models, the tensorboard logs, and the image for the gift are going to be stored during the training.
 
+The dataset folders, T1 and T2, sizes a total of 53 GB. This dataset includes a total 3 datasets groups from OpenNeuro:
+
+  1. Dataset ds002330 -  version 1.1.0
+     Sunavsky, A. and Poppenk, J. (2020). Neuroimaging predictors of creativity in healthy adults. OpenNeuro. [Dataset] doi: 10.18112/openneuro.ds002330.v1.1.0
+      
+  2. Dataset ds002382-  version 1.0.1
+     Rogers CS and Jones MS and McConkey S and Spehar B and Van Engen KJ and Sommers MS and Peelle JE (2022). Age-related differences in auditory cortex activity during spoken word recognition. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds002382.v1.0.1
+     
+  3. Dataset ds003717 -  version 1.0.1
+     Peelle JE and Spehar B and Jones MS and McConkey S and Myerson J and Hale S and Sommers MS and Tye-Murray N (2022). Visual and audiovisual speech perception associated with increased functional connectivity between sensory and motor regions. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds003717.v1.0.1
+
+
 ```
 .
 └── content
     └── drive
         └── MyDrive
             ├── T1
-            |   ├── ds003717_055_149_T1w.pt
+            |   ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
             |   ├── ds003717_055_150_T1w.pt
             |   ├── ds003717_054_151_T1w.pt
             |   ├── ds003717_056_152_T1w.pt
             ├── T2
-            |   ├── ds003717_053_183_T2w.pt
+            |   ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
             |   ├── ds003717_053_184_T2w.pt
             |   ├── ds003717_054_129_T2w.pt
             |   ├── ds003717_054_130_T2w.pt
             └── Model
                 ├── BestModel
-                |   ├── best_model_version_0_0.669-235.ckpt
+                |   ├── best_model_version_{Tensorboard_version}_{T2_SSIM}-{epoch}.ckpt
                 ├── CheckPoint
-                |   ├── model__version_0_25.ckpt
+                |   ├── model__version_{Tensorboard_version}_{epoch}.ckpt
                 ├── GIF
                 └──   cycleGAN
-                     ├── version_0
+                     ├── version_{Tensorboard_version}
                         └── events.out.tfevents.1684251252.16c6ed093068.2517.0
                   
 ```
+
 
 ## Acknowledgements
 This project is based on the CycleGAN paper by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. The MRI datasets are from OpenNeuro.
