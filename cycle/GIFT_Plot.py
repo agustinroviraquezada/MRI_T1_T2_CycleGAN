@@ -96,4 +96,5 @@ class create_gif():
     plt.savefig('temp.png')
     completeImage=imageio.imread('temp.png')
     plt.clf()
+    plt.close(fig)
     return completeImage
