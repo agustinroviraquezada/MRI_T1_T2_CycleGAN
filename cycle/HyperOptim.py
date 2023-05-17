@@ -66,21 +66,21 @@ class HyperParametrization():
 
     # Now, when Optuna logs information, it will also be written to 'log.txt'
     #func = lambda trial: self.objective(trial, self.hyperparameters, self.funcParam)
-    pruner = optuna.pruners.MedianPruner()
-    study = optuna.create_study(direction="maximize", pruner=pruner)
-    study.optimize(self.objective, n_trials=funcParam["n_trials"], timeout=9000)
+    self.pruner = optuna.pruners.MedianPruner()
+    self.study = optuna.create_study(direction="maximize", pruner=self.pruner)
+    self.study.optimize(self.objective, n_trials=funcParam["n_trials"], timeout=9000)
 
     # Print the model report to the log file
     with open(self.funcParam["logs"], 'a') as f:
       f.write("Best trial:\n")
-      f.write("  Trial Number: {}\n".format(study.best_trial.number))
-      f.write("  Value: {}\n".format(study.best_trial.value))
+      f.write("  Trial Number: {}\n".format(self.study.best_trial.number))
+      f.write("  Value: {}\n".format(self.study.best_trial.value))
       f.write("  Params:\n")
-      for key, value in study.best_trial.params.items():
+      for key, value in self.study.best_trial.params.items():
           f.write("    {}: {}\n".format(key, value))
 
 
-    self.BestParameter=study.best_trial.params   
+    self.BestParameter=self.study.best_trial.params   
 
   def objective(self, trial: optuna.trial.Trial) -> float:
     """
