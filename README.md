@@ -153,9 +153,9 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
 ## Model-Training
 
-![T1 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
+![T1 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif)
 
-![T2 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
+![T2 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T2_GIFT.gif)
 
 
 
