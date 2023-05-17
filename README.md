@@ -103,7 +103,7 @@ This project contains several Python classes that are used to download, process,
 
   Finally, to ensure the integrity of the processed images, the Sanity_Check class is used. It checks if the number of images in the T1 and T2 folders are the same, and removes any extra images. It also provides a function to count the number of slices per subject.
 
-![Data processing pipeline](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png)
+<img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png" alt="Data processing pipeline" height="500px" width="500px">
 
 ## Data-Storage
 
@@ -155,7 +155,8 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Alt Text" height="600px" width="800px">
 
 
-![T2 Training process](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T2_GIFT.gif){:height="200px" width="200px"}
+<img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T2_GIFT.gif" alt="Alt Text" height="600px" width="800px">
+
 
 
 
