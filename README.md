@@ -28,6 +28,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
   - [Custom-Script](#Custom-Script)
 - [Data Processing](#Data-Processing)
 - [Data Storage](#Data-Storage)
+- [Model-Training](#Model-Training)
 - [Acknowledgements](#Acknowledgements)
 
 ## Prerequisites
@@ -106,18 +107,18 @@ This project contains several Python classes that are used to download, process,
 
 ## Data-Storage
 
-After pre-processing, the slice are sotores as .pt in their respective folders, as the structure shows. In addition the package implement a function to create the tree structure where the checkpoints, the bests models, the tensorboard logs, and the image for the gift are going to be stored during the training.
+After pre-processing, the slice are storeed as .pt in their respective folders, as the structure shows. In addition the package implement a function to create the tree structure where the checkpoints, the bests models, the tensorboard logs, and the image for the gift are going to be stored during the training.
 
-The dataset folders, T1 and T2, sizes a total of 53 GB. This dataset includes a total 3 datasets groups from OpenNeuro:
+The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made from a total of 3 datasets from OpenNeuro:
 
   1. Dataset ds002330 -  version 1.1.0
-     Sunavsky, A. and Poppenk, J. (2020). Neuroimaging predictors of creativity in healthy adults. OpenNeuro. [Dataset] doi: 10.18112/openneuro.ds002330.v1.1.0
+     Sunavsky, A. and Poppenk, J. (2020). Neuroimaging predictors of creativity in healthy adults. OpenNeuro. [Dataset DOI](doi: 10.18112/openneuro.ds002330.v1.1.0)
       
   2. Dataset ds002382-  version 1.0.1
-     Rogers CS and Jones MS and McConkey S and Spehar B and Van Engen KJ and Sommers MS and Peelle JE (2022). Age-related differences in auditory cortex activity during spoken word recognition. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds002382.v1.0.1
+     Rogers CS and Jones MS and McConkey S and Spehar B and Van Engen KJ and Sommers MS and Peelle JE (2022). Age-related differences in auditory cortex activity during spoken word recognition. OpenNeuro. [Dataset DOI](doi:10.18112/openneuro.ds002382.v1.0.1)
      
   3. Dataset ds003717 -  version 1.0.1
-     Peelle JE and Spehar B and Jones MS and McConkey S and Myerson J and Hale S and Sommers MS and Tye-Murray N (2022). Visual and audiovisual speech perception associated with increased functional connectivity between sensory and motor regions. OpenNeuro. [Dataset] doi: doi:10.18112/openneuro.ds003717.v1.0.1
+     Peelle JE and Spehar B and Jones MS and McConkey S and Myerson J and Hale S and Sommers MS and Tye-Murray N (2022). Visual and audiovisual speech perception associated with increased functional connectivity between sensory and motor regions. OpenNeuro. [Dataset DOI](doi:10.18112/openneuro.ds003717.v1.0.1)
 
 
 ```
@@ -138,14 +139,19 @@ The dataset folders, T1 and T2, sizes a total of 53 GB. This dataset includes a 
             └── Model
                 ├── BestModel
                 |   ├── best_model_version_{Tensorboard_version}_{T2_SSIM}-{epoch}.ckpt
+                |   ├── best_model_version_0_0.3-01.ckpt
                 ├── CheckPoint
                 |   ├── model__version_{Tensorboard_version}_{epoch}.ckpt
+                |   ├── model__version_0_230.ckpt
                 ├── GIF
                 └──   cycleGAN
                      ├── version_{Tensorboard_version}
                         └── events.out.tfevents.1684251252.16c6ed093068.2517.0
                   
 ```
+
+
+## Model-Training
 
 
 ## Acknowledgements
