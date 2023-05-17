@@ -23,6 +23,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 
 - [Prerequisites](#prerequisites)
 - [Introduction](#Introduction)
+  -[CycleGAN](#CycleGAN)
+  -[Arquitecture](#Arquitecture) 
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
@@ -42,6 +44,57 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 ## Introduction
 
 This repository contains an implementation of CycleGAN for performing image conversion between T1-weighted (T1) and T2-weighted (T2) MRI images. The model learned how to convert MRI images from one modality to another modality without using training data pairs. This code is based on the [CycleGAN paper](https://arxiv.org/abs/1703.10593) by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros using PyTorch and PyTorch Lightning.
+
+### CycleGAN
+In the CycleGAN model, as an extension of the GANs, The generator function uses a point from an abstract space, known as latent space, as an input, and creates new convincing images from a specific domain. Concurrently, the discriminator function evaluates an image input and determines whether it is authentic (sourced from a dataset) or counterfeit (created by the generator). Both models are continuously refined through a competitive process, where the generator is improved to better deceive the discriminator, while the discriminator is enhanced to more accurately identify artificially generated images. 
+
+The CycleGAN extends the GANS by adding one generator and discriminator more to the architecture to be able of achieve the cycle consistency.This concept implies that an image produced by the first generator can be utilized as input for the second generator, and the output from the second generator should align with the initial image, and in the opposite way.
+
+
+The key components of CycleGAN include two generator networks G and F, and two discriminator networks D_Y and D_X:
+1. **Generator Networks (G and F):** These networks are responsible for the actual transformation of the images. G transforms images from domain X to domain Y (G: X -> Y) and F does the inverse, transforming images from domain Y to domain X (F: Y -> X).
+
+2. **Discriminator Networks (D_X and D_Y):** These networks are trained to differentiate between real and generated images. D_X takes an image from domain X and outputs the probability that the image is real. Similarly, D_Y takes an image from domain Y and outputs the probability that the image is real.
+
+The loss in the CycleGAN is defined by the following components:
+
+**Adversarial Loss** ensures that the generated images resemble the target domain, while **Cycle Consistency Loss** ensures that an image translated from one domain to the other and back again resembles the original image.
+
+**Adversarial Loss:**
+
+In mathematical terms, for generator G and its corresponding discriminator D_Y, the adversarial loss can be written as:
+
+L_{GAN}(G, D_Y, X, Y) = E_{y∼p_{data}(y)}[log D_Y(y)] + E_{x∼p_{data}(x)}[log(1 - D_Y(G(x)))]
+
+where:
+- E denotes the expectation.
+- x∼p_{data}(x) and y∼p_{data}(y) denote the distributions of the real images from domain X and Y respectively.
+- G(x) is the generated image in domain Y.
+- D_Y(y) is the discriminator's estimate of the probability that real image y from domain Y is real.
+- D_Y(G(x)) is the discriminator's estimate of the probability that generated image G(x) from domain Y is real.
+
+The generator G tries to minimize this objective against an adversary D that tries to maximize it, i.e., G = arg min_G max_D L_{GAN}(G, D_Y, X, Y).
+
+**Cycle Consistency Loss:**
+
+The cycle consistency loss ensures that the image translation process is reversible, i.e., an image from domain X can be translated to domain Y and then back to domain X, and still look like the original image.
+
+This can be written mathematically as:
+
+L_{cyc}(G, F) = E_{x∼p_{data}(x)}[||F(G(x)) - x||_1] + E_{y∼p_{data}(y)}[||G(F(y)) - y||_1]
+
+where:
+- ||.||_1 denotes the L1 norm.
+- F(G(x)) is the reconstruction of the original image x after being translated to domain Y and back to domain X.
+- G(F(y)) is the reconstruction of the original image y after being translated to domain X and back to domain Y.
+
+The total loss is a combination of the GAN loss and the cycle consistency loss:
+
+L(G, F, D_X, D_Y) = L_{GAN}(G, D_Y, X, Y) + L_{GAN}(F, D_X, Y, X) + λL_{cyc}(G, F)
+
+where λ controls the relative importance of the two loss terms.
+
+This model
 
 
 ## Usage
