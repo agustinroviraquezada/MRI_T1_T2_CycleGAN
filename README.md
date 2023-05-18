@@ -23,8 +23,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 
 - [Prerequisites](#prerequisites)
 - [Introduction](#Introduction)   
-  -[CycleGAN](#CycleGAN)   
-  -[Arquitecture](#Arquitecture)    
+  - [CycleGAN](#CycleGAN)   
+  - [Arquitecture](#Arquitecture)    
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
