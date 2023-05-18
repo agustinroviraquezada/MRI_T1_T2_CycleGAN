@@ -243,22 +243,22 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 1.  Baseline   
     To start off, we'll establish a baseline for comparison by training the model using the hyperparameters and parameters that were    specified in the original research paper. Except for the linear decay that it was not applied.
     
-```    
-  'lr'            : 0.0002
-  'lbc_T1'        : 10
-  'lbc_T2'        : 10
-  'lbi'           : 0.1
-  'b1'            : 0.5
-  'b2'            : 0.999
-  'batch_size'    : 1
-  'im_channel'    : 1
-  'n_epochs'      : 9000   
-  'n_epochs_decay': 9000    
-  'mode'          : "linear"
-  "target_shape"  : 1
-  "resnet_neck"   : 6
-  "features"      : 64
-```
+    ```    
+      'lr'            : 0.0002
+      'lbc_T1'        : 10
+      'lbc_T2'        : 10
+      'lbi'           : 0.1
+      'b1'            : 0.5
+      'b2'            : 0.999
+      'batch_size'    : 1
+      'im_channel'    : 1
+      'n_epochs'      : 9000   
+      'n_epochs_decay': 9000    
+      'mode'          : "linear"
+      "target_shape"  : 1
+      "resnet_neck"   : 6
+      "features"      : 64
+    ```
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Alt Text" height="600px" width="800px">
@@ -278,30 +278,30 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
     The goal of the objective function in this scenario is to augment the SSIM T2 metric, meaning that the set of hyperparameters that yields the highest value of the objective function is considered the most suitable.
 
-Here are a list of the hyperparameters to be optimized:
-```    
-  'lr'            : (1e-4, 1e-3) # Learning rate
-  'lbc_T1'        : (7, 12) # controls the weight for the Cycle loss component for T1 in the CycleGAN model
-  'lbc_T2'        : (7, 12) # controls the weight for the Cycle loss component for T2 in the CycleGAN model
-  'lbi'           : (0.05, 0.15) # controls the weight for the identity loss component in the CycleGAN model
-  'b1'            : (0.2, 0.6) # It controls the exponential decay rate for the first-moment estimate of the gradients
-  'b2'            : (0.9, 0.9999) # It controls the exponential decay rate for the second-moment estimate of the gradients 
-  "resnet_neck"   : (5,9) # Controls the number of residual blocks in the neck of the ResNet architecture used in the CycleGAN model
-  "features"      : (16,80) #number of features used in the CycleGAN model, impacts on the Generator and Discriminator
-```
+    Here are a list of the hyperparameters to be optimized:
+    ```    
+      'lr'            : (1e-4, 1e-3) # Learning rate
+      'lbc_T1'        : (7, 12) # controls the weight for the Cycle loss component for T1 in the CycleGAN model
+      'lbc_T2'        : (7, 12) # controls the weight for the Cycle loss component for T2 in the CycleGAN model
+      'lbi'           : (0.05, 0.15) # controls the weight for the identity loss component in the CycleGAN model
+      'b1'            : (0.2, 0.6) # It controls the exponential decay rate for the first-moment estimate of the gradients
+      'b2'            : (0.9, 0.9999) # It controls the exponential decay rate for the second-moment estimate of the gradients 
+      "resnet_neck"   : (5,9) # Controls the number of residual blocks in the neck of the ResNet architecture used in the CycleGAN model
+      "features"      : (16,80) #number of features used in the CycleGAN model, impacts on the Generator and Discriminator
+    ```
 
-Understanding the impact of each hyperparameter on the overall optimization process is a important step to know how to trick the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
+    Understanding the impact of each hyperparameter on the overall optimization process is a important step to know how to trick the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
 
-<p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text">
-</p>
+    <p align="center">
+      <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text">
+    </p>
 
 
-Here is an [interactive counter plot](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.html) to provide comprehensive view of the relationship between multiple hyperparameters and the objective value. This enabling us to understand how the objective value changes as different hyperparameter combinations are explored.
+     Here is an [interactive counter plot](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.html) to provide comprehensive view of the relationship between multiple hyperparameters and the objective value. This enabling us to understand how the objective value changes as different hyperparameter combinations are explored.
 
-<p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
-</p>
+      <p align="center">
+        <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
+      </p>
 
 
  
