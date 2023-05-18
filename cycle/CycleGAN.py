@@ -202,6 +202,9 @@ class CycleGAN(pl.LightningModule):
     self.log("D_loss_T1", T1Loss_Dics, prog_bar=True, on_epoch=True,on_step=False)
     self.log("D_loss_T2", T2Loss_Dics, prog_bar=True, on_epoch=True,on_step=False)
     self.log("G_loss", gen_loss, prog_bar=True, on_epoch=True,on_step=False)
+    self.log("Cycle_term", Cycle_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("Adver_term", Adv_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("identity", Iden_term, prog_bar=False,on_epoch=True,on_step=False)
 
     self.logger.experiment.add_scalars("D_Losses", {"D_loss_T1": T1Loss_Dics,"D_loss_T2": T2Loss_Dics}, global_step=self.current_epoch)
     self.logger.experiment.add_scalars("G_Losses", {"G_loss": gen_loss}, global_step=self.current_epoch)
@@ -282,10 +285,10 @@ class CycleGAN(pl.LightningModule):
     self.log("Gval_ssim_T2", G_ssim_T2, prog_bar=True,on_epoch=True,on_step=False)
     self.log("Gval_psnr_T1", G_psnr_T1, prog_bar=True,on_epoch=True,on_step=False)
     self.log("Gval_ssim_T1", G_ssim_T1, prog_bar=True,on_epoch=True,on_step=False)
+    self.log("Val_Cycle_term", Cycle_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("Val_Adver_term", Adv_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("Val_identity", Iden_term, prog_bar=False,on_epoch=True,on_step=False)
 
-
-    self.logger.experiment.add_scalars("D_Losses", {"Dval_loss_T1": T1Loss_Dics,"Dval_loss_T2": T2Loss_Dics}, global_step=self.current_epoch)
-    self.logger.experiment.add_scalars("G_Losses", {"Gval_loss": gen_loss}, global_step=self.current_epoch)
 
 
     loss= {'Gval_loss': gen_loss,
@@ -372,10 +375,9 @@ class CycleGAN(pl.LightningModule):
     self.log("Gtst_ssim_T2", G_ssim_T2, prog_bar=True,on_epoch=True,on_step=False)
     self.log("Gtst_psnr_T1", G_psnr_T1, prog_bar=True,on_epoch=True,on_step=False)
     self.log("Gtst_ssim_T1", G_ssim_T1, prog_bar=True,on_epoch=True,on_step=False)
-
-
-    self.logger.experiment.add_scalars("D_Losses", {"Dtst_loss_T1": T1Loss_Dics,"Dtst_loss_T2": T2Loss_Dics}, global_step=self.current_epoch)
-    self.logger.experiment.add_scalars("G_Losses", {"Gtst_loss": gen_loss}, global_step=self.current_epoch)
+    self.log("tst_Cycle_term", Cycle_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("tst_identity", Iden_term, prog_bar=False,on_epoch=True,on_step=False)
+    self.log("tst_Adver_term", Adv_term, prog_bar=False,on_epoch=True,on_step=False)
 
 
     loss= {'Gtst_loss': gen_loss,
