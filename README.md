@@ -89,26 +89,33 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
           $||G(y) - y||_1$ and $||F(x) - x||_1$: These measure the absolute differences between the original images and the images translated by G and F respectively.  
 
 ### CycleGAN Architecture
-Forward Cycle Consistency Loss:
-  1.  An image from domain X (T1w) is fed into Generator G (which is trained to translate from domain X to domain Y, e.g., T1w to T2w). Generator G translates this image into domain Y, producing a generated image T2w.
-  2.  The generated T2w image is fed into the discriminator $D_{Y}$ to compute Adversarial loss, by comparing original T2w and generated T2w image
-  3. This generated T2w image is then fed into Generator F (which is trained to translate from domain Y to domain X, e.g., from T2w to T1w).
-  4. Generator F attempts to reconstruct the original X  (T1w cycle) image, as result $\hat{x}$  is produced
-  5. The Forward Cycle Consistency Loss is computed as the difference between the original image from domain X and the reconstructed image, aiming to minimize this difference.
+* Global Architecture
+  Forward Cycle Consistency Loss:
+    1.  An image from domain X (T1w) is fed into Generator G (which is trained to translate from domain X to domain Y, e.g., T1w to T2w). Generator G translates this image into domain Y, producing a generated image T2w.
+    2.  The generated T2w image is fed into the discriminator $D_{Y}$ to compute Adversarial loss, by comparing original T2w and generated T2w image
+    3. This generated T2w image is then fed into Generator F (which is trained to translate from domain Y to domain X, e.g., from T2w to T1w).
+    4. Generator F attempts to reconstruct the original X  (T1w cycle) image, as result $\hat{x}$  is produced
+    5. The Forward Cycle Consistency Loss is computed as the difference between the original image from domain X and the reconstructed image, aiming to minimize this difference.
 
-Backward Cycle Consistency Loss:
-  1.  An image from domain Y (e.g., T2w) is fed into Generator F to this image into domain X, producing a T1w image.
-  2.  The generated T1w image is fed into the discriminator $D_{X}$ to compute Adversarial loss, by comparing original T1w and generated T1w image
-  3.  This generated T1w image is then fed into Generator G.
-  4.  Generator G attempts to reconstruct the original T2w image.
-  5.  The Backward Cycle Consistency Loss is computed as the difference between the original image from domain Y and the reconstructed image, again aiming to minimize this difference.
+  Backward Cycle Consistency Loss:
+    1.  An image from domain Y (e.g., T2w) is fed into Generator F to this image into domain X, producing a T1w image.
+    2.  The generated T1w image is fed into the discriminator $D_{X}$ to compute Adversarial loss, by comparing original T1w and generated T1w image
+    3.  This generated T1w image is then fed into Generator G.
+    4.  Generator G attempts to reconstruct the original T2w image.
+    5.  The Backward Cycle Consistency Loss is computed as the difference between the original image from domain Y and the reconstructed image, again aiming to minimize this difference.
 
-These cycle consistency losses are designed to ensure that if an image is transferred from one domain to another and then reverted back to the original domain, it should closely resemble the original image. 
+  These cycle consistency losses are designed to ensure that if an image is transferred from one domain to another and then reverted back to the original domain, it should closely resemble the original image. 
 
-<p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/CycleGANDraw.svg" alt="CycleGAN Architecture" height="600px" width="800px">
-</p>
+  <p align="center">
+    <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/CycleGANDraw.svg" alt="CycleGAN Architecture" height="600px" width="800px">
+  </p>
+  
+* Components Architecture
 
+  <p align="center">
+    <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/GeneraratorDraw.svg" height="600px" width="800px">
+  </p>
+  
 
 
 
@@ -133,6 +140,8 @@ project_pat="/PATH_PARENT/FOLDER_TO_CONTAINS_THE_REPO"
 requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
+
+A detailed description of the classes and objects can be found in the [cycle package](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/readme.md)
 
 ## Data-Processing
 This project contains several Python classes that are used to download, process, and transform medical imaging data (specifically NIfTI files). The classes interact with each other to form a processing pipeline that automates the extraction and transformation of the imaging data.
