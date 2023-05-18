@@ -237,6 +237,27 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
 
 ## Model-Training
+
+1.  Baseline   
+    To start off, we'll establish a baseline for comparison by training the model using the hyperparameters and parameters that were    specified in the original research paper. Except for the linear decay that it was not applied.
+    
+```    
+  'lr'            : 0.0002
+  'lbc_T1'        : 10
+  'lbc_T2'        : 10
+  'lbi'           : 0.1
+  'b1'            : 0.5
+  'b2'            : 0.999
+  'batch_size'    : 1
+  'im_channel'    : 1
+  'n_epochs'      : 9000   
+  'n_epochs_decay': 9000    
+  'mode'          : "linear"
+  "target_shape"  : 1
+  "resnet_neck"   : 6
+  "features"      : 64
+```
+
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Alt Text" height="600px" width="800px">
 </p>
@@ -249,7 +270,46 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
 
 
+2.  Hyper-parameters tunning
+    
+Optuna is utilized to carry out the hyperparameter tuning for the CycleGAN model. This involves an exploration for the ideal hyperparameters that enhance the performance of our model. Optuna undertakes numerous trials, and within each, it optimizes a designated objective function based on the selected hyperparameters.
 
+The goal of the objective function in this scenario is to augment the SSIM T2 metric, meaning that the set of hyperparameters that yields the highest value of the objective function is considered the most suitable.
+
+Here are a list of the hyperparameters to be optimized:
+* `lr` (Learning Rate):
+   - Range: (1e-4, 1e-3)
+   - This hyperparameter controls the step size at each iteration during the training process. A smaller learning rate can result in slower but more precise convergence, while a larger learning rate can lead to faster but less stable convergence.
+
+* `lbc_T1` (LBC T1):
+   - Range: (7, 12)
+   - ---- TD
+
+* `lbc_T2` (LBC T2):
+   - Range: (7, 12)
+   - ----- TD
+
+* `lbi` (LBI):
+   - Range: (0.05, 0.15)
+   - The lbi hyperparameter controls the weight for the identity loss component in the CycleGAN model. It balances the importance of preserving the original image content during the image translation process.
+
+* `b1` (Beta 1):
+   - Range: (0.2, 0.6)
+   - Beta 1 is a hyperparameter used in the Adam optimizer. It controls the exponential decay rate for the first-moment estimate of the gradients. A smaller value places more emphasis on recent gradients, while a larger value gives more weight to past gradients.
+
+* `b2` (Beta 2):
+   - Range: (0.9, 0.9999)
+   - Beta 2 is another hyperparameter used in the Adam optimizer. It controls the exponential decay rate for the second-moment estimate of the gradients. Similar to `b1`, a smaller value gives more weight to recent gradients, while a larger value considers past gradients as well.
+
+* `resnet_neck` (ResNet Neck):
+   - Range: (5, 9)
+   - The ResNet neck hyperparameter controls the number of residual blocks in the neck of the ResNet architecture used in the CycleGAN model. The neck represents the intermediate layers between the encoder and decoder, and the number of blocks determines the depth and capacity of the model.
+
+* `features` (Number of Features):
+   - Value: 64
+   - This hyperparameter specifies the number of features used in the CycleGAN model. It affects the complexity and capacity of the model.
+
+3.  Optimized Model
 
 ## Acknowledgements
 This project is based on the CycleGAN paper by Jun-Yan Zhu, Taesung Park, Phillip Isola, and Alexei A. Efros. The MRI datasets are from OpenNeuro.
