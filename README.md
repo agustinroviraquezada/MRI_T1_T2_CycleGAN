@@ -24,7 +24,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Prerequisites](#prerequisites)
 - [Introduction](#Introduction)   
   - [CycleGAN](#CycleGAN)   
-  - [Arquitecture](#Arquitecture)    
+  - [CycleGAN Architecture](#CycleGAN Architecture)    
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
@@ -89,7 +89,7 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
           $||G(y) - y||_1$ and $||F(x) - x||_1$: These measure the absolute differences between the original images and the images translated by G and F respectively.  
 
 ### CycleGAN Architecture
-* Global Architecture
+* Global Architecture   
   Forward Cycle Consistency Loss:
     1.  An image from domain X (T1w) is fed into Generator G (which is trained to translate from domain X to domain Y, e.g., T1w to T2w). Generator G translates this image into domain Y, producing a generated image T2w.
     2.  The generated T2w image is fed into the discriminator $D_{Y}$ to compute Adversarial loss, by comparing original T2w and generated T2w image
