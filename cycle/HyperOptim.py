@@ -7,6 +7,14 @@ from optuna.integration import PyTorchLightningPruningCallback
 import lightning.pytorch as pl
 from cycle.CycleGAN import CycleGAN
 from cycle.DataMod import CycleGANDataModule
+from optuna.visualization import plot_optimization_history
+from optuna.visualization import plot_slice
+from optuna.visualization import plot_contour
+from optuna.visualization import plot_param_importances
+from optuna.visualization import plot_parallel_coordinate
+import plotly.io as pio
+import optuna.importance as importance
+import pandas as pd
 
 
 
@@ -81,6 +89,40 @@ class HyperParametrization():
 
 
     self.BestParameter=self.study.best_trial.params   
+
+    ######## Create Plots.
+    sorted_hyperparameters = sorted(importance.get_param_importances(self.study).items(), key=lambda x: x[1], reverse=True)
+    # Select the three most important hyperparameters
+    important_hyperparameters = [param[0] for param in sorted_hyperparameters[:3]]
+    all_hyperparameters = [param[0] for param in sorted_hyperparameters]
+
+    # Get a list of Hyperparameters
+    data = []
+    for trial in study.trials:
+        data.append({**trial.params, 'Objective Value': trial.value})
+
+    df = pd.DataFrame(data)
+    df=df.sort_values('Objective Value',ascending=False)
+
+
+    p=os.path.dirname(self.funcParam["logs"])
+    #Counter Plots
+    figure=plot_contour(self.study, params=all_hyperparameters)  # Specify the parameters to plot
+    figure.update_layout(width=1600, height=1200)
+    pio.write_html(figure, file=os.path.join(p,'plot_contour.html'))
+    #-----
+    figure=plot_contour(self.study, params=important_hyperparameters)  # Specify the parameters to plot
+    figure.update_layout(width=1600, height=1200)
+    pio.write_html(figure, file=os.path.join(p,'plot_contour_important_hyperparameters.html'))
+    #-----
+    figure=plot_slice(self.study)
+    pio.write_html(figure, file=os.path.join(p,'plot_slice.html'))
+    #-----
+    figure=plot_param_importances(self.study)
+    pio.write_html(figure, file=os.path.join(p,'plot_param_importances.html'))
+
+
+
 
   def objective(self, trial: optuna.trial.Trial) -> float:
     """
