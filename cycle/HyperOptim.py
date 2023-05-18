@@ -99,7 +99,7 @@ class HyperParametrization():
     # Get a list of Hyperparameters
     p=os.path.dirname(self.funcParam["logs"])
     data = []
-    for trial in study.trials:
+    for trial in self.study.trials:
         data.append({**trial.params, 'Objective Value': trial.value})
 
     df = pd.DataFrame(data)
