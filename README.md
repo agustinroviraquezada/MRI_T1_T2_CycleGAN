@@ -283,19 +283,19 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
            - Range: (1e-4, 1e-3)
            - This hyperparameter controls the step size at each iteration during the training process. A smaller learning rate can result in slower but more precise convergence, while a larger learning rate can lead to faster but less stable convergence.
 
-    * `lbc_T1` (LBC T1):   
+    * `lbc_T1` (LBC T1):       
            - Range: (7, 12)
            - ---- TD
 
-    * `lbc_T2` (LBC T2):    
+    * `lbc_T2` (LBC T2):       
            - Range: (7, 12)
            - ----- TD
 
-    * `lbi` (LBI):    
+    * `lbi` (LBI):        
            - Range: (0.05, 0.15)
            - The lbi hyperparameter controls the weight for the identity loss component in the CycleGAN model. It balances the importance of preserving the original image content during the image translation process.
 
-    * `b1` (Beta 1):   
+    * `b1` (Beta 1):      
            - Range: (0.2, 0.6)
            - Beta 1 is a hyperparameter used in the Adam optimizer. It controls the exponential decay rate for the first-moment estimate of the gradients. A smaller value places more emphasis on recent gradients, while a larger value gives more weight to past gradients.
 
@@ -311,6 +311,14 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
            - Value: 64
            - This hyperparameter specifies the number of features used in the CycleGAN model. It affects the complexity and capacity of the model.
 
+
+Here is a counter plot to provide comprehensive view of the relationship between multiple hyperparameters and the objective value. This enabling us to understand how the objective value changes as different hyperparameter combinations are explored.
+
+ <p>
+<center><iframe src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.html" height="500" width="1100"frameBorder="0"></iframe></center>
+ </p>
+ 
+ 
 3.  Optimized Model
 
 ## Acknowledgements
