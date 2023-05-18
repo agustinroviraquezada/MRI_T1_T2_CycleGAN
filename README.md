@@ -29,7 +29,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
 - [Data Processing](#Data-Processing)
-- [Data Storage](#Data-Storage)
+- [Data-Storage](#Data-Storage)
 - [Model-Training](#Model-Training)
 - [Acknowledgements](#Acknowledgements)
 
@@ -188,7 +188,9 @@ This project contains several Python classes that are used to download, process,
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/PipeLine.png" alt="Data processing pipeline" height="400px" width="700px">
 </p>
-## Data Storage
+
+
+## Data-Storage
 
 After pre-processing, the slice are storeed as .pt in their respective folders, as the structure shows. In addition the package implement a function to create the tree structure where the checkpoints, the bests models, the tensorboard logs, and the image for the gift are going to be stored during the training.
 
