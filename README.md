@@ -235,15 +235,34 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 
 
 ## Model-Training
-<p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Alt Text" height="600px" width="800px">
-</p>
 
 
-<p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T2_GIFT.gif" alt="Alt Text" height="600px" width="800px">
-</p>
 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .plot {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="plot">
+            <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Plot 1" style="width: 100%; height: auto;">
+        </div>
+        <div class="plot">
+            <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T2_GIFT.gif" alt="Plot 2" style="width: 100%; height: auto;">
+        </div>
+    </div>
+</body>
+</html>
 
 
 
