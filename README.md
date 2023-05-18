@@ -113,13 +113,15 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
 * Components Architecture
 
 
-  1.  Generator: Modified version of the ResNet (Residual Network). For images that are larger than 128x128, they use a 9-block ResNet-based generator, otherwise, a 6-block one. Each block consists of a convolutional layer, a batch normalization layer (except in the output layer), and a ReLU activation function. In these ResNet blocks, the input goes through convolutional layers and is added to the original input, forming a sort of 'shortcut connection'. This is intended to help the model more easily learn identity mappings between the input and output, which is helpful for the type of image-to-image translation tasks that CycleGAN is designed for.
+  1.  Generator:    
+      Modified version of the ResNet (Residual Network). For images that are larger than 128x128, they use a 9-block ResNet-based generator, otherwise, a 6-block one. Each block consists of a convolutional layer, a batch normalization layer (except in the output layer), and a ReLU activation function. In these ResNet blocks, the input goes through convolutional layers and is added to the original input, forming a sort of 'shortcut connection'. This is intended to help the model more easily learn identity mappings between the input and output, which is helpful for the type of image-to-image translation tasks that CycleGAN is designed for.
 
   <p align="center">
     <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/GeneraratorDraw.svg" height="600px" width="800px">
   </p>
   
-  2.  Discriminator: It is a PatchGAN classifier which tries to classify whether patches in an image are real or fake. This means that the discriminator does not try to classify the entire image as real or fake, but rather classifies each patch of the image separately. This gives a form of localised feedback to the generator about which specific parts of the image look unrealistic.
+  2.  Discriminator:   
+      It is a PatchGAN classifier which tries to classify whether patches in an image are real or fake. This means that the discriminator does not try to classify the entire image as real or fake, but rather classifies each patch of the image separately. This gives a form of localised feedback to the generator about which specific parts of the image look unrealistic.
   
   <p align="center">
     <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/DiscriminatorDraw.svg" height="600px" width="800px">
@@ -156,23 +158,23 @@ This project contains several Python classes that are used to download, process,
 
   1. HDBETProcessor
 
-  This class is responsible for applying the HD-BET (High Density - Brain Extraction Tool) to the input NIfTI files. It reads the input file, applies the HD-BET, and writes the processed file to the output folder. It can also apply a mask to the input file if a mask file is provided.
+      This class is responsible for applying the HD-BET (High Density - Brain Extraction Tool) to the input NIfTI files. It reads the input file, applies the HD-BET, and writes the processed file to the output folder. It can also apply a mask to the input file if a mask file is provided.
 
   2. TransformImage
 
-  The TransformImage class loads a NIfTI file, extracts its data, filters and crops the images, and then applies several transformations to the images. This includes resizing the images to a target size, re-scaling the pixel values to the range 0-1, converting the images to PyTorch tensors, and normalizing the tensors. The processed images are then saved in a specified location as tensors of 128 x 128
+     The TransformImage class loads a NIfTI file, extracts its data, filters and crops the images, and then applies several transformations to the images. This includes resizing the images to a target size, re-scaling the pixel values to the range 0-1, converting the images to PyTorch tensors, and normalizing the tensors. The processed images are then saved in a specified location as tensors of 128 x 128
 
   3. Process
 
-  The Process class handles the interaction with the OpenNeuro API to fetch the dataset files. It sends a GraphQL query to the API to get the dataset snapshot files, downloads the files, applies the HD-BET using the HDBETProcessor class, and then processes the images using the TransformImage class.
+     The Process class handles the interaction with the OpenNeuro API to fetch the dataset files. It sends a GraphQL query to the API to get the dataset snapshot files, downloads the files, applies the HD-BET using the HDBETProcessor class, and then processes the images using the TransformImage class.
 
   4. DownloadData
 
-  The DownloadData class coordinates the whole pipeline. It defines the save paths for the processed images, creates the necessary folders, and initializes the Process class for each dataset. It also deletes the temporary folders created during the processing.
+      The DownloadData class coordinates the whole pipeline. It defines the save paths for the processed images, creates the necessary folders, and initializes the Process class for each dataset. It also deletes the temporary folders created during the processing.
 
   5. Sanity_Check
 
-  The Sanity_Check class performs several checks on the processed images to ensure their integrity. It checks if the number of images in the T1 and T2 folders are the same, and removes any extra images. It also provides a function to count the number of slices per subject.
+      The Sanity_Check class performs several checks on the processed images to ensure their integrity. It checks if the number of images in the T1 and T2 folders are the same, and removes any extra images. It also provides a function to count the number of slices per subject.
 
   ### Data Fetching and Processing Pipeline
 
