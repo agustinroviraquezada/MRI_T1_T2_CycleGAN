@@ -22,9 +22,9 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Introduction](#Introduction)
-  -[CycleGAN](#CycleGAN)
-  -[Arquitecture](#Arquitecture) 
+- [Introduction](#Introduction)   
+  -[CycleGAN](#CycleGAN)   
+  -[Arquitecture](#Arquitecture)    
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
@@ -51,10 +51,10 @@ In the CycleGAN model, as an extension of the GANs, The generator function uses 
 The CycleGAN extends the GANS by adding one generator and discriminator more to the architecture to be able of achieve the cycle consistency.This concept implies that an image produced by the first generator can be utilized as input for the second generator, and the output from the second generator should align with the initial image, and in the opposite way.
 
 
-  * The key components of CycleGAN include two generator networks G and F, and two discriminator networks D_Y and D_X:
+  * The key components of CycleGAN include two generator networks G and F, and two discriminator networks $D_{Y}$ and $D_{X}$:
     1. **Generator Networks (G and F):** These networks are responsible for the actual transformation of the images. G transforms images from domain X to domain Y (G: X -> Y) and F does the inverse, transforming images from domain Y to domain X (F: Y -> X).
 
-    2. **Discriminator Networks (D_X and D_Y):** These networks are trained to differentiate between real and generated images. D_X takes an image from domain X and outputs the probability that the image is real. Similarly, D_Y takes an image from domain Y and outputs the probability that the image is real.
+    2. **Discriminator Networks ($D_{X}$ and $D_{Y}$):** These networks are trained to differentiate between real and generated images. $D_{X}$ takes an image from domain X and outputs the probability that the image is real. Similarly, $D_{Y}$ takes an image from domain Y and outputs the probability that the image is real.
 
   * The loss in the CycleGAN is defined by the following components:
 
@@ -89,6 +89,21 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
           $||G(y) - y||_1$ and $||F(x) - x||_1$: These measure the absolute differences between the original images and the images translated by G and F respectively.  
 
 ### CycleGAN Architecture
+Forward Cycle Consistency Loss:
+  1.  An image from domain X (T1w) is fed into Generator G (which is trained to translate from domain X to domain Y, e.g., T1w to T2w). Generator G translates this image into domain Y, producing a generated image T2w.
+  2.  The generated T2w image is fed into the discriminator $D_{Y}$ to compute Adversarial loss, by comparing original T2w and generated T2w image
+  3. This generated T2w image is then fed into Generator F (which is trained to translate from domain Y to domain X, e.g., from T2w to T1w).
+  4. Generator F attempts to reconstruct the original X  (T1w cycle) image, as result $\hat{x}$  is produced
+  5. The Forward Cycle Consistency Loss is computed as the difference between the original image from domain X and the reconstructed image, aiming to minimize this difference.
+
+Backward Cycle Consistency Loss:
+  1.  An image from domain Y (e.g., T2w) is fed into Generator F to this image into domain X, producing a T1w image.
+  2.  The generated T1w image is fed into the discriminator $D_{X}$ to compute Adversarial loss, by comparing original T1w and generated T1w image
+  3.  This generated T1w image is then fed into Generator G.
+  4.  Generator G attempts to reconstruct the original T2w image.
+  5.  The Backward Cycle Consistency Loss is computed as the difference between the original image from domain Y and the reconstructed image, again aiming to minimize this difference.
+
+These cycle consistency losses are designed to ensure that if an image is transferred from one domain to another and then reverted back to the original domain, it should closely resemble the original image. 
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/CycleGANDraw.svg" alt="CycleGAN Architecture" height="600px" width="800px">
