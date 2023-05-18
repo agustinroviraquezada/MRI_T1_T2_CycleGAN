@@ -90,6 +90,10 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
 
 ### CycleGAN Architecture
 
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/CycleGANDraw.svg" alt="CycleGAN Architecture" height="600px" width="800px">
+</p>
+
 
 
 
