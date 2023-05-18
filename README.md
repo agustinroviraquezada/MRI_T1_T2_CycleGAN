@@ -312,11 +312,20 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
            - This hyperparameter specifies the number of features used in the CycleGAN model. It affects the complexity and capacity of the model.
 
 
-Here is a counter plot to provide comprehensive view of the relationship between multiple hyperparameters and the objective value. This enabling us to understand how the objective value changes as different hyperparameter combinations are explored.
+Understanding the impact of each hyperparameter on the overall optimization process is a important step to know how to trick the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
 
- <p>
-<center><iframe src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.html" height="500" width="1100"frameBorder="0"></iframe></center>
- </p>
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text" height="600px" width="800px">
+</p>
+
+
+Here is an [interactive counter plot](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.html) to provide comprehensive view of the relationship between multiple hyperparameters and the objective value. This enabling us to understand how the objective value changes as different hyperparameter combinations are explored.
+
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
+</p>
+
+
  
  
 3.  Optimized Model
