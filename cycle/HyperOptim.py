@@ -97,15 +97,15 @@ class HyperParametrization():
     all_hyperparameters = [param[0] for param in sorted_hyperparameters]
 
     # Get a list of Hyperparameters
+    p=os.path.dirname(self.funcParam["logs"])
     data = []
     for trial in study.trials:
         data.append({**trial.params, 'Objective Value': trial.value})
 
     df = pd.DataFrame(data)
     df=df.sort_values('Objective Value',ascending=False)
-
-
-    p=os.path.dirname(self.funcParam["logs"])
+    df.to_csv(os.path.join(p,"ListHyperValues"),index=False)
+    
     #Counter Plots
     figure=plot_contour(self.study, params=all_hyperparameters)  # Specify the parameters to plot
     figure.update_layout(width=1600, height=1200)
