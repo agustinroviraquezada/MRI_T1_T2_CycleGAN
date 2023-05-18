@@ -315,7 +315,7 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
 Understanding the impact of each hyperparameter on the overall optimization process is a important step to know how to trick the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
 
 <p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text" height="600px" width="800px">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text" height="600px" width="600px">
 </p>
 
 
