@@ -207,34 +207,45 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
   3. Dataset ds003717 -  version 1.0.1   
      Peelle JE and Spehar B and Jones MS and McConkey S and Myerson J and Hale S and Sommers MS and Tye-Murray N (2022). Visual and audiovisual speech perception associated with increased functional connectivity between sensory and motor regions. OpenNeuro. [Dataset DOI](https://openneuro.org/datasets/ds003717/versions/1.0.1)
 
-
 ```
 .
 └── content
     └── drive
         └── MyDrive
-            ├── T1
-            |   ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
-            |   ├── ds003717_055_150_T1w.pt
-            |   ├── ds003717_054_151_T1w.pt
-            |   ├── ds003717_056_152_T1w.pt
-            ├── T2
-            |   ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
-            |   ├── ds003717_053_184_T2w.pt
-            |   ├── ds003717_054_129_T2w.pt
-            |   ├── ds003717_054_130_T2w.pt
-            └── Model
-                ├── BestModel
-                |   ├── best_model_version_{Tensorboard_version}_{T2_SSIM}-{epoch}.ckpt
-                |   ├── best_model_version_0_0.3-01.ckpt
-                ├── CheckPoint
-                |   ├── model__version_{Tensorboard_version}_{epoch}.ckpt
-                |   ├── model__version_0_230.ckpt
-                ├── GIF
-                └──   cycleGAN
-                     ├── version_{Tensorboard_version}
-                        └── events.out.tfevents.1684251252.16c6ed093068.2517.0
-                  
+                ├── Data
+                |    ├── T1
+                |    |   ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
+                |    |   ├── ds003717_055_150_T1w.pt
+                |    |   ├── ds003717_054_151_T1w.pt
+                |    |   ├── ds003717_056_152_T1w.pt
+                |    └── T2
+                |        ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
+                |        ├── ds003717_053_184_T2w.pt
+                |        ├── ds003717_054_129_T2w.pt
+                |        ├── ds003717_054_130_T2w.pt
+                | 
+                ├── Model
+                |      ├── BestModel
+                |      |   ├── best_model_version_{Tensorboard_version}_{T2_SSIM}-{epoch}.ckpt
+                |      |   ├── best_model_version_0_0.3-01.ckpt
+                |      ├── CheckPoint
+                |      |   ├── model__version_{Tensorboard_version}_{epoch}.ckpt
+                |      |   ├── model__version_0_230.ckpt
+                |      ├── GIF
+                |      └──   cycleGAN
+                |             ├── version_{Tensorboard_version}
+                |                    └── events.out.tfevents.1684251252.16c6ed093068.2517.0
+                └──Test
+                      ├── T1
+                      |     ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
+                      |     ├── ds003717_055_150_T1w.pt
+                      |     ├── ds003717_054_151_T1w.pt
+                      |     ├── ds003717_056_152_T1w.pt
+                      └── T2
+                            ├── {Group_id}_{Subject Number}_{Slice Number}_{Modality}w.pt
+                            ├── ds003717_053_184_T2w.pt
+                            ├── ds003717_054_129_T2w.pt
+                            └── ds003717_054_130_T2w.pt
 ```
 
 
