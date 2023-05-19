@@ -34,6 +34,10 @@ class DirectoryCreator:
     """
     T1_path = os.path.join(self.base_path, "T1")
     T2_path = os.path.join(self.base_path, "T2")
+    
+    Test_T1_path = os.path.join(self.base_path, "Test/T1")
+    Test_T2_path = os.path.join(self.base_path, "Test/T2")
+    
     model_path = os.path.join(self.base_path, "Model")
     checkpoint_path = os.path.join(model_path, "CheckPoint")
     checkOptimization_path = os.path.join(model_path, "CheckPoint_Opt")
@@ -42,9 +46,11 @@ class DirectoryCreator:
 
     # Create T1 directory
     os.makedirs(T1_path, exist_ok=True)
+    os.makedirs(T2_path, exist_ok=True)
     
     # Create T2 directory
-    os.makedirs(T2_path, exist_ok=True)
+    os.makedirs(Test_T1_path, exist_ok=True)
+    os.makedirs(Test_T2_path, exist_ok=True)
 
     # Create Model directory
     os.makedirs(model_path, exist_ok=True)
