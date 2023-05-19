@@ -248,6 +248,10 @@ The dataset folders, T1 and T2, size a total of 53 GB. This dataset was made fro
                             └── ds003717_054_130_T2w.pt
 ```
 
+Here is a sample from the final file, T1 and T2 that is used as input for the Model
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/Sample.png" alt="Alt Text" height="600px" width="800px">
+</p>
 
 ## Model-Training
 
