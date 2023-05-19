@@ -66,4 +66,4 @@ class DirectoryCreator:
 
     # Create Best directory
     os.makedirs(best_path, exist_ok=True)
-    return {"T1":T1_path,"T2":T2_path},model_path,checkpoint_path,best_path,checkOptimization_path,gif_path
+    return {"T1":T1_path,"T2":T2_path},{"T1":Test_T1_path,"T2":Test_T2_path},model_path,checkpoint_path,best_path,checkOptimization_path,gif_path
