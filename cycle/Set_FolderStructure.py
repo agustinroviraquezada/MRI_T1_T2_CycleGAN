@@ -32,8 +32,8 @@ class DirectoryCreator:
       - str: The path of the CheckPoint_Opt directory.
       - str: The path of the GIF directory.
     """
-    T1_path = os.path.join(self.base_path, "T1")
-    T2_path = os.path.join(self.base_path, "T2")
+    T1_path = os.path.join(self.base_path, "Data/T1")
+    T2_path = os.path.join(self.base_path, "Data/T2")
     
     Test_T1_path = os.path.join(self.base_path, "Test/T1")
     Test_T2_path = os.path.join(self.base_path, "Test/T2")
