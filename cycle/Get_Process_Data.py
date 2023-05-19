@@ -3,7 +3,6 @@ import os
 import requests
 import re
 import gzip
-import shutil
 import nibabel as nib
 import numpy as np
 import SimpleITK as sitk
@@ -310,10 +309,14 @@ class Process:
     for k, v in Sub_anat.items():
         toDownload.update(self.GetURL(v))
 
-    for i in range(1,len(toDownload)//2):
-      regex = re.compile(f'sub-{i:03d}')
-      sub_dict = dict(filter(lambda x: regex.search(x[0]), toDownload.items()))
-      self.CoordinateProcess(sub_dict)
+    ToDownloadPairs=self.GetPairs(toDownload)
+    for i in ToDownloadPairs:
+      self.CoordinateProcess(i)
+
+    #for i in range(1,len(toDownload)//2):
+      #regex = re.compile(f'sub-{i:03d}')
+      #sub_dict = dict(filter(lambda x: regex.search(x[0]), toDownload.items()))
+      #self.CoordinateProcess(sub_dict)
 
 
 
@@ -412,6 +415,25 @@ class Process:
     return {self.extract_subject_modality(i["urls"][0]): i["urls"][0] for i in response_data if
             ".nii.gz" in i["urls"][0]}
 
+  def GetPairs(self,my_dict):
+    # Prepare a dictionary to store temporary results
+    temp_dict = {}
+
+    # Regular expression pattern to match subject id
+    pattern = re.compile(r"sub-\d+")
+
+    for key, value in my_dict.items():
+        subject_id = pattern.match(key).group()
+
+        if subject_id in temp_dict:
+            temp_dict[subject_id][key] = value
+        else:
+            temp_dict[subject_id] = {key: value}
+
+    # Convert the dictionary of dictionaries to a list of dictionaries
+    list_of_dicts = list(temp_dict.values())
+    return list_of_dicts
+
   def CoordinateProcess(self, subDic):
     """
     @Description
@@ -429,15 +451,16 @@ class Process:
     download_directory = os.path.join(self.save_path, f'{self.dataset_id}_files')
 
     #Download .nii T1 and T2
+    filenames=[]
     for k,v in subDic.items():
-      self.Download(k, v, download_directory)
+      filenames.append(self.Download(k, v, download_directory))
 
     #Apply HD-BET and do the transformationa
-    for k,v in subDic.items():
+    for k in filenames:
       self.ApplyBET(k,download_directory)
 
     #Apply Transformations
-    for k,v in subDic.items():
+    for k in filenames:
       local_file_path_nii = os.path.join(download_directory, k)
       if "_T1w.nii" in k:
         trans1=TransformImage(local_file_path_nii,self.dataset_id,self.T1_path,target_img=self.target_img,idx=None)
@@ -461,6 +484,14 @@ class Process:
     @output
       - Downloads the NIfTI file
     """
+    match = re.match(r'(sub-\d+)', filename)
+    if match:
+      sub_number = match.group(1)
+      if 'T1' in url:
+        filename = f"{sub_number}_T1w.nii"
+      if 'T2' in url:
+        filename = f"{sub_number}_T2w.nii"
+
     local_file_path_nii = os.path.join(download_directory, filename)
     local_file_path = local_file_path_nii + '.gz'
 
@@ -478,6 +509,7 @@ class Process:
     # Remove the .gz file
     os.remove(local_file_path)
     print(f'Downloaded and  Uncompressed {filename} to {local_file_path_nii}')
+    return filename
 
   def ApplyBET(self,filename,download_directory):
     """
@@ -635,7 +667,7 @@ class Sanity_Check:
     
     num_bins = 100
 
-    fig, axs = plt.subplots(1, 2, figsize=(8, 8))
+    fig, axs = plt.subplots(1, 2, figsize=(15, 6))
     for T1,T2 in zip(T1_sample,T2_sample):
 
       T1_array=torch.load(T1).numpy().flatten()
@@ -644,13 +676,19 @@ class Sanity_Check:
       axs[0].hist(T1_array, num_bins, density=True, histtype='step', facecolor='g',alpha=0.05)
       axs[1].hist(T2_array, num_bins, density=True, histtype='step', facecolor='g',alpha=0.05)
 
-    axs[0].set_xlim(-0.98, 1)
-    axs[1].set_xlim(-0.98, 1)
+    axs[0].set_xlim(-0.95, 1)
+    axs[1].set_xlim(-0.95, 1)
+    axs[0].set_xlabel("Pixel Values")
+    axs[1].set_xlabel("Pixel Values")
+    axs[0].set_ylabel("Prob Value")
+    axs[1].set_ylabel("Prob Value")
+    axs[0].grid()
+    axs[1].grid()
 
     axs[0].set_title("T1 Probability Density Plot")
     axs[1].set_title("T2 Probability Density Plot")
 
-    plt.tight_layout()
+    plt.savefig("myplot.svg", format='svg')
     plt.show()
     print(f"It has taken a sample of {sample_size} files from T1 and T2")
   
@@ -685,12 +723,4 @@ class Sanity_Check:
     plt.tight_layout()
     plt.show()
     print(f"It is shown {os.path.basename(T1_sample)} and {os.path.basename(T2_sample)}")
-
-
-
-
-
-
-
-
 
