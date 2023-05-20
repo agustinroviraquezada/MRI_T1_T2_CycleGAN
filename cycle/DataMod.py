@@ -1,4 +1,3 @@
-#Necesary Packages
 import os
 import glob
 import os.path
@@ -11,7 +10,9 @@ from torch.utils.data import DataLoader,Dataset
 from sklearn.model_selection import train_test_split
 import random
 import re
+import shutil
 import torchvision.transforms.functional as F
+from cycle.Get_Process_Data import Sanity_Check
 
 
 
@@ -308,6 +309,63 @@ class CycleGANDataModule(pl.LightningDataModule):
   def test_dataloader(self):
     return DataLoader(self.test_dataset, batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=True)
 
-  
 
+def Move_DataTest(source_dir,destination_dir,prb=0.09):
+  """
+  @Description
+    randomly selects a proportion of files from the source directories
+    and moves them to the destination directories.
+
+  @Input:
+    source_dir (dict): A dictionary containing keys "T1" and "T2" mapped to the source directory paths for T1 and T2 respectively.
+    destination_dir (dict): A dictionary containing keys "T1" and "T2" mapped to the destination directory paths for T1 and T2 respectively.
+    prb (float): A probability value representing the proportion of files to be moved from source to destination directory. Default is 0.09.
+  """
+
+  # Get a list of all files in source directory
+  T1_Data=os.listdir(source_dir["T1"])
+
+  # Randomly select files to move
+  f2move_T1 = random.sample(T1_Data, int(len(T1_Data)*prb))
+  f2move_T2 = [re.sub(r'(T1)(w?)', r'T2\2', i) for i in f2move_T1]
   
+  # Move the selected files to the destination directory
+  for f in f2move_T1:
+      shutil.move(os.path.join(source_dir["T1"], f), destination_dir["T1"])
+  for f in f2move_T2:
+      shutil.move(os.path.join(source_dir["T2"], f), destination_dir["T2"])
+
+class ImagePairTestSet(Dataset):
+  """
+  @Description
+    PyTorch Dataset for pairs of T1 and T2 images. During initialization, if the destination directory is
+    empty, it moves a portion of data from source directory to the destination directory.
+    
+  @Input
+    source_dir (dict): A dictionary containing keys "T1" and "T2" mapped to the source directory paths for T1 and T2 respectively.
+    destination_dir (dict): A dictionary containing keys "T1" and "T2" mapped to the destination directory paths for T1 and T2 respectively.
+    prb (float): A probability value representing the proportion of files to be moved from source to destination directory at initialization. Default is 0.09.
+
+  @Output
+    Returns a dataset instance which, when iterated over, yields tuples of (T1 image, T2 image, T1 filename, T2 filename).
+  """
+  def __init__(self, source_dir,destination_dir,prb=0.09):
+
+    if (not os.listdir(destination_dir["T1"])) & (not os.listdir(destination_dir["T2"])):
+      Move_DataTest(source_dir,destination_dir,prb=prb)
+      Sanity_Check(destination_dir)
+
+    self.t1w_images_paths=sorted([os.path.join(destination_dir["T1"],i) for i in os.listdir(destination_dir["T1"])])
+    self.t2w_images_paths = sorted([os.path.join(destination_dir["T2"],i) for i in os.listdir(destination_dir["T2"])])
+
+  def __len__(self):
+    return len(self.t1w_images_paths)
+
+  def __getitem__(self, idx):
+    t1w_image = torch.load(self.t1w_images_paths[idx])
+    t2w_image = torch.load(self.t2w_images_paths[idx])
+
+    t1w_name=os.path.basename(self.t1w_images_paths[idx])
+    t2w_name=os.path.basename(self.t1w_images_paths[idx])
+
+    return t1w_image, t2w_image,t1w_name,t2w_name
