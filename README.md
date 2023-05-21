@@ -41,6 +41,10 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - CUDA 10.2+ (if using GPU)
 - Google Colab (optional)
 
+```
+!nvidia-smi
+
+###########
 +-----------------------------------------------------------------------------+
 | NVIDIA-SMI 525.85.12    Driver Version: 525.85.12    CUDA Version: 12.0     |
 |-------------------------------+----------------------+----------------------+
@@ -49,7 +53,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 |                               |                      |               MIG M. |
 |===============================+======================+======================|
 |   0  Tesla T4            Off  | 00000000:00:04.0 Off |                    0 |
-| N/A   39C    P8     9W /  70W |      0MiB / 15360MiB |      0%      Default |
+| N/A   42C    P8     9W /  70W |      0MiB / 15360MiB |      0%      Default |
 |                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
                                                                                
@@ -60,6 +64,8 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 |=============================================================================|
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
+###########
+```
 
 ## Introduction
 
