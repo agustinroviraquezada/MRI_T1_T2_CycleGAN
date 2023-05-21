@@ -46,7 +46,7 @@ class ModelEval():
 
     for T1,T2,T1_name,T2_name in self.dataloader:
       if random.random()>0.5:
-        c+=1
+        ct+=1
         T1 = T1.to(self.device)
         T2 = T2.to(self.device)
 
@@ -66,8 +66,10 @@ class ModelEval():
       ax[f,c]=plt.imshow(t2,cmap="gray")
       ax[f,c].axis('off')
 
-      ax[f,c+1]=plt.imshow(t2,cmap="gray")
+      ax[f,c+1]=plt.imshow(t2f,cmap="gray")
       ax[f,c+1].axis('off')
+    plt.savefig("Plot_SampleEval.png", format='png')
+    plt.show()
 
 
   def GetMetrics(self,ModelPath):
