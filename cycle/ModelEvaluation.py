@@ -57,7 +57,7 @@ class ModelEval():
         with torch.no_grad():  # Inference only
             T1f_sample.append(torch.squeeze(model2load.G_T2_T1(T2).device('cpu')).numpy())
             T2f_sample.append(torch.squeeze(model2load.G_T1_T2(T1).device('cpu')).numpy())
-      if ct==4
+      if ct==4:
         break
 
     fig, ax = plt.subplots(2,4,figsize=(12, 12))
