@@ -190,3 +190,19 @@ class HyperParametrization():
           else:
               hyperparameters[key] = value
     return hyperparameters
+  
+  
+  
+ 
+
+def GetBestCombination(path):
+  df=pd.read_csv(path).sort_values(by=['Objective Value'],ascending=False,ignore_index=True)
+  df=df[df["Objective Value"]>0.50]
+
+  # Get variables
+  columns_to_average = list(df.columns)[:-1]
+  objective_values = df['Objective Value']
+
+  # Computes the weighted average
+  weighted_average = [np.average(df[c], weights=objective_values) for c in columns_to_average]
+  print(f"{columns_to_average}\n{weighted_average}")
