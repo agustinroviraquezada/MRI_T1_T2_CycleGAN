@@ -11,12 +11,63 @@ import re
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 from cycle.CycleGAN import CycleGAN
 from cycle.DataMod import CycleGANDataModule,ImagePairTestSet
+import random
 
 class ModelEval():
   def __init__(self,dataloader,device='cuda'):
 
     self.dataloader=dataloader
     self.device=device
+
+  def RandomSamplePlot(self,ModelPath):
+    params = {'lr'        : 0.0002,
+          'lbc_T1'        : 10,
+          'lbc_T2'        : 10,
+          'lbi'           : 0.1,
+          'b1'            : 0.5,
+          'b2'            : 0.999,
+          'batch_size'    : 1,
+          'im_channel'    : 1,
+          'n_epochs'      : 9000,     #When it start. High number to not apply this
+          'n_epochs_decay': 9000,     #Every each epoch to do High number to not apply this
+          'mode'          : "linear",
+          "target_shape"  : 1,
+          "resnet_neck"   : 6,
+          "features"      : 64}
+    
+    model2=CycleGAN(params)
+    model2load=model2.load_from_checkpoint(checkpoint_path=ModelPath)
+
+    # Instantiate your CycleGAN class (assuming it is already trained)
+    model2load.eval()  # Set the model to evaluation mode
+    model2load.to(self.device)  # Assuming you're using GPU
+    ct=0
+    T1_sample,T2_sample,T1f_sample,T2f_sample=[],[],[],[]
+
+    for T1,T2,T1_name,T2_name in self.dataloader:
+      if random.random()>0.5:
+        c+=1
+        T1 = T1.to(self.device)
+        T2 = T2.to(self.device)
+
+        T1_sample.append(torch.squeeze(T1.device('cpu')).numpy())
+        T2_sample.append(torch.squeeze(T2.device('cpu')).numpy())
+
+        # Generate a T2w image
+        with torch.no_grad():  # Inference only
+            T1f_sample.append(torch.squeeze(model2load.G_T2_T1(T2).device('cpu')).numpy())
+            T2f_sample.append(torch.squeeze(model2load.G_T1_T2(T1).device('cpu')).numpy())
+      if ct==4
+        break
+
+    fig, ax = plt.subplots(2,4,figsize=(12, 12))
+    fl,cl=[0,0,1,1],[0,2,0,2]
+    for t2,t2f,f,c in zip(T2_sample,T2f_sample,fl,cl):
+      ax[f,c]=plt.imshow(t2,cmap="gray")
+      ax[f,c].axis('off')
+
+      ax[f,c+1]=plt.imshow(t2,cmap="gray")
+      ax[f,c+1].axis('off')
 
 
   def GetMetrics(self,ModelPath):
