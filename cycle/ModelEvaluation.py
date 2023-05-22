@@ -73,6 +73,7 @@ class ModelEval():
       ax[f,c+1].imshow(t2f,cmap="gray")
       ax[f,c+1].set_title("False")
       ax[f,c+1].axis('off')
+    plt.suptitle("Model Sample Real vs Generated T2")
     plt.savefig("Plot_SampleEval.svg", format='sgv')
     plt.show()
 
