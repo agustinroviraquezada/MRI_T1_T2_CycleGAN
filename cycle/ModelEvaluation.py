@@ -63,7 +63,7 @@ class ModelEval():
       if ct==6:
         break
 
-    fig, ax = plt.subplots(2,4,figsize=(12, 12))
+    fig, ax = plt.subplots(3,4,figsize=(12, 12))
     fl,cl=[0,0,1,1,2,2],[0,2,0,2,0,2]
     for t2,t2f,f,c in zip(T2_sample,T2f_sample,fl,cl):
       ax[f,c].imshow(t2,cmap="gray")
