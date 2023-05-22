@@ -606,7 +606,8 @@ To evaluate, the performance of the network architecture and the builted model, 
 
   The figure  demonstrates that the learning model has achieved a stable state at epoch 100 aprox. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
-<p align="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Optimized.svg" alt="Trainig Metrics" height="400"  width="400">
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Optimized.svg" alt="Trainig Metrics" height="400"  width="400">
 </p>  
 
   Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
