@@ -333,7 +333,7 @@ Finally, we can see the density distribution from the pixel intensity of a rando
 
 The training process used a randomly  subset of 10,000 images from the dataset. Over the course of 300 epochs, each involving 200 steps, the model was iteratively trained. Following the end of each epoch, a validation stage consisting of 150 steps was implemented to assess the performance of the model. During the training evaluation metrics were computed such as generator loss, discriminator loss, Structural Similarity Index Measure (SSIM) and the Peak Signal-to-Noise Ratio (PSNR). 
 
-To evaluate, the performance of the network architecture and the builted model, several trials where ran and also a hyperparameter oprimization was performed. The different models are explained and analized bellow.
+To evaluate, the performance of the network architecture and the builted model, several trials where ran and also a hyperparameter optimization was performed. The different models are explained and analized bellow.
 
 
 1.  Baseline   
@@ -358,8 +358,6 @@ To evaluate, the performance of the network architecture and the builted model, 
       "steps/epoch"   : 200
     ```
     
-    
-    
 The baseline was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
 
 <table>
@@ -378,23 +376,144 @@ The baseline was trained with 10k images. However, it counted with a data augmen
 </table>   
 
 
-
-A test set of 1k images were selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images). This also match with the increase at the adversarial loss at the epoch 100.
+A test set of 1k images were selected from the original dataset to test the models obtained in the training. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images). This also match with the increase at the adversarial loss at the epoch 100.
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Baseline.svg" alt="Trainig Metrics">
 </p>
 
-From the figure it is visible that learning model reach a steady stay, therefore to get the model with the best weights, the best 10 models were analized based on the SSIM and PSNR computed from the test set. On the following image you can see the 4 best models.
+The figure  demonstrates that the learning model has achieved a stable state. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
 <p align="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics" height="400"  width="400">
 </p>  
 
+Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. In addition the cycle consistency for the T2 at the test set is 0.58.
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Modality</th>
+      <th rowspan="2">Model</th>
+      <th colspan="2">SSIM_F</th>
+      <th colspan="2">PSNR_F</th>
+      <th colspan="2">SSIM_C</th>
+      <th colspan="2">PSNR_C</th>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>T1</td>
+      <td>model_0.690-260.ckpt</td>
+      <td>0.6502</td>
+      <td>0.1320</td>
+      <td>22.1270</td>
+      <td>2.3915</td>
+      <td>0.9260</td>
+      <td>0.0427</td>
+      <td>31.334</td>
+      <td>1.0948</td>
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.692-270.ckpt</td>
+      <td>0.642647</td>
+      <td>0.12948</td>
+      <td>21.9797</td>
+      <td>2.19933</td>
+      <td>0.93316</td>
+      <td>0.03550</td>
+      <td>31.5920</td>
+      <td>1.06344</td>   
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.694-276.ckpt</td>
+      <td>0.6359</td>
+      <td>0.1264</td>
+      <td>22.0085</td>
+      <td>2.1567</td>
+      <td>0.9380</td>
+      <td>0.0238</td>
+      <td>31.7246</td>
+      <td>0.9551</td>
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.696-193.ckpt</td>
+      <td>0.6295</td>
+      <td>0.1254</td>
+      <td>21.8710</td>
+      <td>2.1208</td>
+      <td>0.9306</td>
+      <td>0.0351</td>
+      <td>31.5725</td>
+      <td>1.0323</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.696-193.ckpt</td>
+      <td>0.6766</td>
+      <td>0.0917</td>
+      <td>22.5656</td>
+      <td>1.7960</td>
+      <td>0.4936</td>
+      <td>0.0858</td>
+      <td>20.3324</td>
+      <td>1.8195</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.694-276.ckpt</td>
+      <td>0.6743</td>
+      <td>0.0920</td>
+      <td>22.4581</td>
+      <td>1.7618</td>
+      <td>0.5840</td>
+      <td>0.0964</td>
+      <td>21.6542</td>
+      <td>1.5903</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.692-270.ckpt</td>
+      <td>0.6729</td>
+      <td>0.0933</td>
+      <td>22.4328</td>
+      <td>1.7885</td>
+      <td>0.5841</td>
+      <td>0.08747</td>
+      <td>21.5786</td>
+      <td>1.5241</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.690-260.ckpt</td>
+      <td>0.67191</td>
+      <td>0.0900</td>
+      <td>22.3060</td>
+      <td>1.6904</td>
+      <td>0.29242</td>
+      <td>0.10037</td>
+      <td>17.8007</td>
+      <td>1.7490</td>
+    </tr>
+  </tbody>
+</table>
 
-From the values of the models, the best model selected is  .... , with a SSIM of .... Here is a sample of the images generated by the model. 
+
+Finally, from the best models (Model epoch 276) a sample of the images generated to illustra the performance of the image synthesis
 
    <p align="center">
-      <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluationSample_10k_Baseline.svg" alt="Alt Text">
+      <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluationSample_10k_Baseline.svg" alt="T2 Sample">
     </p>
 
 
