@@ -331,9 +331,14 @@ Finally, we can see the density distribution from the pixel intensity of a rando
 
 ## Model-Training
 
+The training process used a randomly  subset of 10,000 images from the dataset. Over the course of 300 epochs, each involving 200 steps, the model was iteratively trained. Following the end of each epoch, a validation stage consisting of 150 steps was implemented to assess the performance of the model. During the training evaluation metrics were computed such as generator loss, discriminator loss, Structural Similarity Index Measure (SSIM) and the Peak Signal-to-Noise Ratio (PSNR). 
+
+To evaluate, the performance of the network architecture and the builted model, several trials where ran and also a hyperparameter oprimization was performed. The different models are explained and analized bellow.
+
+
 1.  Baseline   
     To start off, we'll establish a baseline for comparison by training the model using the hyperparameters and parameters that were    specified in the original research paper. Except for the linear decay that it was not applied.
-    
+     
     ```    
       'lr'            : 0.0002
       'lbc_T1'        : 10
@@ -349,7 +354,24 @@ Finally, we can see the density distribution from the pixel intensity of a rando
       "target_shape"  : 1
       "resnet_neck"   : 6
       "features"      : 64
+      "epochs"        : 300
+      "steps/epoch"   : 200
     ```
+The baseline was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. A test set of 1k images was selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images). This also match with the increase at the adversarial loss at the epoch 100.
+
+<p align="center">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Baseline.svg" alt="Trainig Metrics">
+</p>
+
+From the figure it is visible that learning model reach a steady stay, therefore to get the model with the best weights, the best 10 models were analized based on the SSIM and PSNR computed from the test set. On the following image you can see the 4 best models.
+
+<p align="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics">
+</p>
+
+
+
+
+
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/T1_GIFT.gif" alt="Alt Text" height="600px" width="800px">
