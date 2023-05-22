@@ -67,10 +67,10 @@ class ModelEval():
     fl,cl=[0,0,1,1],[0,2,0,2]
     for t2,t2f,f,c in zip(T2_sample,T2f_sample,fl,cl):
       ax[f,c]=plt.imshow(t2,cmap="gray")
-      ax[f,c]
+      ax[f,c].set_title("Real")
 
       ax[f,c+1]=plt.imshow(t2f,cmap="gray")
-      ax[f,c+1]
+      ax[f,c+1].set_title("False")
     plt.axis('off')
     plt.savefig("Plot_SampleEval.png", format='png')
     plt.show()
