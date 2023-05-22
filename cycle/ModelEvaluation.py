@@ -60,11 +60,11 @@ class ModelEval():
         with torch.no_grad():  # Inference only
             T1f_sample.append(torch.squeeze(model2load.G_T2_T1(T2).to("cpu")).numpy())
             T2f_sample.append(torch.squeeze(model2load.G_T1_T2(T1).to("cpu")).numpy())
-      if ct==4:
+      if ct==6:
         break
 
-    fig, ax = plt.subplots(2,4,figsize=(12, 12),gridspec_kw={'hspace': 0.05})
-    fl,cl=[0,0,1,1],[0,2,0,2]
+    fig, ax = plt.subplots(2,4,figsize=(12, 12))
+    fl,cl=[0,0,1,1,2,2],[0,2,0,2,0,2]
     for t2,t2f,f,c in zip(T2_sample,T2f_sample,fl,cl):
       ax[f,c].imshow(t2,cmap="gray")
       ax[f,c].set_title("Real")
