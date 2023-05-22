@@ -322,16 +322,19 @@ class create_gif():
     ax1 = fig.add_subplot(gs[0, 0])# Real_T2
     ax1.imshow(images[0], cmap='gray')
     ax1.set_title(f'{self.labels[0]} - epoch:{epoch:02d}')
+    ax1.axis('off')
 
     ## Fake_T2
     ax2 = fig.add_subplot(gs[0, 1])# Fake_T2
     ax2.imshow(images[1], cmap='gray')
     ax2.set_title(f'{self.labels[1]} - epoch:{epoch:02d}')
+    ax2.axis('off')
 
     ## Cycle_T2
     ax3 = fig.add_subplot(gs[0, 2])# Cycle_T2
     ax3.imshow(images[2], cmap='gray')
     ax3.set_title(f'{self.labels[2]} - epoch:{epoch:02d}')
+    ax3.axis('off')
 
     # Histogram_T2
     ax4 = fig.add_subplot(gs[1, 0:])
