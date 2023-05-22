@@ -155,6 +155,8 @@ class ModelEval():
     g_T2=result[result["Modality"]=="T2"].sort_values(('SSIM_F', 'mean'), ascending=False).head(4)
     g_T1 = result[result["Modality"]=="T1"]
     g_T1 = g_T1[g_T1['Model'].isin(g_T2['Model'].tolist())]
+    
+    self.result=pd.concat([g_T1,g_T2])
 
 
     stat_T1=[(g_T1[i]["mean"],g_T1[i]["std"],g_T1["Model"]) for i in pltg]
