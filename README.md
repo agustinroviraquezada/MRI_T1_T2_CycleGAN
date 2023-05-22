@@ -376,7 +376,7 @@ The baseline was trained with 10k images. However, it counted with a data augmen
 </table>   
 
 
-A test set of 1k images were selected from the original dataset to test the models obtained in the training. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images). This also match with the increase at the adversarial loss at the epoch 100.
+A test set of 1k images were selected from the original dataset to test the models obtained in the training. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images) at the generator loss. This also match with the increase at the adversarial loss at the epoch 100.
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Baseline.svg" alt="Trainig Metrics">
@@ -553,29 +553,34 @@ Finally, from the best models (Model epoch 276) a sample of the images generated
         <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
       </p>
 
-Finally, the optimization was triggered 3 times. In each run, there were 100 trial consisting of 5 epochs with 150 steps each. From the total combination of parameters only those that optimized the objective function beyond a threshold of 0.5 were selected. From the selected parameters a weighted average was computed to get the final hyperparameters used in the optimized model.
+Finally, the optimization was triggered 3 times. In each run, there were 100 trial consisting of 5 epochs with 150 steps each. From the total combination of parameters only those that optimized the objective function beyond a threshold of 0.5 were selected. From the selected parameters a weighted average was computed to get the final hyperparameters used in the optimized model. The compleate list of hyperparameters can be found [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/ListHyperValues.txt) 
 
 
  
 3.  Optimized Model
-    ```    
-      'lr'            : 0.0002
-      'lbc_T1'        : 10
-      'lbc_T2'        : 10
-      'lbi'           : 0.1
-      'b1'            : 0.5
-      'b2'            : 0.999
+
+    The optimized model was trained with the hyperparameters found at the fine tuning process describe in the section 2. Here is the complete list of hyperparameters used to train this model.
+
+    ```
+      'lr'            : 0.0005132
+      'lbc_T1'        : 9.377
+      'lbc_T2'        : 8.834
+      'lbi'           : 0.08638
+      'b1'            : 0.4984
+      'b2'            : 0.9636
       'batch_size'    : 1
       'im_channel'    : 1
       'n_epochs'      : 9000   
       'n_epochs_decay': 9000    
       'mode'          : "linear"
       "target_shape"  : 1
-      "resnet_neck"   : 6
-      "features"      : 64
+      "resnet_neck"   : 7
+      "features"      : 56
       "epochs"        : 300
       "steps/epoch"   : 200
+
     ```
+   
 The optimized model was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
 
 <table>
@@ -593,15 +598,13 @@ The optimized model was trained with 10k images. However, it counted with a data
   </tr>
 </table>   
 
-
-
-A test set of 1k images were selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images). This also match with the increase at the adversarial loss at the epoch 100.
+A test set of 1k images were selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. However, in comparison with the other model, the training and validation loss at the generator are less. In addition, the difference between the SSIM of the T1 and T2, seems less than the other model, which might indicate that the cycle consistency is better in this model. 
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Optimized.svg" alt="Trainig Metrics">
 </p>
 
-From the figure it is visible that learning model reach a steady stay, therefore to get the model with the best weights, the best 10 models were analized based on the SSIM and PSNR computed from the test set. On the following image you can see the 4 best models.
+The figure  demonstrates that the learning model has achieved a stable state at epoch 100 aprox. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
 <p align="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Optimized.svg" alt="Trainig Metrics" height="400"  width="400">
 </p>  
