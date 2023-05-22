@@ -194,6 +194,7 @@ class ModelEval():
                     color='IndianRed', label='Group 2')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.grid(True)
     ax.set_xlabel('Score')
     ax.set_title(f'Metric {pltg}')
     ax.set_yticks(ind)
