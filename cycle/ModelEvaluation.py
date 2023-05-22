@@ -53,13 +53,13 @@ class ModelEval():
         T1 = T1.to(self.device)
         T2 = T2.to(self.device)
 
-        T1_sample.append(torch.squeeze(T1.device('cpu')).numpy())
-        T2_sample.append(torch.squeeze(T2.device('cpu')).numpy())
+        T1_sample.append(torch.squeeze(T1.to("cpu")).numpy())
+        T2_sample.append(torch.squeeze(T2.to("cpu")).numpy())
 
         # Generate a T2w image
         with torch.no_grad():  # Inference only
-            T1f_sample.append(torch.squeeze(model2load.G_T2_T1(T2).device('cpu')).numpy())
-            T2f_sample.append(torch.squeeze(model2load.G_T1_T2(T1).device('cpu')).numpy())
+            T1f_sample.append(torch.squeeze(model2load.G_T2_T1(T2).to("cpu")).numpy())
+            T2f_sample.append(torch.squeeze(model2load.G_T1_T2(T1).to("cpu")).numpy())
       if ct==4:
         break
 
