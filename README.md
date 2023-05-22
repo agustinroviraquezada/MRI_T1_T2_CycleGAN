@@ -610,12 +610,132 @@ To evaluate, the performance of the network architecture and the builted model, 
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Optimized.svg" alt="Trainig Metrics" height="400"  width="400">
 </p>  
 
-  Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
+  Here the metrics are shown in detail. It is clear that the best model is the model from epoch 290 with a SSIM of 0.690 during the training at the synthesis of T2 and a SSIM of 0,671 at the test. The cycle consistency SSIM is 0,51 for T2 at the test. In the table F stands for generated and C for cycle:
+  
+  
+  <table>
+  <thead>
+    <tr>
+      <th rowspan="2">Modality</th>
+      <th rowspan="2">Model</th>
+      <th colspan="2">SSIM_F</th>
+      <th colspan="2">PSNR_F</th>
+      <th colspan="2">SSIM_C</th>
+      <th colspan="2">PSNR_C</th>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>T1</td>
+      <td>model_0.688-207.ckpt</td>
+      <td>0.6424</td>
+      <td>0.1275</td>
+      <td>22.2651</td>
+      <td>2.1602</td>
+      <td>0.9294</td>
+      <td>0.0381</td>
+      <td>32.2574</td>
+      <td>1.2643</td>
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.689-208.ckpt</td>
+      <td>0.6401</td>
+      <td>0.1275</td>
+      <td>21.9910</td>
+      <td>2.1157</td>
+      <td>0.9368</td>
+      <td>0.0266</td>
+      <td>31.9415</td>
+      <td>0.9999</td>
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.690-283.ckpt</td>
+      <td>0.6169</td>
+      <td>0.1278</td>
+      <td>21.7205</td>
+      <td>2.0394</td>
+      <td>0.9328</td>
+      <td>0.0345</td>
+      <td>31.4958</td>
+      <td>1.3287</td>
+    </tr>
+    <tr>
+      <td>T1</td>
+      <td>model_0.690-290.ckpt</td>
+      <td>0.6463</td>
+      <td>0.1233</td>
+      <td>22.2334</td>
+      <td>2.1123</td>
+      <td>0.9313</td>
+      <td>0.0271</td>
+      <td>31.5213</td>
+      <td>1.1140</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.690-290.ckpt</td>
+      <td>0.6710</td>
+      <td>0.0930</td>
+      <td>22.2126</td>
+      <td>1.7518</td>
+      <td>0.5184</td>
+      <td>0.0830</td>
+      <td>20.9698</td>
+      <td>1.3539</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.690-283.ckpt</td>
+      <td>0.6705</td>
+      <td>0.0922</td>
+      <td>22.1879</td>
+      <td>1.7730</td>
+      <td>0.4823</td>
+      <td>0.0855</td>
+      <td>20.9437</td>
+      <td>1.3314</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.688-207.ckpt</td>
+      <td>0.6688</td>
+      <td>0.0922</td>
+      <td>22.4329</td>
+      <td>1.7547</td>
+      <td>0.4679</td>
+      <td>0.0764</td>
+      <td>20.9658</td>
+      <td>1.3815</td>
+    </tr>
+    <tr>
+      <td>T2</td>
+      <td>model_0.689-208.ckpt</td>
+      <td>0.6687</td>
+      <td>0.0915</td>
+      <td>22.3913</td>
+      <td>1.7059</td>
+      <td>0.4693</td>
+      <td>0.0786</td>
+      <td>21.0089</td>
+      <td>1.4020</td>
+    </tr>
+  </tbody>
+</table>
 
 
-  Finally, from the best models (Model epoch ) a sample of the images generated to illustra the performance of the image synthesis
-
-
+  Finally, from the best models (Model epoch 290) a sample of the images generated to illustra the performance of the image synthesis
    <p align="center">
       <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionSample_10k_Optimized.svg">
     </p>
