@@ -308,7 +308,7 @@ class create_gif():
 
 
   def GetTensor(self,epoch):
-    return [torch.squeeze(torch.load(os.path.join(image_path,f"{f}{epoch:02d}.pt"))).cpu() for f in self.filenames]
+    return [torch.squeeze(torch.load(os.path.join(self.image_path,f"{f}{epoch:02d}.pt"))).cpu() for f in self.filenames]
 
   def createImage(self,epoch):
 
