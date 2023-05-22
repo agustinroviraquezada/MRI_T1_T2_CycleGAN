@@ -358,7 +358,7 @@ To evaluate, the performance of the network architecture and the builted model, 
       "steps/epoch"   : 200
     ```
     
-The baseline was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
+    The baseline was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
 
 <table>
   <tr>
@@ -376,19 +376,19 @@ The baseline was trained with 10k images. However, it counted with a data augmen
 </table>   
 
 
-A test set of 1k images were selected from the original dataset to test the models obtained in the training. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images) at the generator loss. This also match with the increase at the adversarial loss at the epoch 100.
+  A test set of 1k images were selected from the original dataset to test the models obtained in the training. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. This seems reasanable taking into account that after 100 epochs the model was already seen all the dataset (100x200=20k images) at the generator loss. This also match with the increase at the adversarial loss at the epoch 100.
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Baseline.svg" alt="Trainig Metrics">
 </p>
 
-The figure  demonstrates that the learning model has achieved a stable state. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
+  The figure  demonstrates that the learning model has achieved a stable state. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics">
 </p>  
 
-Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
+  Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
 
 <table>
   <thead>
@@ -512,7 +512,7 @@ Here the metrics are shown in detail. It is clear that the best model is the mod
 </table>
 
 
-Finally, from the best models (Model epoch 276) a sample of the images generated to illustra the performance of the image synthesis
+  Finally, from the best models (Model epoch 276) a sample of the images generated to illustra the performance of the image synthesis
 
    <p align="center">
       <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluationSample_10k_Baseline.svg" alt="T2 Sample">
@@ -553,7 +553,7 @@ Finally, from the best models (Model epoch 276) a sample of the images generated
         <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
       </p>
 
-Finally, the optimization was triggered 3 times. In each run, there were 100 trial consisting of 5 epochs with 150 steps each. From the total combination of parameters only those that optimized the objective function beyond a threshold of 0.5 were selected. From the selected parameters a weighted average was computed to get the final hyperparameters used in the optimized model. The compleate list of hyperparameters can be found [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/ListHyperValues.txt) 
+     Finally, the optimization was triggered 3 times. In each run, there were 100 trial consisting of 5 epochs with 150 steps each. From the total combination of parameters only those that optimized the objective function beyond a threshold of 0.5 were selected. From the selected parameters a weighted average was computed to get the final hyperparameters used in the optimized model. The compleate list of hyperparameters can be found [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/ListHyperValues.txt) 
 
 
  
@@ -581,7 +581,7 @@ Finally, the optimization was triggered 3 times. In each run, there were 100 tri
 
     ```
    
-The optimized model was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
+  The optimized model was trained with 10k images. However, it counted with a data augmentation that increase the total dataset to 15k. Here is a sequence that shows the learning process of the model. 
 
 <table>
   <tr>
@@ -598,19 +598,22 @@ The optimized model was trained with 10k images. However, it counted with a data
   </tr>
 </table>   
 
-A test set of 1k images were selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. However, in comparison with the other model, the training and validation loss at the generator are less. In addition, the difference between the SSIM of the T1 and T2, seems less than the other model, which might indicate that the cycle consistency is better in this model. 
+  A test set of 1k images were selected from the original dataset to test the models obtained in this run. The training metrics, bellow, shows that after 100 epochs the learning seems to reach the plateau. However, in comparison with the other model, the training and validation loss at the generator are less. In addition, the difference between the SSIM of the T1 and T2, seems less than the other model, which might indicate that the cycle consistency is better in this model. 
 
 <p align="center">
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionTraining_10k_Optimized.svg" alt="Trainig Metrics">
 </p>
 
-The figure  demonstrates that the learning model has achieved a stable state at epoch 100 aprox. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
+  The figure  demonstrates that the learning model has achieved a stable state at epoch 100 aprox. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
 <p align="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Optimized.svg" alt="Trainig Metrics" height="400"  width="400">
 </p>  
 
+  Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
 
-From the values of the models, the best model selected is  .... , with a SSIM of .... Here is a sample of the images generated by the model. 
+
+  Finally, from the best models (Model epoch ) a sample of the images generated to illustra the performance of the image synthesis
+
 
    <p align="center">
       <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionSample_10k_Optimized.svg">
