@@ -316,7 +316,7 @@ class create_gif():
     images=self.GetTensor(epoch)
     #Create figure with grid
     gs = gridspec.GridSpec(2, 3)
-    fig = plt.figure(figsize=(10, 8))
+    fig = plt.figure(figsize=(8, 6))
     
     ## Real_T2
     ax1 = fig.add_subplot(gs[0, 0])# Real_T2
