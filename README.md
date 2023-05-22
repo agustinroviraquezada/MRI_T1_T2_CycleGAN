@@ -388,7 +388,8 @@ The figure  demonstrates that the learning model has achieved a stable state. He
   <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics">
 </p>  
 
-Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. In addition the cycle consistency for the T2 at the test set is 0.58.
+Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. Despite the model from epoch 193 show a better SSIM for T2 at the generated image, the model 276 was considered better, since it was taking in consideration the SSIM for the cycle consistency, which is 0.58 for model 276. In the table F stands for generated and C for cycle:
+
 <table>
   <thead>
     <tr>
@@ -539,7 +540,7 @@ Finally, from the best models (Model epoch 276) a sample of the images generated
       "features"      : (16,80) #number of features used in the CycleGAN model, impacts on the Generator and Discriminator
     ```
 
-    Understanding the impact of each hyperparameter on the overall optimization process is a important step to know how to trick the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
+    From the figure bellow it is clear the impact of each hyperparameter on the overall optimization process. It is a important to know the relevance of the most important hyperparameters, with the objective of improving the optimization. Therefore, here is an [interactive representation](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.html) of the relative importance of each hyperparameter in determining the objective value.
 
     <p align="center">
       <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_param_importances.png" alt="Alt Text">
@@ -552,8 +553,9 @@ Finally, from the best models (Model epoch 276) a sample of the images generated
         <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/plot_contour_important_hyperparameters.png" alt="Alt Text" height="600px" width="800px">
       </p>
 
+Finally, the optimization was triggered 3 times. In each run, there were 100 trial consisting of 5 epochs with 150 steps each. From the total combination of parameters only those that optimized the objective function beyond a threshold of 0.5 were selected. From the selected parameters a weighted average was computed to get the final hyperparameters used in the optimized model.
 
- 
+
  
 3.  Optimized Model
     ```    
