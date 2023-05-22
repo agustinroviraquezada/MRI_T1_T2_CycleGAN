@@ -300,7 +300,7 @@ class create_gif():
       print("please choose right modality T1 or T2")
     
     #Get epochs
-    self.epochs = sorted(set([int(filename.split('_epoch')[1].split('.')[0]) for filename in os.listdir("/content/drive/MyDrive/Model/GIF") if 'epoch' in filename]))
+    self.epochs = sorted(set([int(filename.split('_epoch')[1].split('.')[0]) for filename in os.listdir(self.image_path) if 'epoch' in filename]))
     ImageLoop=[self.createImage(e) for e in tqdm(self.epochs)]
 
     # Save the images as a GIF using imageio
