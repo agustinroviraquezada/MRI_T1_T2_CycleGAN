@@ -385,7 +385,7 @@ A test set of 1k images were selected from the original dataset to test the mode
 The figure  demonstrates that the learning model has achieved a stable state. Hence, in order to obtain the model with optimal weights, we analyzed the top 10 models based on the SSIM and PSNR calculated from the test set. In the image below, you can view the top four models.
 
 <p align="center">
-  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics" height="400"  width="400">
+  <img src="https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/docs/EvaluacionMetrics_10k_Baseline.svg" alt="Trainig Metrics">
 </p>  
 
 Here the metrics are shown in detail. It is clear that the best model is the model from epoch 276 with a SSIM of 0.694 during the training at the synthesis of T2 and a SSIM of 0.674 at the test. In addition the cycle consistency for the T2 at the test set is 0.58.
