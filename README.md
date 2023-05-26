@@ -177,7 +177,7 @@ requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
 ### Apply-Model
-If you only want to test the model, you can run the [generation.py](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/generation.py) script from the command line by providing the input image and the model as arguments. You can find example to try the model in the folder examples.
+If you only want to test the model, you can run the [generation.py](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/generation.py) script from the command line by providing the input image and the model as arguments. You can find example to try the model in the folder examples. Additionally, I include [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/TestModel.ipynb) a example of how to run generation.py
 
 The examples provided here were extracted from the Brats 2020 dataset. Slices were taken from subject 2 of the training set and the matrix was transposed to obtain the current view (important step) and any processing was applied to these examples. Futhermore, examples from the original test set were added. This examples underwent the entire processing pipeline.
 
