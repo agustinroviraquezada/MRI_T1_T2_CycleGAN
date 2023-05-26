@@ -11,78 +11,30 @@ import torch
 from torchvision.transforms.functional import normalize
 
 
-
-# Definir las clases de la pipeline
-class ApplyHDBET:
-  def __init__(self):
-    pass
-   
-    #Apply process
-  def procesar(self,file_input):
-    output_folder=os.path.dirname(file_input)
-    output_file = os.path.join(output_folder, os.path.basename(file_input)+"_HDBET")
-    run_hd_bet(file_input,output_file)
-    return output_file
-
- 
-
-class ExtractNifTI():
+class CropNifTI:
   def __init__(self):
     pass
 
-  def procesar(self,file_path ,target_img=(128,128)):
-    nii_object = nib.load(file_path)
-    data = nii_object.get_fdata()
-    return data
-
-
-
-class FilterNifTI():
-  def __init__(self):
-    pass
-
-  def procesar(self,data,BlckProp=0.6,axis2mov=1):
-    data=np.moveaxis(data, axis2mov, 0)
-    siz=data.shape[1]*data.shape[2]    
-    select=np.sum(data == 0, axis=(1, 2))/siz < BlckProp
-    idx=[index for index, value in enumerate(select) if value]
-    filt_data=data[idx,:,:]
-
-    return filt_data
-
-
-class CropNifTI():
-  def __init__(self):
-    pass
-
-  def procesar(self,data,margin=5,target_shape=(128, 128)):
-    crop = []
+  def procesar(self, data, margin=5, target_shape=(128, 128)):
+    data = (data-np.min(data))/(np.max(data)-np.min(data))
+    mask = data != 0
+    row_mask = np.any(mask, axis=0)
+    col_mask = np.any(mask, axis=1)
     
-    #Use a mask to find black margins and compute margings per each image
-    for img in data:
-      mask = img != 0
-      row_mask = np.any(mask, axis=1)
-      col_mask = np.any(mask, axis=0)
+    rmin = np.maximum(np.argmax(row_mask) - margin,0)
+    rmax = row_mask.size - np.argmax(row_mask[::-1]) + margin
+    cmin = np.maximum(np.argmax(col_mask) - margin,0)
+    cmax = col_mask.size - np.argmax(col_mask[::-1]) + margin
 
-      rmin = np.maximum(np.argmax(row_mask) - margin, 0)
-      rmax = row_mask.size - np.argmax(row_mask[::-1]) + margin
-      cmin = np.maximum(np.argmax(col_mask) - margin, 0)
-      cmax = col_mask.size - np.argmax(col_mask[::-1]) + margin
-
-      rmax = min(rmax, img.shape[0] - 1)
-      cmax = min(cmax, img.shape[1] - 1)
-
-      #Crop the image
-      cropped = img[rmin:rmax+1, cmin:cmax+1]
-      #Resize to 256x256
-      resized_img = cv2.resize(cropped, target_shape, interpolation=cv2.INTER_LINEAR)
-      crop.append(resized_img)
     
-    if not crop:
-        print("No images to stack. Please check the input data since it could be not good.")
-        return np.array([])
+    # Crop the image
+    cropped = data[cmin:cmax,rmin:rmax]
 
-    return np.stack(crop)
+
+    # Resize to target shape
+    resized_img = cv2.resize(cropped, target_shape, interpolation=cv2.INTER_LINEAR)
+
+    return np.array(resized_img)
     
 
 class SliceOperation():
@@ -98,13 +50,13 @@ class SliceOperation():
     #Squeeze
     im = np.squeeze(img)
       
-   
+    img_crop=CropNifTI().procesar(img, margin=5, target_shape=(128, 128))
     #Resize image
-    if (img.shape[0]!=128 and img.shape[1]!=128):
-      img = cv2.resize(img, (128,128), interpolation=cv2.INTER_LINEAR)
+    if (img_crop.shape[0]!=128 and img_crop.shape[1]!=128):
+      img_crop = cv2.resize(img_crop, (128,128), interpolation=cv2.INTER_LINEAR)
 
     #re-scale image to 0-1
-    images_scaled  = (img-np.min(img)) / (np.max(img)-np.min(img))
+    images_scaled  = (img-np.min(img_crop)) / (np.max(img_crop)-np.min(img_crop))
 
     # Convert the numpy array to a PyTorch tensor
     img_tensor = torch.tensor(images_scaled, dtype=torch.float32)[None,:,:]
