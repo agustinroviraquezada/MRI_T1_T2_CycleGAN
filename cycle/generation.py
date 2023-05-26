@@ -207,7 +207,8 @@ if __name__ == '__main__':
 
 
   elif file_extension == ".npy" or file_extension == ".npz" :
-    data=SliceOperation(args.input)
+    im=np.load(args.input)
+    data=SliceOperation().procesar(im)
     g_data=applyModel.procesar(data)[0]
     Save_plot(g_data,output_folder)
 
