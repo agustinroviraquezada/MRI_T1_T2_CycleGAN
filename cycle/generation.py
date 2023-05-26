@@ -114,10 +114,10 @@ class SliceOperation():
 
 
 class CreateModel():
-  def __init__(self,ModelPath):
-    self.model=self.BuiltModel(ModelPath)
+  def __init__(self):
+    pass
 
-  def BuiltModel(ModelPath):
+  def BuiltModel(self,ModelPath):
     #built basic class instance
     params = {'lr'            : 0.0005132, #0.0002 
               'lbc_T1'        : 9.377, #7
@@ -138,14 +138,15 @@ class CreateModel():
 
 class ModelApply():
   def __init__(self,model):
-    self.model=model.eval()  
+    self.model=model.eval() 
+    self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     self.model=model.to(self.device)  
   
   def procesar(self,data):
     n_data=[]
     for im in data:
       im=im.to(self.device)
-      n_data.append(torch.squeeze(self.model.G_T2_T1(im).to("cpu").numpy()))
+      n_data.append(torch.squeeze(self.model.G_T2_T1(im).to("cpu")).numpy())
 
     return n_data
 
@@ -182,7 +183,7 @@ if __name__ == '__main__':
   args = parser.parse_args()
 
   #Create Model
-  model=CreateModel(args.model).model
+  model=CreateModel().BuiltModel(args.model)
   applyModel=ModelApply(model)
 
   #parameter
