@@ -137,11 +137,9 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='Pipeline de procesamiento')
   parser.add_argument('--input', required=True , type=str,  help='Input file path. File must be a .nii or numpy 128 x 128. If it is. nii  add option --nii')
   parser.add_argument('--model', required=True , type=str, help='Path to the model checkpoint')
-  parser.add_argument('--nii', required=False , default='False',type=bool, help='To apply NifIT pipeline')
 
   # Obtener los argumentos de la línea de comandos
   args = parser.parse_args()
-
 
   #parameter
   _, file_extension = os.path.splitext(args.input)
@@ -150,26 +148,10 @@ if __name__ == '__main__':
 
 
   #Check inputs and pre-processing
-  if file_extension == ".nii" and args.nii==False:
-    print("activate --nii or use a numpy image")
-  elif file_extension == ".nii" and args.nii==True:
-    pipeline = [ApplyHDBET(),ExtractNifTI(),FilterNifTI(),CropNifTI()]
-    inputline=args.input
-    for step in pipeline:
-      inputline = step.procesar(inputline)
-    
-    Pro_im=SliceOperation()
-    data=[Pro_im.procesar(im) for im in inputline]
-    g_data=ModelApply().procesar(data,ModelPath) #Numpy 128x128
-    Save_plot(g_data,output_folder)
-
-
-  elif file_extension == ".npy" or file_extension == ".npz" :
+  if file_extension == ".npy" or file_extension == ".npz" :
     im=np.load(args.input)
     data=SliceOperation().procesar(im)
     g_data=ModelApply().procesar(data,ModelPath)
     Save_plot(g_data,output_folder)
-
-
   else:
     print("Please check the help or the code")
