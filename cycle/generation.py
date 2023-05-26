@@ -154,7 +154,6 @@ class ModelApply():
         n_data.append(torch.squeeze(model.G_T1_T2(data).to("cpu")).numpy())
       
       n_data=n_data[0]
-
     
 
     return n_data
@@ -162,15 +161,14 @@ class ModelApply():
 
 def Save_plot(image,path):
   
-  #save
-  for n,im in enumerate(image):
-    np.save(os.path.join(path,f'image_{n}.npy'), im)
-
-  #Plot
   if isinstance(image, list):
+    for im in image:
+      np.save(os.path.join(path,f'image_{n}.npy'), im)
     im_sample=sample(image,1)
+
   else:
     im_sample=image
+    np.save(os.path.join(path,f'image_T2Generated.npy'), image)
 
   fig, ax = plt.subplots()
   ax.imshow(im_sample,cmap="gray")
