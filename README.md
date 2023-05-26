@@ -28,6 +28,7 @@ This repository contains an implementation of CycleGAN for MRI T1-T2 image trans
 - [Usage](#usage)
   - [Main-Script](#Main-Script)
   - [Custom-Script](#Custom-Script)
+  - [Apply-Model](#Apply-Model)
 - [Data Processing](#Data-Processing)
 - [Data-Storage](#Data-Storage)
 - [Model-Training](#Model-Training)
@@ -157,6 +158,7 @@ The CycleGAN extends the GANS by adding one generator and discriminator more to 
 Due resource limitation this model was created in google colab. Therefore, the installation and use has been designed to fits with google colab and google drive. You are provided with a Main.ipynb notebook in Google Colab or Jupyter Notebook, in case you want to reproduce the training of the model. If you want to recreate the training please be aware that some modifications have to be done before use it
 
 ### Main-Script
+If you wish to perform the training from scratch, you can use [Main.ipynb](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/Main.ipynb) which completes the training process in approximately 8 hours.
 1.  Open the Main.ipynb notebook in Google Colab or Jupyter Notebook.
 2.  Update the project_pat variable with the path to the project folder.
 3.  Run the notebook cells to download the datasets, train the model, and generate results.
@@ -174,6 +176,16 @@ project_pat="/PATH_PARENT/FOLDER_TO_CONTAINS_THE_REPO"
 requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
+### Apply-Model
+If you only want to test the model, you can run the [generation.py](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/generation.py) script from the command line by providing the input image and the model as arguments. You can find example to try the model in the folder examples.
+
+The examples provided here were extracted from the Brats 2020 dataset. Slices were taken from subject 2 of the training set and the matrix was transposed to obtain the current view (important step). Futhermore, examples from the original test set were added. This examples underwent the entire processing pipeline.
+
+When generating the synthetic image, the script removes the black borders as they can affect the synthesis. If you try using different images, you will notice that the resulting size is 128 x 128, with the black borders reduced. This is important step since the black margins affects to the synthesis
+
+It is strongly recommended to apply HD-BET before synthesis in order to remove the skull. If a different procedure is used, the resulting outcome may not be guaranteed.
+
+Finally, as the focus is on obtaining synthetic T2 images, the generation.py script specifically converts T1 images to T2.
 
 A detailed description of the classes and objects can be found in the [cycle package](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/readme.md)
 
