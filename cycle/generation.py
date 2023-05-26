@@ -120,7 +120,7 @@ def Save_plot(image,path):
 
   else:
     im_sample=image
-    np.save(os.path.join(path,f'image_T2Generated.npy'), image)
+    np.save(path, image)
 
   fig, ax = plt.subplots()
   ax.imshow(im_sample,cmap="gray")
@@ -142,8 +142,8 @@ if __name__ == '__main__':
   args = parser.parse_args()
 
   #parameter
-  _, file_extension = os.path.splitext(args.input)
-  output_folder=os.path.dirname(args.input)
+  file_name, file_extension = os.path.splitext(args.input)
+  output_file=os.path.join(os.path.dirname(args.input),file_name+"_generated.npy")
   ModelPath=args.model
 
 
@@ -152,6 +152,6 @@ if __name__ == '__main__':
     im=np.load(args.input)
     data=SliceOperation().procesar(im)
     g_data=ModelApply().procesar(data,ModelPath)
-    Save_plot(g_data,output_folder)
+    Save_plot(g_data,output_file)
   else:
     print("Please check the help or the code")
