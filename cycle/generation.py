@@ -56,7 +56,7 @@ class SliceOperation():
       img_crop = cv2.resize(img_crop, (128,128), interpolation=cv2.INTER_LINEAR)
 
     #re-scale image to 0-1
-    images_scaled  = (img-np.min(img_crop)) / (np.max(img_crop)-np.min(img_crop))
+    images_scaled  = (img_crop-np.min(img_crop)) / (np.max(img_crop)-np.min(img_crop))
 
     # Convert the numpy array to a PyTorch tensor
     img_tensor = torch.tensor(images_scaled, dtype=torch.float32)[None,:,:]
