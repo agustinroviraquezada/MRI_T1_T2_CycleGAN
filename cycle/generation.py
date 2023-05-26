@@ -94,16 +94,21 @@ class SliceOperation():
     #Check Numpy
     if not isinstance(img, np.ndarray):
       img=np.array(img)
+
+    #Squeeze
+    im = np.squeeze(img)
       
+   
     #Resize image
     if (img.shape[0]!=128 and img.shape[1]!=128):
-      resized_img = cv2.resize(img, (128,128), interpolation=cv2.INTER_LINEAR)
+      img = cv2.resize(img, (128,128), interpolation=cv2.INTER_LINEAR)
 
     #re-scale image to 0-1
-    images_scaled = resized_img / np.max(resized_img, axis=(1, 2))[:, np.newaxis, np.newaxis]
+    images_scaled  = (img-np.min(img)) / (np.max(img)-np.min(img))
 
     # Convert the numpy array to a PyTorch tensor
-    img_tensor = torch.tensor(images_scaled, dtype=torch.float32).unsqueeze(1)
+    img_tensor = torch.tensor(images_scaled, dtype=torch.float32)[None,:,:]
+
 
     # Normalize the tensor with mean=0.5 and std=0.5
     normalized_tensor = normalize(img_tensor, (0.5,), (0.5,))
@@ -111,14 +116,11 @@ class SliceOperation():
 
 
 
-
-
-class CreateModel():
+class ModelApply():
   def __init__(self):
     pass
 
-  def BuiltModel(self,ModelPath):
-    #built basic class instance
+  def procesar(self,data,ModelPath):
     params = {'lr'            : 0.0005132, #0.0002 
               'lbc_T1'        : 9.377, #7
               'lbc_T2'        : 8.834,  #8
@@ -133,22 +135,30 @@ class CreateModel():
               "target_shape"  : 1,
               "resnet_neck"   : 7,      #6
               "features"      : 56}
-    model=CycleGAN(params).load_from_checkpoint(checkpoint_path=ModelPath)
-    return model
 
-class ModelApply():
-  def __init__(self,model):
-    self.model=model.eval() 
+    model=CycleGAN(params).load_from_checkpoint(checkpoint_path=ModelPath)
     self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    self.model=model.to(self.device)  
-  
-  def procesar(self,data):
+    
+    model.eval() 
+    model.to(self.device)  
     n_data=[]
-    for im in data:
-      im=im.to(self.device)
-      n_data.append(torch.squeeze(self.model.G_T2_T1(im).to("cpu")).numpy())
+
+    if isinstance(data, list):
+      for im in data:
+        im = im.to(self.device)
+        with torch.no_grad():
+          n_data.append(torch.squeeze(model.G_T1_T2(im).to("cpu")).numpy())
+    else:
+      data = data.to(self.device)
+      with torch.no_grad():
+        n_data.append(torch.squeeze(model.G_T1_T2(data).to("cpu")).numpy())
+      
+      n_data=n_data[0]
+
+    
 
     return n_data
+
 
 def Save_plot(image,path):
   
@@ -182,13 +192,11 @@ if __name__ == '__main__':
   # Obtener los argumentos de la línea de comandos
   args = parser.parse_args()
 
-  #Create Model
-  model=CreateModel().BuiltModel(args.model)
-  applyModel=ModelApply(model)
 
   #parameter
   _, file_extension = os.path.splitext(args.input)
   output_folder=os.path.dirname(args.input)
+  ModelPath=args.model
 
 
   #Check inputs and pre-processing
@@ -202,14 +210,14 @@ if __name__ == '__main__':
     
     Pro_im=SliceOperation()
     data=[Pro_im.procesar(im) for im in inputline]
-    g_data=applyModel.procesar(data) #Numpy 128x128
+    g_data=ModelApply().procesar(data,ModelPath) #Numpy 128x128
     Save_plot(g_data,output_folder)
 
 
   elif file_extension == ".npy" or file_extension == ".npz" :
     im=np.load(args.input)
     data=SliceOperation().procesar(im)
-    g_data=applyModel.procesar(data)[0]
+    g_data=ModelApply().procesar(data,ModelPath)
     Save_plot(g_data,output_folder)
 
 
