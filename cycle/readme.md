@@ -14,6 +14,9 @@ This project contains the implementation of a Cycle Generative Adversarial Netwo
 │   ├── Nets.py
 │   ├── SetSeed.py
 │   └── Set_FolderStructure.py
+│   └──generation.py
+│   └──ModelEvaluation.py
+
 ```
 
 ## File Descriptions
