@@ -72,8 +72,7 @@ class HyperParametrization():
     # Set Optuna's logging verbosity
     optuna.logging.set_verbosity(optuna.logging.INFO)
 
-    # Now, when Optuna logs information, it will also be written to 'log.txt'
-    #func = lambda trial: self.objective(trial, self.hyperparameters, self.funcParam)
+    
     self.pruner = optuna.pruners.MedianPruner()
     self.study = optuna.create_study(direction="maximize", pruner=self.pruner)
     self.study.optimize(self.objective, n_trials=funcParam["n_trials"], timeout=9000)
