@@ -177,15 +177,21 @@ requirements= project_pat+"/requirements.txt"
 !pip install -r $requirements -q
 ```
 ### Apply-Model
-If you only want to test the model, you can run the [generation.py](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/generation.py) script from the command line by providing the input image and the model as arguments. You can find example to try the model in the folder examples. Additionally, I include [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/TestModel.ipynb) a example of how to run generation.py
+If you only want to test the model, you can run the [Test.py](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/Test.py) script from the command line by providing the input image and the model as arguments. You can find example to try the model in the folder examples. Additionally, I include [here](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/Model_Testing.ipynb) a example of how to run generation.py
 
 ```
-input=project_pat+"/examples/BraTS20_Train_2_60_t1.npy"
-model=project_pat+"/Models/Optimized_model_0.690-290.ckpt"
-!python /content/drive/MyDrive/TFM_3/cycle/generation.py --input $input --model $model
+import os
+import shutil
+!git clone https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN.git
+requirements= "/content/MRI_T1_T2_CycleGAN/requirements.txt"
+!pip install -r $requirements -q
+
+input="/content/MRI_T1_T2_CycleGAN/Examples/BraTS20_Validation_007_t1.nii"
+model="/content/MRI_T1_T2_CycleGAN/Models/Optimized_model_0.690-290.ckpt"
+!python /content/MRI_T1_T2_CycleGAN/cycle/Test.py --input $input --model $model --Modality "T1" --filters 1 --dim 2 --BlackProportion 0.7
 ```
 
-The examples provided here were extracted from the Brats 2020 dataset. Slices were taken from subject 2 of the training set and the matrix was transposed to obtain the current view (important step) and any processing was applied to these examples. Futhermore, examples from the original test set were added. This examples underwent the entire processing pipeline.
+The examples provided here were extracted from the Brats 2020 dataset. Futhermore, examples from the original test set were added. This examples underwent the entire processing pipeline.
 
 When generating the synthetic image, the script removes the black borders as they can affect the synthesis. If you try using different images, you will notice that the resulting size is 128 x 128, with the black borders reduced. This is important step since the black margins affects to the synthesis
 
