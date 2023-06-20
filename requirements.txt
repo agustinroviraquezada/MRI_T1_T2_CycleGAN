@@ -1,4 +1,6 @@
 lightning>=2.0.2
+tensorflow==2.12.2
+tensorboard==2.12.2
 lightning_bolts>=0.6.0.post1
 nibabel>=3.0.2
 numpy>=1.22.4
