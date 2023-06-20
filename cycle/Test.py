@@ -12,7 +12,6 @@ from torchmetrics import StructuralSimilarityIndexMeasure as SSIM
 from torchmetrics import PeakSignalNoiseRatio as PSNR
 import pandas as pd
 import numpy as np
-from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 from cycle.CycleGAN import CycleGAN
 from cycle.DataMod import CycleGANDataModule,ImagePairTestSet
 import random
