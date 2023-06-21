@@ -19,5 +19,5 @@ imageio==2.25.1
 plotly==5.13.1
 setuptools==67.7.2
 tqdm==4.65.0
-HD-BET @ git+https://github.com/MIC-DKFZ/HD-BET.git@56c7fb8e6509563aa6377cdb0f2dd4e7ad359252
-cycle @ git+https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN.git@b73ba44a52ab0970a7b3f59ccb16bf1959bac6a4
+git+https://github.com/MIC-DKFZ/HD-BET.git
+git+https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN.git
