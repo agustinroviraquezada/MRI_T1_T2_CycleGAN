@@ -1,16 +1,7 @@
 steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
-            'build',
-            '-t',
-            'europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:${SHORT_SHA}',
-            '-t',
-            'europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:latest',
-            '--cache-from',
-            'europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:latest',
-            '.'
-          ]
+    args: ['build', '-t', 'europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:${SHORT_SHA}', '.' ]
 
   # Docker push to Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
@@ -19,4 +10,3 @@ steps:
 # Store images in Google Artifact Registry 
 images:
   - europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:${SHORT_SHA}
-  - europe-southwest1-docker.pkg.dev/mricyclegan/mricyclegan/mricyclegan:latest
