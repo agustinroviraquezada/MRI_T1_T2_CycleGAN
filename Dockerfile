@@ -1,5 +1,5 @@
 # Use a base image with Python pre-installed
-FROM python:3.10
+FROM python:3.10.12
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,15 +7,8 @@ WORKDIR /app
 # Copy the repository files to the working directory
 COPY . /app
 
-# Install virtualenv
-RUN pip install --upgrade pip && \
-    pip install virtualenv
-
-# Create and activate a virtual environment
-RUN virtualenv venv && \
-    source venv/bin/activate
-
-# Install dependencies inside the virtual environment
+# Install dependencies
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Set environment variables
