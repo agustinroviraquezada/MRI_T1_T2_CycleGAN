@@ -197,9 +197,11 @@ When generating the synthetic image, the script removes the black borders as the
 
 It is strongly recommended to apply HD-BET before synthesis in order to remove the skull. If a different procedure is used, the resulting outcome may not be guaranteed.
 
-Finally, as the focus is on obtaining synthetic T2 images, the generation.py script specifically converts T1 images to T2.
+Aditionally, as the focus is on obtaining synthetic T2 images, the generation.py script specifically converts T1 images to T2. A detailed description of the classes and objects can be found in the [cycle package](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/readme.md)
 
-A detailed description of the classes and objects can be found in the [cycle package](https://github.com/agustinroviraquezada/MRI_T1_T2_CycleGAN/blob/main/cycle/readme.md)
+Finally as future work the model has to be encapsulated in a docker container for the distribution. So far a docker can be pulled docker `pull atinrov/cycleganmri:latest`. However It hasn't tested yet
+
+
 
 ## Data-Processing
 This project contains several Python classes that are used to download, process, and transform medical imaging data (specifically NIfTI files). The classes interact with each other to form a processing pipeline that automates the extraction and transformation of the imaging data.
